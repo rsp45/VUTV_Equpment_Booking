@@ -77,7 +77,7 @@ body{
   .task-success .done-badge{width:40px;height:40px;font-size:18px;margin:0 auto 8px}
 
   /* Feedback panel: slide-up drawer */
-  .panel{position:fixed;top:auto;bottom:0;right:0;left:0;width:100%;max-width:none;height:85vh;height:85dvh;z-index:1001;border-radius:24px 24px 0 0;padding:24px 16px;transform:translateY(105%);transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:0 -8px 30px rgba(0,0,0,.15);flex-direction:column}
+  .panel{position:fixed;top:auto;bottom:0;right:0;left:0;width:100%;max-width:none;height:85vh;height:85dvh;z-index:1001;border-radius:24px 24px 0 0;padding:24px 16px;transform:translateY(105%);transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:0 -8px 30px rgba(0,0,0,.15);flex-direction:column;overflow-y:auto}
   .panel.open{display:flex;transform:translateY(105%)}
   .panel.mob-open{transform:translateY(0) !important;display:flex !important}
 
@@ -1070,18 +1070,11 @@ function renderTasks() {
     // Progress dots all done
     let dots = '';
     for (let i = 0; i < TASKS.length; i++) dots += '<div class="task-dot done"></div>';
-    tp.innerHTML = '<div class="task-progress">' + dots + '</div><div class="task-success"><div class="done-badge">&#10003;</div><h3>All tasks complete!</h3><p>Thank you for participating.</p></div>';
+    tp.innerHTML = '<div class="task-progress">' + dots + '</div><div class="task-success"><div class="done-badge">&#10003;</div><h3>All tasks complete!</h3><p>Thank you for participating.</p><br><button class="btn" style="width:100%;background:var(--brand);color:#fff;border:none;border-radius:12px;padding:12px" onclick="window.openFeedback()">Open Feedback Form</button></div>';
     
     // Automatically open feedback panel
     setTimeout(() => {
-      const logPanel = document.getElementById('panel');
-      const overlay = document.getElementById('mob-overlay');
-      logPanel.classList.add('open');
-      if (window.innerWidth <= 560) {
-        logPanel.classList.add('mob-open');
-        overlay.classList.add('show');
-      }
-      paintLog();
+      window.openFeedback();
     }, 1200);
     return;
   }
@@ -1310,6 +1303,17 @@ document.getElementById('u-submit').addEventListener('click', async () => {
 });
 
 /* ===================== MOBILE DRAWER TOGGLE ===================== */
+window.openFeedback = function() {
+  const logPanel = document.getElementById('panel');
+  const overlay = document.getElementById('mob-overlay');
+  logPanel.classList.add('open');
+  if (window.innerWidth <= 560) {
+    logPanel.classList.add('mob-open');
+    overlay.classList.add('show');
+  }
+  paintLog();
+};
+
 (function(){
   const logPanel = document.getElementById('panel');
   const overlay = document.getElementById('mob-overlay');
