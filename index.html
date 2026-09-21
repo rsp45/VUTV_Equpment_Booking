@@ -64,25 +64,29 @@ body{
   .island,.status,.homebar{display:none}
   body{overflow:hidden}
 
-  /* Task panel: slide-over drawer from left */
-  .task-panel{position:fixed;top:0;left:0;width:85vw;max-width:340px;height:100vh;height:100dvh;z-index:1001;border-radius:0 18px 18px 0;padding:20px 16px;transform:translateX(-105%);transition:transform .3s cubic-bezier(.4,0,.2,1);max-height:100vh;max-height:100dvh;box-shadow:8px 0 30px rgba(0,0,0,.15)}
-  .task-panel.mob-open{transform:translateX(0)}
-  .task-panel h2{font-size:15px}
-  .task-panel .sm{font-size:12px;margin-bottom:10px}
-  .task-step{padding:12px}
-  .task-step h3{font-size:14px}
+  /* Task panel: compact floating card on mobile */
+  .task-panel{position:fixed;top:10px;left:10px;right:10px;width:auto;max-width:none;height:auto;z-index:900;border-radius:12px;padding:12px;transform:none;transition:none;max-height:none;box-shadow:0 8px 24px rgba(0,0,0,.15);display:block !important}
+  .task-panel h2, .task-panel .sm, .task-progress{display:none}
+  .task-step{padding:0;border:none;background:transparent}
+  .task-step-num{font-size:10px;margin-bottom:2px}
+  .task-step h3{font-size:13px;margin:0 0 2px 0}
+  .task-step p{font-size:11.5px;line-height:1.3;color:var(--sub)}
+  .task-step button{display:none}
+  
+  .task-success{padding:10px 0}
+  .task-success .done-badge{width:40px;height:40px;font-size:18px;margin:0 auto 8px}
 
-  /* Feedback panel: slide-over drawer from right */
-  .panel{position:fixed;top:0;right:0;left:auto;width:90vw;max-width:380px;height:100vh;height:100dvh;z-index:1001;border-radius:18px 0 0 18px;padding:16px 14px;transform:translateX(105%);transition:transform .3s cubic-bezier(.4,0,.2,1);max-height:100vh;max-height:100dvh;overflow-y:auto;box-shadow:-8px 0 30px rgba(0,0,0,.15)}
-  .panel.open{display:flex;transform:translateX(105%)}
-  .panel.mob-open{transform:translateX(0) !important;display:flex !important}
+  /* Feedback panel: slide-up drawer */
+  .panel{position:fixed;top:auto;bottom:0;right:0;left:0;width:100%;max-width:none;height:85vh;height:85dvh;z-index:1001;border-radius:24px 24px 0 0;padding:24px 16px;transform:translateY(105%);transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:0 -8px 30px rgba(0,0,0,.15);flex-direction:column}
+  .panel.open{display:flex;transform:translateY(105%)}
+  .panel.mob-open{transform:translateY(0) !important;display:flex !important}
 
-  /* Mobile overlay backdrop */
+  /* Mobile overlay backdrop for feedback only */
   .mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none}
   .mob-overlay.show{display:block}
 
-  /* Mobile toggle buttons (floating) */
-  .mob-toggle{display:flex !important}
+  /* Hide toggle buttons entirely */
+  .mob-toggle{display:none !important}
 
   /* Improve touch targets */
   .btn{padding:16px;font-size:15px;min-height:48px}
@@ -93,7 +97,7 @@ body{
   .slot{padding:14px 16px;min-height:48px}
 
   /* Better scrolling */
-  .body{-webkit-overflow-scrolling:touch;padding-bottom:calc(20px + env(safe-area-inset-bottom))}
+  .body{-webkit-overflow-scrolling:touch;padding-top:100px;padding-bottom:calc(20px + env(safe-area-inset-bottom))}
   .tabs{padding-bottom:calc(8px + env(safe-area-inset-bottom))}
 
   /* Toast position for mobile */
@@ -109,12 +113,6 @@ body{
   /* Log rows */
   .logwrap{max-height:140px}
 }
-
-/* Mobile toggle buttons - hidden on desktop */
-.mob-toggle{display:none;position:fixed;bottom:calc(12px + env(safe-area-inset-bottom));z-index:998;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);box-shadow:0 4px 16px rgba(0,0,0,.12);align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--ink);-webkit-tap-highlight-color:transparent}
-.mob-toggle:active{transform:scale(.92)}
-.mob-toggle-task{left:12px}
-.mob-toggle-log{right:12px}
 
 /* header */
 .top{display:flex;align-items:center;gap:8px;padding:14px 16px 12px;border-bottom:1px solid var(--line);background:var(--surface);flex:0 0 auto}
@@ -399,9 +397,6 @@ h2{font-size:20px;font-weight:700;margin:0;letter-spacing:-.02em}
 </div>
 <button class="reset-demo" id="resetBtn">Reset demo</button>
 
-<!-- Mobile toggle buttons -->
-<button class="mob-toggle mob-toggle-task" id="mob-task-btn" title="Tasks">&#9776;</button>
-<button class="mob-toggle mob-toggle-log" id="mob-log-btn" title="Feedback">&#9998;</button>
 <div class="mob-overlay" id="mob-overlay"></div>
 
 <div class="task-panel" id="task-panel">
@@ -1076,6 +1071,18 @@ function renderTasks() {
     let dots = '';
     for (let i = 0; i < TASKS.length; i++) dots += '<div class="task-dot done"></div>';
     tp.innerHTML = '<div class="task-progress">' + dots + '</div><div class="task-success"><div class="done-badge">&#10003;</div><h3>All tasks complete!</h3><p>Thank you for participating.</p></div>';
+    
+    // Automatically open feedback panel
+    setTimeout(() => {
+      const logPanel = document.getElementById('panel');
+      const overlay = document.getElementById('mob-overlay');
+      logPanel.classList.add('open');
+      if (window.innerWidth <= 560) {
+        logPanel.classList.add('mob-open');
+        overlay.classList.add('show');
+      }
+      paintLog();
+    }, 1200);
     return;
   }
   
@@ -1304,51 +1311,24 @@ document.getElementById('u-submit').addEventListener('click', async () => {
 
 /* ===================== MOBILE DRAWER TOGGLE ===================== */
 (function(){
-  const taskPanel = document.getElementById('task-panel');
   const logPanel = document.getElementById('panel');
   const overlay = document.getElementById('mob-overlay');
-  const taskBtn = document.getElementById('mob-task-btn');
-  const logBtn = document.getElementById('mob-log-btn');
   
   function closeAll(){
-    taskPanel.classList.remove('mob-open');
     logPanel.classList.remove('mob-open');
     overlay.classList.remove('show');
   }
   
-  taskBtn.addEventListener('click', function(e){
-    e.stopPropagation();
-    const isOpen = taskPanel.classList.contains('mob-open');
-    closeAll();
-    if(!isOpen){
-      taskPanel.classList.add('mob-open');
-      overlay.classList.add('show');
-    }
-  });
-  
-  logBtn.addEventListener('click', function(e){
-    e.stopPropagation();
-    const isOpen = logPanel.classList.contains('mob-open');
-    closeAll();
-    if(!isOpen){
-      logPanel.classList.add('mob-open');
-      logPanel.classList.add('open');
-      overlay.classList.add('show');
-      paintLog();
-    }
-  });
-  
   overlay.addEventListener('click', closeAll);
   
-  // Swipe to close drawers
-  let touchX = 0;
+  // Swipe to close feedback drawer
+  let touchY = 0;
   document.addEventListener('touchstart', function(e){
-    touchX = e.touches[0].clientX;
+    touchY = e.touches[0].clientY;
   }, {passive:true});
   document.addEventListener('touchend', function(e){
-    const dx = e.changedTouches[0].clientX - touchX;
-    if(taskPanel.classList.contains('mob-open') && dx < -60) closeAll();
-    if(logPanel.classList.contains('mob-open') && dx > 60) closeAll();
+    const dy = e.changedTouches[0].clientY - touchY;
+    if(logPanel.classList.contains('mob-open') && dy > 60) closeAll();
   }, {passive:true});
 })();
 
