@@ -331,7 +331,8 @@ h2{font-size:20px;font-weight:700;margin:0;letter-spacing:-.02em}
 .panel.open{display:flex}
 .panel h2{font-size:14px;font-weight:700;margin:0}
 .panel .sm{font-size:11.5px;color:var(--sub);margin:0}
-.panel .r{display:flex;gap:8px}
+.panel input,.panel select{font-size:14px}
+.panel .r{display:flex;gap:12px;margin-bottom:12px}
 .panel input{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:9px;font:inherit;font-size:13px;background:var(--surface);color:var(--ink)}
 .pbtn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:9px;padding:9px 10px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;flex:1}
 .pbtn.go{background:var(--brand);color:#fff;border-color:transparent}
@@ -395,7 +396,7 @@ h2{font-size:20px;font-weight:700;margin:0;letter-spacing:-.02em}
   .task-success .done-badge{width:40px;height:40px;font-size:18px;margin:0 auto 8px}
 
   /* Feedback panel: slide-up drawer */
-  .panel{position:fixed;top:auto;bottom:0;right:0;left:0;width:100%;max-width:none;height:85vh;height:85dvh;z-index:10001 !important;border-radius:24px 24px 0 0;padding:24px 16px;transform:translateY(105%);transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:0 -8px 30px rgba(0,0,0,.15);flex-direction:column;overflow-y:auto}
+  .panel{position:fixed;top:auto;bottom:0;right:0;left:0;width:100%;max-width:none;height:85vh;height:85dvh;z-index:10001 !important;border-radius:24px 24px 0 0;padding:24px 16px 48px;transform:translateY(105%);transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:0 -8px 30px rgba(0,0,0,.15);flex-direction:column;overflow-y:auto}
   .panel.open{display:flex;transform:translateY(105%)}
   .panel.mob-open{transform:translateY(0) !important;display:flex !important}
 
@@ -467,17 +468,17 @@ h2{font-size:20px;font-weight:700;margin:0;letter-spacing:-.02em}
     <h2>Usability Feedback</h2>
     <p class="sm">Log interactions and submit feedback directly to a Google Sheet.</p>
   </div>
-  <div class="r"><input id="pid" placeholder="Participant name (e.g. User 1)"></div>
-  <div class="r" style="gap:8px">
-    <div class="field" style="flex:1"><label style="margin-bottom:2px">Task done?</label><select id="u-comp" style="padding:6px;font-size:12px;border-radius:6px"><option>Yes</option><option>No</option><option>Partial</option></select></div>
-    <div class="field" style="flex:1"><label style="margin-bottom:2px">Ease (1-5)</label><select id="u-ease" style="padding:6px;font-size:12px;border-radius:6px"><option>5 - Very Easy</option><option>4 - Easy</option><option>3 - Neutral</option><option>2 - Hard</option><option>1 - Very Hard</option></select></div>
+  <div class="r"><input id="pid" placeholder="Participant name (e.g. P04)" style="padding:10px"></div>
+  <div class="r" style="gap:12px">
+    <div class="field" style="flex:1"><label style="margin-bottom:4px; font-weight:600; font-size:13px">Task done?</label><select id="u-comp" style="padding:10px;border-radius:8px"><option>Yes</option><option>No</option><option>Partial</option></select></div>
+    <div class="field" style="flex:1"><label style="margin-bottom:4px; font-weight:600; font-size:13px">Ease (1-5)</label><select id="u-ease" style="padding:10px;border-radius:8px"><option>5 - Very Easy</option><option>4 - Easy</option><option>3 - Neutral</option><option>2 - Hard</option><option>1 - Very Hard</option></select></div>
   </div>
-  <div class="r"><input id="u-notes" placeholder="Feedback notes..." style="padding:8px"></div>
-  <div class="r">
-    <input id="u-url" placeholder="Google Apps Script Web App URL..." style="padding:8px" value="https://script.google.com/macros/s/AKfycby1QMTzr3UdTUh7JW-Qw8s_NkknOrqz1iP4MkLEMKkXvjzV-NbHOnFXOkyuaTYWKXyD/exec">
+  <div class="r"><input id="u-notes" placeholder="Feedback notes..." style="padding:10px"></div>
+  <div class="r" style="display:none">
+    <input id="u-url" placeholder="Google Apps Script Web App URL..." style="padding:10px" value="https://script.google.com/macros/s/AKfycby1QMTzr3UdTUh7JW-Qw8s_NkknOrqz1iP4MkLEMKkXvjzV-NbHOnFXOkyuaTYWKXyD/exec">
   </div>
-  <button class="pbtn go" id="u-submit" style="padding:10px; margin-bottom:8px">Submit Session to Google Sheet</button>
-  <button class="pbtn" id="clearLog" style="padding:10px; background:#dc3545; color:#fff; border:none; margin-bottom:24px">Reset Session & Form</button>
+  <button class="pbtn go" id="u-submit" style="padding:12px; margin-bottom:12px">Submit Session to Google Sheet</button>
+  <button class="pbtn" id="clearLog" style="padding:12px; background:#dc3545; color:#fff; border:none; margin-bottom:24px">Reset Session & Form</button>
 
   <!-- Quick Feedback Questions -->
   <div class="qf-bar" id="qf-bar">
