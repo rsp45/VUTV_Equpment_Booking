@@ -1332,11 +1332,7 @@ document.addEventListener('click', ev => {
 
 // Google Sheet Submission
 const uUrlEl = document.getElementById('u-url');
-uUrlEl.addEventListener('input',()=>{try{localStorage.setItem('vutv.url',uUrlEl.value);}catch(e){}});
-try{
-  const saved = localStorage.getItem('vutv.url');
-  uUrlEl.value = saved !== null ? saved : 'https://script.google.com/macros/s/AKfycby1QMTzr3UdTUh7JW-Qw8s_NkknOrqz1iP4MkLEMKkXvjzV-NbHOnFXOkyuaTYWKXyD/exec';
-}catch(e){}
+uUrlEl.value = 'https://script.google.com/macros/s/AKfycby1QMTzr3UdTUh7JW-Qw8s_NkknOrqz1iP4MkLEMKkXvjzV-NbHOnFXOkyuaTYWKXyD/exec';
 
 document.getElementById('u-submit').addEventListener('click', async () => {
   const url = uUrlEl.value.trim();
