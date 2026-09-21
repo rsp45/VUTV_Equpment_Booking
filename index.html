@@ -1332,6 +1332,60 @@ document.getElementById('u-submit').addEventListener('click', async () => {
   }, {passive:true});
 })();
 
+/* ===================== DRAGGABLE TASK PANEL ===================== */
+(function(){
+  const tp = document.getElementById('task-panel');
+  tp.style.cursor = 'grab';
+  tp.style.touchAction = 'none'; // Prevent browser scrolling when dragging
+  
+  let isDragging = false;
+  let currentX = 0, currentY = 0;
+  let initialX = 0, initialY = 0;
+  let xOffset = 0, yOffset = 0;
+
+  function dragStart(e) {
+    if(e.target.tagName.toLowerCase() === 'button') return;
+    if (e.type === "touchstart") {
+      initialX = e.touches[0].clientX - xOffset;
+      initialY = e.touches[0].clientY - yOffset;
+    } else {
+      initialX = e.clientX - xOffset;
+      initialY = e.clientY - yOffset;
+    }
+    isDragging = true;
+    tp.style.cursor = 'grabbing';
+  }
+
+  function dragEnd(e) {
+    isDragging = false;
+    tp.style.cursor = 'grab';
+  }
+
+  function drag(e) {
+    if (isDragging) {
+      e.preventDefault(); // Prevent pull-to-refresh or scroll
+      if (e.type === "touchmove") {
+        currentX = e.touches[0].clientX - initialX;
+        currentY = e.touches[0].clientY - initialY;
+      } else {
+        currentX = e.clientX - initialX;
+        currentY = e.clientY - initialY;
+      }
+      xOffset = currentX;
+      yOffset = currentY;
+      tp.style.transform = "translate3d(" + currentX + "px, " + currentY + "px, 0)";
+    }
+  }
+
+  tp.addEventListener("touchstart", dragStart, {passive: false});
+  document.addEventListener("touchend", dragEnd, {passive: false});
+  document.addEventListener("touchmove", drag, {passive: false});
+
+  tp.addEventListener("mousedown", dragStart);
+  document.addEventListener("mouseup", dragEnd);
+  document.addEventListener("mousemove", drag);
+})();
+
 /* ===================== BOOT ===================== */
 renderTasks();
 render();
