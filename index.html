@@ -1268,8 +1268,25 @@ const pidEl=document.getElementById('pid');
 pidEl.addEventListener('input',()=>{try{localStorage.setItem('vutv.pid',pidEl.value);}catch(e){}paintLog();});
 try{pidEl.value=localStorage.getItem('vutv.pid')||'';}catch(e){}
 
-// Clear log
-document.getElementById('clearLog').addEventListener('click',()=>{LOG=[];persist();paintLog();toast('Session log cleared');});
+// Clear log and reset feedback form
+document.getElementById('clearLog').addEventListener('click',()=>{
+  LOG=[];
+  persist();
+  paintLog();
+  
+  // Reset tasks
+  currentTask=0;
+  renderTasks();
+  
+  // Reset feedback form
+  document.getElementById('u-notes').value = '';
+  document.getElementById('u-comp').value = 'Yes';
+  document.getElementById('u-ease').value = '5 - Very Easy';
+  document.querySelectorAll('.qf-opts button').forEach(b => b.classList.remove('qf-sel'));
+  for (let k in QF_DATA) delete QF_DATA[k];
+  
+  toast('Session and form reset');
+});
 
 // Export
 const COLS=['n','session','participant','kind','detail','extra','screen','msIntoSession','time'];
@@ -1344,12 +1361,17 @@ document.getElementById('u-submit').addEventListener('click', async () => {
   btn.disabled = true;
   btn.style.opacity = '0.5';
   
+  const formData = new URLSearchParams();
+  for (const key in data) {
+    formData.append(key, data[key]);
+  }
+  
   try {
     await fetch(url, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(data)
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: formData.toString()
     });
     toast('Session feedback sent to Google Sheet!');
     document.getElementById('u-notes').value = '';
