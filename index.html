@@ -1383,16 +1383,6 @@ window.openFeedback = function() {
   }
   
   overlay.addEventListener('click', closeAll);
-  
-  // Swipe to close feedback drawer
-  let touchY = 0;
-  document.addEventListener('touchstart', function(e){
-    touchY = e.touches[0].clientY;
-  }, {passive:true});
-  document.addEventListener('touchend', function(e){
-    const dy = e.changedTouches[0].clientY - touchY;
-    if(logPanel.classList.contains('mob-open') && dy > 60) closeAll();
-  }, {passive:true});
 })();
 
 /* ===================== DRAGGABLE TASK PANEL ===================== */
