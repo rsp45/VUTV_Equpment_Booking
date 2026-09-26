@@ -226,6 +226,8 @@ h2{font-size:20px;font-weight:700;margin:0;letter-spacing:-.02em}
 .cal-d:hover{background:var(--raised)}
 .cal-d.sel{background:var(--navy);color:#fff;font-weight:700}
 .cal-d.empty{pointer-events:none}
+.cal-d:disabled{color:var(--faint);opacity:.4;cursor:not-allowed}
+.cal-d:focus-visible,.cal-nav:focus-visible,.slot:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
 
 /* slots */
 .slot{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:var(--r);border:1.5px solid var(--line);background:var(--surface)}
@@ -508,21 +510,50 @@ h2{font-size:20px;font-weight:700;margin:0;letter-spacing:-.02em}
 <script>
 /* ===================== DATA ===================== */
 const EQUIPMENT = [
-  {id:'cam1',name:'Sony A7III Camera',cat:'Cameras',asset:'CAM-014',img:'assets/sony-a7iii.jpg',avail:'available',ready:'ready',battery:78,condition:'Good',location:'Equipment Room B, Shelf 3',lastChecked:'Today, 8:45 AM',nextBooking:'Mon, Sep 21, 3:00 PM'},
-  {id:'mic1',name:'Rode NTG3 Shotgun Mic',cat:'Audio',asset:'AUD-007',img:'assets/rode-ntg3.jpg',avail:'available',ready:'ready',battery:null,condition:'Excellent',location:'Equipment Room A, Cabinet 2',lastChecked:'Today, 9:10 AM',nextBooking:'Tue, Sep 22, 10:00 AM'},
-  {id:'tri1',name:'Manfrotto Tripod',cat:'Support',asset:'TRP-003',img:'assets/tripod.jpg',avail:'available',ready:'check',battery:null,condition:'Fair, minor scuff',location:'Equipment Room B, Shelf 1',lastChecked:'Yesterday',nextBooking:'None'},
-  {id:'lite1',name:'Aputure 120D Light',cat:'Lighting',asset:'LGT-002',img:'assets/aputure-120d.jpg',avail:'inuse',ready:'ready',battery:null,condition:'Good',location:'Studio A (in use)',lastChecked:'Today, 7:30 AM',nextBooking:'Mon, Sep 21, 5:00 PM'},
-  {id:'rec1',name:'Zoom H6 Recorder',cat:'Audio',asset:'AUD-012',img:'assets/recorder.jpg',avail:'repair',ready:'repair',battery:65,condition:'Needs repair: input 3 faulty',location:'Equipment Room A, Shelf 4',lastChecked:'18 Sep',nextBooking:'N/A'}
+  {id:'cam1',name:'Sony A7III Camera',cat:'Cameras',asset:'CAM-014',img:'assets/sony-a7iii.jpg',avail:'available',ready:'ready',battery:78,condition:'Good',location:'Equipment Room B, Shelf 3',lastChecked:'Not verified in demo'},
+  {id:'mic1',name:'Rode NTG3 Shotgun Mic',cat:'Audio',asset:'AUD-007',img:'assets/rode-ntg3.jpg',avail:'available',ready:'ready',battery:null,condition:'Excellent',location:'Equipment Room A, Cabinet 2',lastChecked:'Not verified in demo'},
+  {id:'tri1',name:'Manfrotto Tripod',cat:'Support',asset:'TRP-003',img:'assets/tripod.jpg',avail:'available',ready:'check',battery:null,condition:'Fair, minor scuff',location:'Equipment Room B, Shelf 1',lastChecked:'Not verified in demo'},
+  {id:'lite1',name:'Aputure 120D Light',cat:'Lighting',asset:'LGT-002',img:'assets/aputure-120d.jpg',avail:'available',ready:'ready',battery:null,condition:'Good',location:'Equipment Room B, Shelf 2',lastChecked:'Not verified in demo'},
+  {id:'rec1',name:'Zoom H6 Recorder',cat:'Audio',asset:'AUD-012',img:'assets/recorder.jpg',avail:'repair',ready:'repair',battery:65,condition:'Needs repair: input 3 faulty',location:'Equipment Room A, Shelf 4',lastChecked:'Not verified in demo'}
 ];
 
 const COORDINATOR = {name:'Aarav Mehta',role:'VUTV Equipment Desk',initials:'AM'};
-const SLOTS = [
-  {time:'9:00 AM - 11:00 AM',status:'free'},
-  {time:'11:00 AM - 1:00 PM',status:'booked'},
-  {time:'1:00 PM - 3:00 PM',status:'free'},
-  {time:'3:00 PM - 5:00 PM',status:'conflict'}
-];
-
+const BOOKING_KEY='vutv.equip.bookings.v1';
+const dateKey=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+const addDays=(date,n)=>{const d=new Date(date+'T12:00:00');d.setDate(d.getDate()+n);return dateKey(d);};
+const dateLabel=date=>new Date(date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+const timeLabel=time=>new Date('2000-01-01T'+time).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+const interval=(date,time)=>new Date(date+'T'+time).getTime();
+const overlaps=(aStart,aEnd,bStart,bEnd)=>aStart<bEnd && bStart<aEnd;
+const bookingStart=b=>interval(b.startDate,b.startTime);
+const bookingEnd=b=>interval(b.endDate,b.endTime);
+const blocks=b=>['pending','confirmed','active'].includes(b.status);
+const bookingsFromStorage=()=>{try{const stored=JSON.parse(localStorage.getItem(BOOKING_KEY));return Array.isArray(stored)?stored:null;}catch{return null;}};
+function saveBookings(){try{localStorage.setItem(BOOKING_KEY,JSON.stringify(S.bookings));}catch{toast('Bookings could not be saved on this device');}}
+function conflictFor(draft,bookings,excludeId){
+  return bookings.find(b=>b.id!==excludeId && b.eqId===draft.equipmentId && blocks(b) && b.startDate && overlaps(interval(draft.startDate,draft.startTime),interval(draft.endDate,draft.endTime),bookingStart(b),bookingEnd(b)));
+}
+function newDraft(id){
+  const now=new Date(),today=dateKey(now);
+  const startHour=Math.max(9,Math.ceil((now.getHours()+now.getMinutes()/60)/2)*2);
+  const startDate=startHour>=16?addDays(today,1):today;
+  const startTime=String(startHour>=16?9:startHour).padStart(2,'0')+':00';
+  const endTime=String((startHour>=16?9:startHour)+2).padStart(2,'0')+':00';
+  return {equipmentId:id,startDate,endDate:startDate,startTime,endTime,durationType:'custom',purpose:'Academic project',requester:'',destination:'',coordinator:COORDINATOR.name,status:'pending'};
+}
+function bookingDate(b){return b.startDate?dateLabel(b.startDate)+(b.endDate!==b.startDate?' – '+dateLabel(b.endDate):''):b.date;}
+function bookingTime(b){return b.startTime?timeLabel(b.startTime)+' – '+timeLabel(b.endTime):b.time;}
+function formatRange(d){return dateLabel(d.startDate)+' '+timeLabel(d.startTime)+' – '+dateLabel(d.endDate)+' '+timeLabel(d.endTime);}
+function validateDraft(d){
+  if(!d||!getEq(d.equipmentId)) return 'Choose equipment first';
+  if(!d.requester.trim()) return 'Enter a requester or team name';
+  if(!d.destination.trim()) return 'Enter where the equipment will be used';
+  if(!d.startDate||!d.endDate||!d.startTime||!d.endTime) return 'Select both dates and times';
+  if(interval(d.startDate,d.startTime)<Date.now()) return 'Choose a future start time';
+  if(interval(d.endDate,d.endTime)<=interval(d.startDate,d.startTime)) return 'End must be after start';
+  if(getEq(d.equipmentId).avail==='repair') return 'This item needs repair';
+  return '';
+}
 function seedState(){
   return {
     tab:'home',
@@ -531,14 +562,20 @@ function seedState(){
     filter:'All',
     lastUpdated:'just now',
     selectedEq:null,
+    selectedDate:dateKey(new Date()),
+    selectedMonth:dateKey(new Date()).slice(0,7),
+    bookingDraft:null,
+    lastBookingId:null,
     bookings:[
-      {id:'b1',ref:'VR-0924-007',eq:'Rode NTG3 Shotgun Mic',eqId:'mic1',date:'Thu, Sep 24',time:'2:00 - 4:00 PM',loc:'Equipment Room A, Cabinet 2',status:'confirmed',rating:null,feedback:null},
-      {id:'b2',ref:'VR-0912-003',eq:'Manfrotto Tripod',eqId:'tri1',date:'Sat, Sep 12',time:'10:00 AM - 12:00 PM',loc:'Equipment Room B, Shelf 1',status:'completed',rating:4,feedback:'Good condition'}
+      {id:'demo-mic',ref:'VR-DEMO-001',eq:'Rode NTG3 Shotgun Mic',eqId:'mic1',startDate:addDays(dateKey(new Date()),1),endDate:addDays(dateKey(new Date()),1),startTime:'14:00',endTime:'16:00',loc:'Equipment Room A, Cabinet 2',status:'confirmed',rating:null,feedback:null},
+      {id:'demo-light',ref:'VR-DEMO-002',eq:'Aputure 120D Light',eqId:'lite1',startDate:dateKey(new Date()),endDate:Date.now()>interval(dateKey(new Date()),'17:00')?addDays(dateKey(new Date()),1):dateKey(new Date()),startTime:'00:00',endTime:'17:00',loc:'Studio A',status:'active',rating:null,feedback:null},
+      {id:'demo-tripod',ref:'VR-DEMO-003',eq:'Manfrotto Tripod',eqId:'tri1',startDate:addDays(dateKey(new Date()),-1),endDate:addDays(dateKey(new Date()),-1),startTime:'10:00',endTime:'12:00',loc:'Equipment Room B, Shelf 1',status:'completed',rating:4,feedback:'Good condition'}
     ],
     coordNotified:false
   };
 }
 let S = seedState();
+S.bookings=bookingsFromStorage()||S.bookings;
 
 /* ===================== HELPERS ===================== */
 const $=id=>document.getElementById(id);
@@ -548,6 +585,10 @@ let toastT;
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2600);}
 function setTab(t){S.tab=t;go(t);}
 function getEq(id){return EQUIPMENT.find(e=>e.id===id);}
+function availability(e){
+  if(e.avail==='repair')return 'repair';
+  return S.bookings.some(b=>b.eqId===e.id&&blocks(b)&&b.startDate&&bookingStart(b)<=Date.now()&&bookingEnd(b)>Date.now())?'inuse':'available';
+}
 
 function shell(title,bodyHtml,o){
   o=o||{};
@@ -583,7 +624,7 @@ function statusPill(s){
 const V={};
 
 V.home=()=>{
-  const avail=EQUIPMENT.filter(e=>e.avail==='available').length;
+  const avail=EQUIPMENT.filter(e=>availability(e)==='available').length;
   const ready=EQUIPMENT.filter(e=>e.ready==='ready').length;
   const upcoming=S.bookings.filter(b=>b.status==='pending'||b.status==='confirmed'||b.status==='active');
   let h='<h2>VUTV Equipment</h2><p class="lead">Equipment booking for student producers</p>';
@@ -605,12 +646,16 @@ V.home=()=>{
   h+='<div class="card" style="text-align:center; padding:16px;"><div style="font-size:26px; font-weight:700; color:var(--ok);">'+ready+'</div><div style="font-size:12px; color:var(--sub); margin-top:4px; line-height:1.3;">Items<br>Shoot-Ready</div></div>';
   h+='<div class="card" style="text-align:center; padding:16px; grid-column:1 / span 2;"><div style="font-size:16px; font-weight:600; color:var(--ink);">'+avail+' Available</div><div style="font-size:12px; color:var(--sub); margin-top:4px;">'+(EQUIPMENT.length-avail)+' in use or under repair</div></div>';
   h+='</div>';
+  if(upcoming.length){
+    const next=upcoming.filter(b=>b.startDate&&bookingEnd(b)>Date.now()).sort((a,b)=>bookingStart(a)-bookingStart(b))[0];
+    if(next)h+='<div class="card"><h3>Next: '+esc(next.eq)+'</h3><p>'+esc(bookingDate(next))+' · '+esc(bookingTime(next))+' · '+esc(next.loc)+'</p></div>';
+  }
 
   // Upcoming
   if(upcoming.length){
     h+='<p class="label">Upcoming bookings</p>';
     upcoming.forEach(b=>{
-      h+='<button class="row" data-act="viewbooking" data-id="'+b.id+'"><div class="r-main"><div class="r-t">'+esc(b.eq)+'</div><div class="r-s">'+esc(b.date)+', '+esc(b.time)+'</div></div>'+statusPill(b.status)+'<span class="chev">&#8250;</span></button>';
+      h+='<button class="row" data-act="viewbooking" data-id="'+b.id+'"><div class="r-main"><div class="r-t">'+esc(b.eq)+'</div><div class="r-s">'+esc(bookingDate(b))+', '+esc(bookingTime(b))+'</div></div>'+statusPill(b.status)+'<span class="chev">&#8250;</span></button>';
     });
   }
   return shell('Home',h);
@@ -628,7 +673,7 @@ V.equipment=()=>{
   // Filter logic
   let filtered=EQUIPMENT.filter(e=>{
     if(S.filter!=='All'&&e.cat!==S.filter) return false;
-    if(S.search&&!e.name.toLowerCase().includes(S.search.toLowerCase())&&!e.cat.toLowerCase().includes(S.search.toLowerCase())) return false;
+    if(S.search&&![e.name,e.cat,e.asset,e.location].some(x=>x.toLowerCase().includes(S.search.toLowerCase()))) return false;
     return true;
   });
 
@@ -637,14 +682,14 @@ V.equipment=()=>{
   if(filtered.length){
     filtered.forEach(e=>{
       const imgHtml=e.img?'<img src="'+e.img+'" onerror="this.style.display=\'none\'">':'<span style="font-size:18px;color:var(--faint)">&#9733;</span>';
-      const canBook=e.avail==='available' || e.avail==='inuse';
+      const state=availability(e),canBook=state!=='repair';
       h+='<div class="eq">';
       h+='<div class="eq-img" data-act="detail" data-id="'+e.id+'">'+imgHtml+'</div>';
       h+='<div class="eq-info">';
       h+='<div class="eq-name" style="cursor:pointer" data-act="detail" data-id="'+e.id+'">'+esc(e.name)+'</div>';
       h+='<div class="eq-cat">'+esc(e.cat)+', '+esc(e.asset)+'</div>';
-      h+='<div class="eq-pills">'+availPill(e.avail)+readyPill(e.ready)+'</div>';
-      if(canBook) h+='<button class="eq-book" data-act="startbook" data-id="'+e.id+'">Book</button>';
+      h+='<div class="eq-pills">'+availPill(state)+readyPill(e.ready)+'</div>';
+      if(canBook) h+='<button class="eq-book" data-act="startbook" data-id="'+e.id+'">'+(state==='inuse'?'Book for later':'Book now')+'</button>';
       h+='</div></div>';
     });
   } else {
@@ -665,7 +710,8 @@ V.detail=()=>{
 
   // Image
   h+='<div class="d-img">'+imgHtml;
-  if(e.avail==='available') h+='<div class="d-badge"><span class="dot"></span> Available now</div>';
+  const state=availability(e);
+  if(state==='available') h+='<div class="d-badge"><span class="dot"></span> Available now</div>';
   h+='</div>';
 
   // Title
@@ -673,7 +719,7 @@ V.detail=()=>{
   h+='<div style="font-size:12px;color:var(--sub);margin-top:2px">'+esc(e.cat)+', Asset #'+esc(e.asset)+'</div></div>';
 
   // Status pills
-  h+='<div style="display:flex;gap:6px">'+availPill(e.avail)+readyPill(e.ready)+'</div>';
+  h+='<div style="display:flex;gap:6px">'+availPill(state)+readyPill(e.ready)+'</div>';
 
   // Details table
   h+='<div class="sum">';
@@ -681,7 +727,8 @@ V.detail=()=>{
   h+='<div><span>Location</span><b>'+esc(e.location)+'</b></div>';
   if(e.battery!==null) h+='<div><span>Battery</span><b><span class="bat-bar"><span class="bat-fill" style="width:'+e.battery+'%"></span></span> '+e.battery+'%</b></div>';
   h+='<div><span>Last checked</span><b>'+esc(e.lastChecked)+'</b></div>';
-  h+='<div><span>Next booking</span><b>'+esc(e.nextBooking)+'</b></div>';
+  const next=S.bookings.filter(b=>b.eqId===e.id&&blocks(b)&&bookingEnd(b)>Date.now()).sort((a,b)=>bookingStart(a)-bookingStart(b))[0];
+  h+='<div><span>Next booking</span><b>'+(next?esc(formatRange(next)):'None scheduled')+'</b></div>';
   h+='</div>';
 
   // Coordinator
@@ -689,8 +736,12 @@ V.detail=()=>{
   h+='<div class="coord"><div class="coord-av">'+esc(COORDINATOR.initials)+'</div><div class="coord-info"><div class="coord-name">'+esc(COORDINATOR.name)+'</div><div class="coord-role">'+esc(COORDINATOR.role)+'</div></div></div>';
 
   // Actions
-  if(e.avail==='available' || e.avail==='inuse'){
-    h+='<button class="btn primary" data-act="startbook" data-id="'+e.id+'">' + (e.avail==='inuse' ? 'Book for later' : 'Book this equipment') + '</button>';
+  if(state==='inuse'){
+    const active=S.bookings.find(b=>b.eqId===e.id&&blocks(b)&&bookingStart(b)<=Date.now()&&bookingEnd(b)>Date.now());
+    h+='<div class="banner info"><strong>In use now</strong>'+(active?'Booked until '+esc(dateLabel(active.endDate))+' '+esc(timeLabel(active.endTime))+'. ':'')+'You can reserve a future window.</div>';
+  }
+  if(state!=='repair'){
+    h+='<button class="btn primary" data-act="startbook" data-id="'+e.id+'">' + (state==='inuse' ? 'Book for later' : 'Book this equipment') + '</button>';
   } else {
     h+='<button class="btn ghost" disabled>Currently unavailable</button>';
   }
@@ -699,38 +750,36 @@ V.detail=()=>{
 };
 
 V.calendar=()=>{
-  const e=getEq(S.view.arg);
+  const d=S.bookingDraft,e=getEq(d&&d.equipmentId);
   if(!e) return V.equipment();
-  let h='';
-
-  h+='<div style="font-size:14px;font-weight:600;margin-bottom:-4px">'+esc(e.name)+'</div>';
-  h+='<div style="font-size:12px;color:var(--sub)">Monday, Sep 21, 2026</div>';
-
-  // Calendar
-  h+='<div class="card" style="padding:12px">';
-  h+='<div class="cal-head"><button class="cal-nav">&#8249;</button><span class="cal-month">September 2026</span><button class="cal-nav">&#8250;</button></div>';
-  h+='<div class="cal-grid">';
-  'S M T W T F S'.split(' ').forEach(d=>h+='<div class="cal-lbl">'+d+'</div>');
-  h+='<div class="cal-d empty"></div><div class="cal-d empty"></div>';
-  for(let i=1;i<=30;i++) h+='<div class="cal-d'+(i===21?' sel':'')+'" data-calday="'+i+'">'+i+'</div>';
+  const [year,month]=S.selectedMonth.split('-').map(Number);
+  const first=new Date(year,month-1,1),days=new Date(year,month,0).getDate();
+  let h='<div style="font-size:14px;font-weight:600">'+esc(e.name)+'</div>';
+  h+='<div style="font-size:12px;color:var(--sub)">Selected: '+esc(dateLabel(S.selectedDate))+'</div>';
+  h+='<div class="card" style="padding:12px"><div class="cal-head">';
+  h+='<button class="cal-nav" data-act="month" data-val="-1" aria-label="Previous month">&#8249;</button>';
+  h+='<span class="cal-month">'+first.toLocaleDateString('en-US',{month:'long',year:'numeric'})+'</span>';
+  h+='<button class="cal-nav" data-act="month" data-val="1" aria-label="Next month">&#8250;</button></div><div class="cal-grid">';
+  ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(day=>h+='<div class="cal-lbl">'+day+'</div>');
+  for(let i=0;i<first.getDay();i++) h+='<span class="cal-d empty"></span>';
+  for(let i=1;i<=days;i++){
+    const day=year+'-'+String(month).padStart(2,'0')+'-'+String(i).padStart(2,'0');
+    h+='<button class="cal-d'+(day===S.selectedDate?' sel':'')+'" data-act="calday" data-val="'+day+'" aria-label="'+esc(dateLabel(day))+'" '+(day<dateKey(new Date())?'disabled':'')+'>'+i+'</button>';
+  }
   h+='</div></div>';
-
-  // Slots
-  h+='<div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:6px;">';
-  h+='<p class="label" style="margin:0;">Select Time & Duration</p>';
-  h+='<select style="font-size:11px; padding:4px 8px; border-radius:6px; border:1px solid var(--line); background:var(--surface);"><option>2 Hours</option><option>4 Hours</option><option>Full Day</option><option>Multiple Days</option></select>';
-  h+='</div>';
-  SLOTS.forEach((s,i)=>{
-    if(s.status==='free'){
-      h+='<div class="slot avail" data-act="selectslot" data-idx="'+i+'"><div class="slot-time">'+s.time+'</div><span class="slot-badge s-free">Select</span></div>';
-    } else if(s.status==='booked'){
-      h+='<div class="slot taken"><div class="slot-time">'+s.time+'</div><span class="slot-badge s-taken">Booked</span></div>';
-    } else {
-      // Conflict demo slot: looks free but triggers conflict
-      h+='<div class="slot avail" data-act="selectslot" data-idx="'+i+'"><div class="slot-time">'+s.time+'</div><span class="slot-badge s-free">Select</span></div>';
-    }
-  });
-
+  h+='<p class="label">Available two-hour shortcuts — '+esc(dateLabel(S.selectedDate))+'</p>';
+  for(let hour=9;hour<=15;hour+=2){
+    const start=String(hour).padStart(2,'0')+':00',end=String(hour+2).padStart(2,'0')+':00';
+    const probe={equipmentId:e.id,startDate:S.selectedDate,endDate:S.selectedDate,startTime:start,endTime:end};
+    const taken=conflictFor(probe,S.bookings)||interval(S.selectedDate,start)<Date.now();
+    h+=taken?'<div class="slot taken"><span class="slot-time">'+timeLabel(start)+' – '+timeLabel(end)+'</span><span class="slot-badge s-taken">Unavailable</span></div>':'<button class="slot avail" data-act="selectslot" data-val="'+start+'" style="width:100%"><span class="slot-time">'+timeLabel(start)+' – '+timeLabel(end)+'</span><span class="slot-badge s-free">Select</span></button>';
+  }
+  h+='<p class="label">Or choose a custom interval</p>';
+  h+='<div class="grid2"><div class="field"><label for="startDate">Start date</label><input id="startDate" type="date" min="'+dateKey(new Date())+'" value="'+esc(d.startDate)+'" data-draft="startDate"></div>';
+  h+='<div class="field"><label for="startTime">Start time</label><input id="startTime" type="time" value="'+esc(d.startTime)+'" data-draft="startTime"></div>';
+  h+='<div class="field"><label for="endDate">End date</label><input id="endDate" type="date" min="'+esc(d.startDate)+'" value="'+esc(d.endDate)+'" data-draft="endDate"></div>';
+  h+='<div class="field"><label for="endTime">End time</label><input id="endTime" type="time" value="'+esc(d.endTime)+'" data-draft="endTime"></div></div>';
+  h+='<button class="btn primary" data-act="continuebooking">Continue with selected interval</button>';
   h+='<button class="btn quiet" data-act="go" data-to="equipment">Cancel</button>';
   return shell('Select date and time',h,{back:'detail',backArg:e.id,hideTabs:true});
 };
@@ -742,11 +791,13 @@ V.bookingform=()=>{
 
   h+='<div class="banner info" style="margin-bottom:12px;"><strong>Booking Details</strong>Please provide information about this reservation.</div>';
 
-  h+='<div class="field" style="margin-top:16px"><label>Who is booking?</label><input type="text" placeholder="Your name / Team name"></div>';
-  h+='<div class="field" style="margin-top:12px"><label>For what purpose?</label><select><option>Academic project</option><option>VUTV Production</option><option>Personal</option><option>Other</option></select></div>';
-  h+='<div class="field" style="margin-top:12px"><label>Where will the equipment be after use?</label><input type="text" placeholder="Hostel no. / Room no. / Location"></div>';
+  const d=S.bookingDraft;
+  h+='<div class="card"><strong>'+esc(formatRange(d))+'</strong></div>';
+  h+='<div class="field" style="margin-top:16px"><label for="requester">Who is booking?</label><input id="requester" data-draft="requester" type="text" value="'+esc(d.requester)+'" placeholder="Your name / Team name"></div>';
+  h+='<div class="field" style="margin-top:12px"><label for="purpose">For what purpose?</label><select id="purpose" data-draft="purpose">'+['Academic project','VUTV Production','Personal','Other'].map(p=>'<option '+(d.purpose===p?'selected':'')+'>'+p+'</option>').join('')+'</select></div>';
+  h+='<div class="field" style="margin-top:12px"><label for="destination">Where will the equipment be used?</label><input id="destination" data-draft="destination" type="text" value="'+esc(d.destination)+'" placeholder="Studio / room / location"></div>';
 
-  h+='<div class="actions" style="margin-top:20px"><button class="btn primary" data-act="go" data-to="review" data-arg="'+e.id+'">Continue to Review</button>';
+  h+='<div class="actions" style="margin-top:20px"><button class="btn primary" data-act="reviewbooking">Continue to Review</button>';
   h+='<button class="btn ghost" data-act="go" data-to="calendar" data-arg="'+e.id+'">Back to time selection</button></div>';
 
   return shell('Booking Details',h,{back:'calendar',backArg:e.id,hideTabs:true});
@@ -761,16 +812,19 @@ V.review=()=>{
 
   h+='<div class="sum">';
   h+='<div><span>Equipment</span><b>'+esc(e.name)+'</b></div>';
-  h+='<div><span>Date</span><b>Monday, Sep 21, 2026</b></div>';
-  h+='<div><span>Time</span><b>9:00 AM - 11:00 AM</b></div>';
-  h+='<div><span>Purpose</span><b>VUTV, Podcast recording</b></div>';
-  h+='<div><span>Readiness</span><b class="ok">Shoot-ready</b></div>';
+  const d=S.bookingDraft;
+  h+='<div><span>Start</span><b>'+esc(dateLabel(d.startDate))+' '+esc(timeLabel(d.startTime))+'</b></div>';
+  h+='<div><span>End</span><b>'+esc(dateLabel(d.endDate))+' '+esc(timeLabel(d.endTime))+'</b></div>';
+  h+='<div><span>Requester</span><b>'+esc(d.requester)+'</b></div>';
+  h+='<div><span>Purpose</span><b>'+esc(d.purpose)+'</b></div>';
+  h+='<div><span>Use location</span><b>'+esc(d.destination)+'</b></div>';
+  h+='<div><span>Readiness</span><b>'+esc(e.ready==='ready'?'Ready to shoot':'Needs check')+'</b></div>';
   h+='<div><span>Pickup</span><b>'+esc(e.location)+'</b></div>';
   h+='<div><span>Coordinator</span><b>'+esc(COORDINATOR.name)+'</b></div>';
-  h+='<div><span>Conflicts</span><b class="ok">None detected</b></div>';
+  h+='<div><span>Conflicts</span><b>'+ (conflictFor(d,S.bookings)?'Time unavailable':'None detected')+'</b></div>';
   h+='</div>';
 
-  h+='<div class="notice"><strong>Slot reservation</strong>This slot will be tentatively reserved pending admin approval.</div>';
+  h+='<div class="notice"><strong>Prototype request</strong>This request is saved in this browser only; coordinator approval is not connected.</div>';
 
   h+='<div class="actions"><button class="btn primary" data-act="confirm">Request booking</button>';
   h+='<button class="btn ghost" data-act="go" data-to="bookingform" data-arg="'+e.id+'">Back to details</button></div>';
@@ -779,21 +833,22 @@ V.review=()=>{
 };
 
 V.success=()=>{
-  const e=getEq(S.view.arg);
+  const b=S.bookings.find(x=>x.id===S.lastBookingId);
+  const e=b&&getEq(b.eqId);
   let h='<div class="center" style="flex:0 0 auto;align-items:flex-start;text-align:left">';
   h+='<div class="badge ok">&#10003;</div><h2>Booking requested</h2>';
-  h+='<p class="lead" style="margin-top:4px">'+(e?esc(e.name):'Equipment')+' request sent. Awaiting admin approval.</p></div>';
+  h+='<p class="lead" style="margin-top:4px">'+(e?esc(e.name):'Equipment')+' request saved locally. Awaiting coordinator approval.</p></div>';
 
   // Details
   h+='<div class="sum">';
-  h+='<div><span>Reference</span><b style="font-family:monospace">VR-0921-014</b></div>';
-  h+='<div><span>Date</span><b>Monday, Sep 21, 2026</b></div>';
-  h+='<div><span>Time</span><b>9:00 AM - 11:00 AM</b></div>';
-  h+='<div><span>Pickup</span><b>'+(e?esc(e.location):'Equipment Room B, Shelf 3')+'</b></div>';
+  h+='<div><span>Reference</span><b style="font-family:monospace">'+esc(b.ref)+'</b></div>';
+  h+='<div><span>Date</span><b>'+esc(bookingDate(b))+'</b></div>';
+  h+='<div><span>Time</span><b>'+esc(bookingTime(b))+'</b></div>';
+  h+='<div><span>Pickup</span><b>'+esc(b.loc)+'</b></div>';
   h+='</div>';
 
   // Coordinator notified
-  h+='<div class="banner ok"><strong>Coordinator notified</strong>'+esc(COORDINATOR.name)+' has been notified about your booking and pickup time.</div>';
+  h+='<div class="banner info"><strong>Pending coordinator approval</strong>This demo records the request locally. No notification has been sent to '+esc(COORDINATOR.name)+'.</div>';
 
   h+='<div class="actions"><button class="btn primary" data-act="tab" data-to="mybookings">View my bookings</button>';
   h+='<button class="btn ghost" data-act="tab" data-to="home">Back to home</button></div>';
@@ -805,17 +860,12 @@ V.conflict=()=>{
   const e=getEq(S.view.arg);
   let h='<div class="center" style="flex:0 0 auto;align-items:flex-start;text-align:left">';
   h+='<div class="badge bad">!</div><h2>Slot no longer available</h2>';
-  h+='<p class="lead" style="margin-top:4px">Someone reserved 3:00 - 5:00 PM a moment ago.</p></div>';
+  h+='<p class="lead" style="margin-top:4px">That interval overlaps an existing booking. Choose another time.</p></div>';
 
   // Preserved selections
-  h+='<div class="card"><h3>Your selections are saved</h3><p>'+(e?esc(e.name):'Equipment')+', Monday, Sep 21, 2026</p></div>';
+  h+='<div class="card"><h3>Your selections are saved</h3><p>'+(e?esc(e.name):'Equipment')+', '+(S.bookingDraft?esc(formatRange(S.bookingDraft)):'')+'</p></div>';
 
-  // Alternative slots
-  h+='<p class="label">Available alternatives</p>';
-  SLOTS.filter(s=>s.status==='free').forEach((s,i)=>{
-    h+='<div class="slot avail" data-act="selectslot" data-idx="'+SLOTS.indexOf(s)+'"><div class="slot-time">'+s.time+'</div><span class="slot-badge s-free">Select</span></div>';
-  });
-
+  h+='<button class="btn primary" data-act="go" data-to="calendar" data-arg="'+esc(e.id)+'">Choose another time</button>';
   h+='<button class="btn ghost" data-act="go" data-to="equipment">Cancel and return to equipment</button>';
   return shell('Scheduling conflict',h,{hideTabs:true});
 };
@@ -831,10 +881,11 @@ V.mybookings=()=>{
   }
   upcoming.forEach(b=>{
     h+='<div class="bk"><div class="bk-bar g"></div><div class="bk-body"><div class="bk-top">'+statusPill(b.status)+'<span class="bk-ref">'+esc(b.ref)+'</span></div>';
-    h+='<div class="bk-name">'+esc(b.eq)+'</div><div class="bk-meta">'+esc(b.date)+', '+esc(b.time)+'</div>';
+    h+='<div class="bk-name">'+esc(b.eq)+'</div><div class="bk-meta">'+esc(bookingDate(b))+', '+esc(bookingTime(b))+'</div>';
     h+='<div class="bk-loc">'+esc(b.loc)+'</div></div></div>';
     h+='<div style="display:flex;gap:8px;margin-top:-1px;padding:0 0 0 4px">';
-    h+='<button class="bk-btn primary" data-act="markreturn" data-id="'+b.id+'" style="flex:1">Mark as returned</button>';
+    if(b.startDate)h+='<button class="bk-btn" data-act="extend" data-id="'+b.id+'" style="flex:1">Extend</button>';
+    h+='<button class="bk-btn primary" data-act="markreturn" data-id="'+b.id+'" style="flex:1">Return</button>';
     h+='<button class="bk-btn danger" data-act="cancel" data-id="'+b.id+'" style="flex:1">Cancel</button></div>';
   });
 
@@ -844,7 +895,10 @@ V.mybookings=()=>{
   }
   completed.forEach(b=>{
     h+='<div class="bk" style="opacity:'+(b.status==='completed'&&!b.rating?'1':'.7')+'"><div class="bk-bar d"></div><div class="bk-body"><div class="bk-top">'+statusPill(b.status)+'<span class="bk-ref">'+esc(b.ref)+'</span></div>';
-    h+='<div class="bk-name">'+esc(b.eq)+'</div><div class="bk-meta">'+esc(b.date)+', '+esc(b.time)+'</div></div></div>';
+    h+='<div class="bk-name">'+esc(b.eq)+'</div><div class="bk-meta">'+esc(bookingDate(b))+', '+esc(bookingTime(b))+'</div>';
+    if(b.returnCondition)h+='<div class="bk-loc">Returned: '+esc(b.returnCondition)+(b.returnNotes?' · '+esc(b.returnNotes):'')+'</div>';
+    if(b.returnPhoto)h+='<img src="'+esc(b.returnPhoto)+'" alt="Return condition evidence" style="max-width:100%;max-height:120px;border-radius:8px;margin-top:8px">';
+    h+='</div></div>';
     if(b.status==='completed'&&!b.rating){
       h+='<button class="bk-btn ok" data-act="givefeedback" data-id="'+b.id+'" style="margin-top:-1px;width:100%;padding:8px 14px">Give feedback</button>';
     }
@@ -857,6 +911,18 @@ V.mybookings=()=>{
   return shell('My bookings',h);
 };
 
+V.extend=()=>{
+  const b=S.bookings.find(x=>x.id===S.view.arg);
+  if(!b||!b.endDate)return V.mybookings();
+  let h='<div class="banner info"><strong>Extend booking</strong>Choose a later end time. Existing bookings cannot be overlapped.</div>';
+  h+='<div class="sum"><div><span>Equipment</span><b>'+esc(b.eq)+'</b></div><div><span>Current end</span><b>'+esc(dateLabel(b.endDate))+' '+esc(timeLabel(b.endTime))+'</b></div></div>';
+  h+='<div class="field"><label for="extendDate">New end date</label><input id="extendDate" type="date" min="'+esc(b.endDate)+'" value="'+esc(b.endDate)+'"></div>';
+  h+='<div class="field"><label for="extendTime">New end time</label><input id="extendTime" type="time" value="'+esc(b.endTime)+'"></div>';
+  h+='<button class="btn primary" data-act="saveextension" data-id="'+b.id+'">Save extension</button>';
+  h+='<button class="btn ghost" data-act="tab" data-to="mybookings">Cancel</button>';
+  return shell('Extend booking',h,{back:'mybookings',hideTabs:true});
+};
+
 V.returnconfirm=()=>{
   const b=S.bookings.find(x=>x.id===S.view.arg);
   if(!b) return V.mybookings();
@@ -864,13 +930,15 @@ V.returnconfirm=()=>{
   h+='<div class="sum">';
   h+='<div><span>Equipment</span><b>'+esc(b.eq)+'</b></div>';
   h+='<div><span>Reference</span><b style="font-family:monospace">'+esc(b.ref)+'</b></div>';
-  h+='<div><span>Date</span><b>'+esc(b.date)+'</b></div>';
-  h+='<div><span>Time</span><b>'+esc(b.time)+'</b></div>';
+  h+='<div><span>Date</span><b>'+esc(bookingDate(b))+'</b></div>';
+  h+='<div><span>Time</span><b>'+esc(bookingTime(b))+'</b></div>';
   h+='<div><span>Coordinator</span><b>'+esc(COORDINATOR.name)+'</b></div>';
   h+='</div>';
 
-  h+='<p class="label">Condition Verification</p>';
-  h+='<button class="btn ghost" style="margin-bottom:14px; display:flex; gap:8px; align-items:center; justify-content:center; padding:12px;" onclick="toast(\'Camera opened for photo capture\')"><span style="font-size:18px;">&#128247;</span> Add return photo</button>';
+  h+='<p class="label">Condition on return</p>';
+  h+='<div class="field"><label for="returnCondition">Condition</label><select id="returnCondition"><option value="">Select a condition</option><option>Excellent</option><option>Good</option><option>Fair</option><option>Damaged</option></select></div>';
+  h+='<div class="field"><label for="returnNotes">Notes (optional)</label><textarea id="returnNotes" placeholder="Describe any issues"></textarea></div>';
+  h+='<div class="field"><label for="returnPhoto">Return photo (optional, stored on this device)</label><input type="file" accept="image/*" capture="environment" id="returnPhoto"></div>';
 
   h+='<div class="actions"><button class="btn primary-ok" data-act="doreturn" data-id="'+b.id+'">Confirm return</button>';
   h+='<button class="btn ghost" data-act="tab" data-to="mybookings">Go back</button></div>';
@@ -882,7 +950,7 @@ V.feedback=()=>{
   if(!b) return V.mybookings();
   let h='<h2>How was the equipment?</h2><p class="lead">Your feedback helps the team maintain equipment quality.</p>';
 
-  h+='<div class="sum"><div><span>Equipment</span><b>'+esc(b.eq)+'</b></div><div><span>Date</span><b>'+esc(b.date)+'</b></div></div>';
+  h+='<div class="sum"><div><span>Equipment</span><b>'+esc(b.eq)+'</b></div><div><span>Date</span><b>'+esc(bookingDate(b))+'</b></div></div>';
 
   // Star rating
   h+='<p class="label">Rating</p>';
@@ -948,54 +1016,107 @@ document.addEventListener('click',ev=>{
   if(act==='detail'){go('detail',id);return;}
   if(act==='startbook'){
     S.selectedEq=id;
-    // Short loading transition
+    S.bookingDraft=newDraft(id);
+    S.selectedDate=S.bookingDraft.startDate;
+    S.selectedMonth=S.selectedDate.slice(0,7);
     S.view={name:'loading'};render();
-    setTimeout(()=>{go('calendar',id);},500);
+    setTimeout(()=>{if(S.view.name==='loading')go('calendar',id);},300);
     return;
+  }
+  if(act==='month'){
+    const [year,month]=S.selectedMonth.split('-').map(Number);
+    const next=new Date(year,month-1+Number(val),1);
+    S.selectedMonth=dateKey(next).slice(0,7);
+    render();return;
+  }
+  if(act==='calday'){
+    S.selectedDate=val;
+    S.bookingDraft.startDate=val;
+    if(S.bookingDraft.endDate<val)S.bookingDraft.endDate=val;
+    render();return;
   }
   if(act==='selectslot'){
-    const slot=SLOTS[Number(idx)];
-    if(slot.status==='conflict'){
-      go('conflict',S.view.arg||S.selectedEq);
-      return;
-    }
-    go('bookingform',S.view.arg||S.selectedEq);
-    return;
+    const d=S.bookingDraft;
+    d.startDate=S.selectedDate;d.endDate=S.selectedDate;
+    d.startTime=val;
+    d.endTime=String(Number(val.slice(0,2))+2).padStart(2,'0')+':00';
+    if(conflictFor(d,S.bookings)||interval(d.startDate,d.startTime)<Date.now()){go('conflict',d.equipmentId);return;}
+    go('bookingform',d.equipmentId);return;
+  }
+  if(act==='continuebooking'){
+    const d=S.bookingDraft;
+    if(!d.startDate||!d.endDate||!d.startTime||!d.endTime||interval(d.startDate,d.startTime)<Date.now()||interval(d.endDate,d.endTime)<=interval(d.startDate,d.startTime)){toast('Choose a valid future interval');return;}
+    if(conflictFor(d,S.bookings)){go('conflict',d.equipmentId);return;}
+    go('bookingform',d.equipmentId);return;
+  }
+  if(act==='reviewbooking'){
+    const error=validateDraft(S.bookingDraft);
+    if(error){toast(error);return;}
+    if(conflictFor(S.bookingDraft,S.bookings)){go('conflict',S.bookingDraft.equipmentId);return;}
+    go('review',S.bookingDraft.equipmentId);return;
   }
   if(act==='confirm'){
-    // Create booking
-    const e=getEq(S.view.arg||S.selectedEq);
-    S.bookings.unshift({
-      id:'b'+Date.now(),
-      ref:'VR-0921-'+String(Math.floor(Math.random()*900)+100),
-      eq:e?e.name:'Sony A7III Camera',
-      eqId:e?e.id:'cam1',
-      date:'Mon, Sep 21',
-      time:'9:00 - 11:00 AM',
-      loc:e?e.location:'Equipment Room B, Shelf 3',
-      status:'pending',
-      rating:null,
-      feedback:null
-    });
-    S.coordNotified=true;
-    go('success',S.view.arg||S.selectedEq);
+    const d=S.bookingDraft,error=validateDraft(d);
+    if(error){toast(error);go('bookingform',d&&d.equipmentId);return;}
+    S.bookings=bookingsFromStorage()||S.bookings;
+    if(conflictFor(d,S.bookings)){go('conflict',d.equipmentId);return;}
+    const e=getEq(d.equipmentId);
+    const id='b'+(crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random().toString(36).slice(2));
+    const b={...d,id,ref:'VR-'+id.slice(1,9).toUpperCase(),eq:e.name,eqId:e.id,loc:e.location,rating:null,feedback:null};
+    S.bookings.unshift(b);
+    S.lastBookingId=id;
+    saveBookings();
+    go('success',e.id);
     return;
   }
   if(act==='cancel'){
     S.bookings=S.bookings.filter(b=>b.id!==id);
+    saveBookings();
     toast('Booking cancelled');
     render();
     return;
+  }
+  if(act==='extend'){go('extend',id);return;}
+  if(act==='saveextension'){
+    const b=S.bookings.find(x=>x.id===id);
+    if(!b)return;
+    const endDate=$('extendDate').value,endTime=$('extendTime').value;
+    if(!endDate||!endTime||interval(endDate,endTime)<=bookingEnd(b)){toast('Choose an end later than the current end');return;}
+    const extension={equipmentId:b.eqId,startDate:b.endDate,startTime:b.endTime,endDate,endTime};
+    S.bookings=bookingsFromStorage()||S.bookings;
+    const current=S.bookings.find(x=>x.id===id);
+    if(!current||!blocks(current)){toast('This booking is no longer active');go('mybookings');return;}
+    if(conflictFor(extension,S.bookings,id)){toast('Extension overlaps another booking');return;}
+    current.endDate=endDate;current.endTime=endTime;
+    saveBookings();toast('Booking extended');go('mybookings');return;
   }
   if(act==='markreturn'){
     go('returnconfirm',id);
     return;
   }
   if(act==='doreturn'){
-    const b=S.bookings.find(x=>x.id===id);
-    if(b){b.status='completed';}
-    toast('Equipment marked as returned');
-    go('feedback',id);
+    const b=S.bookings.find(x=>x.id===id),condition=$('returnCondition').value;
+    if(!b||!condition){toast('Select a return condition');return;}
+    const file=$('returnPhoto').files[0];
+    const finish=photo=>{
+      b.returnCondition=condition;b.returnNotes=$('returnNotes').value.trim();
+      b.returnPhoto=photo;b.status='completed';saveBookings();
+      toast('Return recorded locally');go('feedback',id);
+    };
+    if(!file){finish(null);return;}
+    if(!file.type.startsWith('image/')){toast('Choose an image file');return;}
+    const img=new Image(),reader=new FileReader();
+    reader.onerror=()=>toast('Could not read the image');
+    reader.onload=()=>{img.src=reader.result;};
+    img.onerror=()=>toast('Could not process the image');
+    img.onload=()=>{
+      const scale=Math.min(1,640/Math.max(img.width,img.height));
+      const canvas=document.createElement('canvas');
+      canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);
+      canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+      finish(canvas.toDataURL('image/jpeg',.65));
+    };
+    reader.readAsDataURL(file);
     return;
   }
   if(act==='givefeedback'){
@@ -1020,12 +1141,14 @@ document.addEventListener('click',ev=>{
     return;
   }
   if(act==='submitfeedback'){
+    if(!pendingRating||!pendingCond){toast('Choose a rating and condition');return;}
     const b=S.bookings.find(x=>x.id===id);
     if(b){
-      b.rating=pendingRating||3;
-      b.feedback=pendingCond||'Good';
+      b.rating=pendingRating;
+      b.feedback=pendingCond;
       const notes=$('fb-notes');
       if(notes&&notes.value.trim()) b.feedback+=': '+notes.value.trim();
+      saveBookings();
     }
     toast('Feedback submitted, thank you');
     S.tab='mybookings';go('mybookings');
@@ -1058,6 +1181,9 @@ document.addEventListener('click',ev=>{
 // Search input
 document.addEventListener('input',ev=>{
   const t=ev.target;
+  if(t.dataset&&t.dataset.draft&&S.bookingDraft){
+    S.bookingDraft[t.dataset.draft]=t.value;
+  }
   if(t.dataset&&t.dataset.act==='search'){
     S.search=t.value;
     // Don't re-render, just filter in place for perf
@@ -1065,17 +1191,22 @@ document.addEventListener('input',ev=>{
   }
 });
 
-// Calendar day clicks
-document.addEventListener('click',ev=>{
-  const calEl=ev.target.closest('[data-calday]');
-  if(calEl){
-    calEl.closest('.cal-grid').querySelectorAll('.cal-d').forEach(d=>d.classList.remove('sel'));
-    calEl.classList.add('sel');
+document.addEventListener('change',ev=>{
+  const t=ev.target;
+  if(t.dataset&&t.dataset.draft&&S.bookingDraft){
+    S.bookingDraft[t.dataset.draft]=t.value;
+    if(t.dataset.draft==='startDate'){
+      S.selectedDate=t.value;
+      S.selectedMonth=t.value.slice(0,7);
+      if(S.bookingDraft.endDate<t.value)S.bookingDraft.endDate=t.value;
+      render();
+    }
   }
 });
 
 // Reset demo
 $('resetBtn').addEventListener('click',()=>{
+  localStorage.removeItem(BOOKING_KEY);
   S=seedState();
   pendingRating=0;pendingCond='';
   currentTask=0;
