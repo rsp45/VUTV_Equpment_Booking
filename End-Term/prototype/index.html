@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="VUTV Equipment Booking System — Smart equipment reservations and production kit planning for student producers">
+<meta name="theme-color" content="#FBF6EA">
+<link rel="icon" type="image/png" href="assets/vutv-logo.png">
+<title>VUTV Equipment Booking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+/* ===================================================================
+   VUTV Equipment Booking — Warm Gold & Ivory Theme
+   =================================================================== */
+:root{
+  --bg:#FBF6EA; --bg-deep:#F3EAD6; --surface:#FFFDF7; --surface-line:rgba(41,35,27,.10);
+  --ink:#29231B; --ink-soft:#574B3B; --muted:#8D8069;
+  --gold:#AD7A24; --gold-deep:#7E5613; --gold-pale:#EEDFB8; --gold-pale-2:#F7EFDC;
+  --navy:#363B5E; --navy-dk:#2A2E4B; --navy-lt:rgba(54,59,94,.08);
+  --red:#9C3A34; --red-pale:#F1DFDA; --red-lt:rgba(156,58,52,.06);
+  --green:#3E6B49; --green-pale:#DEEAE0; --green-br:#2EA043; --green-lt:rgba(62,107,73,.06);
+  --shadow-soft:0 24px 60px -32px rgba(90,65,20,.35);
+  --shadow-card:0 2px 0 rgba(41,35,27,.04),0 12px 30px -22px rgba(90,65,20,.28);
+  --r:12px; --r-lg:18px; --r-sm:8px;
+  --serif:"Fraunces","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --sans:"Inter","Helvetica Neue",Arial,sans-serif;
+  --raised:var(--bg-deep); --sub:var(--ink-soft); --faint:var(--muted); --line:var(--surface-line);
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{
+  background:var(--bg);color:var(--ink-soft);
+  font-family:var(--sans);font-size:16px;line-height:1.65;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+
+/* ========== REALISTIC PHONE SHELL (iPhone 17 Pro Max) ========== */
+.fit{transform:scale(var(--k,.32));transform-origin:center center}
+.phone{
+  width:1326px;height:2880px;padding:22px;border-radius:185px;position:relative;
+  background:#A499A6; /* Titanium purple */
+  box-shadow:inset 0 0 12px rgba(255,255,255,0.4), inset 0 0 6px 3px rgba(0,0,0,0.4), 0 60px 160px rgba(40,30,50,.5);
+}
+.phone::before {
+  content: ""; position: absolute; top: 480px; left: -8px; width: 8px; height: 90px; background: #8E8391; border-radius: 8px 0 0 8px;
+  box-shadow: 0 150px 0 0 #8E8391, 0 340px 0 0 #8E8391; /* Action, Vol up, Vol down */
+}
+.phone::after {
+  content: ""; position: absolute; top: 720px; right: -8px; width: 8px; height: 180px; background: #8E8391; border-radius: 0 8px 8px 0; /* Power */
+}
+.screen{width:1242px;height:2796px;background:var(--surface);border-radius:160px;overflow:hidden;position:relative; border:22px solid #111; box-sizing: content-box; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.1)}
+.device{width:414px;height:932px;transform:scale(3);transform-origin:top left;display:flex;flex-direction:column;position:relative;background:var(--surface)}
+.island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:126px;height:37px;background:#000;border-radius:20px;z-index:30; display:flex;align-items:center;justify-content:flex-end;padding: 0 12px;gap: 8px; box-shadow: inset 0 0 1px 1px rgba(255,255,255,0.05)}
+.island::before{content:"";width:8px;height:8px;border-radius:50%;background:#091434;box-shadow:inset -1px -1px 3px rgba(255,255,255,0.2)}
+.island::after{content:"";width:4px;height:4px;border-radius:50%;background:#2bd84d;filter:blur(0.5px);opacity:0.8}
+.status{flex:0 0 auto;height:56px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 7px;font-size:15px;font-weight:700;letter-spacing:.01em;color:var(--ink);background:var(--surface)}
+.status .right{display:flex;align-items:flex-end;gap:5px}
+.bars{display:flex;align-items:flex-end;gap:2px;height:11px}
+.bars i{width:3px;background:var(--ink);border-radius:1px;display:block}
+.bars i:nth-child(1){height:4px}.bars i:nth-child(2){height:6px}
+.bars i:nth-child(3){height:9px}.bars i:nth-child(4){height:11px}
+.batt{width:24px;height:12px;border:1.5px solid var(--ink);border-radius:4px;position:relative;opacity:.9}
+.batt::after{content:"";position:absolute;right:-3px;top:3.5px;width:2px;height:5px;background:var(--ink);border-radius:0 2px 2px 0}
+.batt i{position:absolute;inset:2px;width:70%;background:var(--ink);border-radius:2px;display:block}
+.homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:140px;height:5px;border-radius:3px;background:var(--ink);opacity:.3;z-index:25;pointer-events:none}
+#app{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden;background:var(--surface)}
+@media(max-width:560px){
+  .fit{transform:none}
+  .phone{width:100vw;height:100vh;height:100dvh;padding:0;border-radius:0;background:none;box-shadow:none}
+  .screen{width:100%;height:100%;border-radius:0}
+  .device{width:100%;height:100%;transform:none}
+  .island,.status,.homebar{display:none}
+  body{overflow:hidden}
+  .btn{padding:16px;font-size:15px;min-height:48px}
+  .row{padding:14px 16px;min-height:48px}
+  .fbtn{padding:9px 16px;font-size:13px;min-height:40px}
+  .tabs button{padding:12px 0 8px;min-height:52px}
+  .eq-book{padding:10px 18px;font-size:13px;min-height:40px}
+  .slot{padding:14px 16px;min-height:48px}
+  .body{-webkit-overflow-scrolling:touch;padding-bottom:calc(20px + env(safe-area-inset-bottom))}
+  .tabs{padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+  .toast{bottom:calc(80px + env(safe-area-inset-bottom));left:12px;right:12px}
+  .top{padding-top:calc(10px + env(safe-area-inset-top))}
+  .reset-demo{display:none}
+}
+
+/* ========== HEADER ========== */
+.top{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--surface);flex:0 0 auto;justify-content:space-between}
+.top h1{font-family:var(--serif);font-size:17px;font-weight:600;margin:0;letter-spacing:-.01em;flex:1;color:var(--ink);text-align:center}
+.iconbtn{border:none;background:var(--raised);color:var(--ink);width:32px;height:32px;border-radius:10px;font-size:15px;cursor:pointer;display:grid;place-items:center;flex:0 0 auto;transition:background .15s}
+.iconbtn:hover{background:var(--gold-pale)}
+.linkbtn{border:none;background:none;color:var(--gold-deep);font:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:6px}
+
+/* ========== CONTENT ========== */
+.body{flex:1;overflow-y:auto;padding:16px 16px 80px;display:flex;flex-direction:column;gap:14px}
+.body::-webkit-scrollbar{width:0}
+h2{font-family:var(--serif);font-size:20px;font-weight:600;margin:0;letter-spacing:-.02em;color:var(--ink)}
+.lead{font-size:13px;color:var(--sub);margin:-8px 0 0;line-height:1.5}
+.label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);margin:6px 0 -6px}
+
+/* ========== CARDS ========== */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;box-shadow:var(--shadow-card);flex-shrink:0}
+.card h3{margin:0;font-size:14px;font-weight:600;color:var(--ink)}
+.card p{margin:4px 0 0;font-size:12.5px;color:var(--sub);line-height:1.45}
+.hero-card{
+  background:var(--bg-deep);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px;cursor:pointer;text-align:left;
+  width:100%;font:inherit;display:block;box-shadow:var(--shadow-card);transition:transform .12s ease,box-shadow .15s ease;flex-shrink:0;
+}
+.hero-card:active{transform:scale(.99)}
+.hero-card .h-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.hero-card .h-name{font-size:15px;font-weight:700;color:var(--ink)}
+.hero-card .h-big{font-family:var(--serif);font-size:22px;font-weight:600;margin:10px 0 2px;color:var(--gold-deep)}
+.hero-card .h-sub{font-size:12.5px;color:var(--sub)}
+.chip{background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 10px;font-size:11px;font-weight:600;color:var(--ink);display:inline-flex;align-items:center;gap:4px}
+.chip .dot{width:5px;height:5px;border-radius:50%;background:var(--green-br);animation:pulse 2s ease infinite}
+
+/* ========== BUTTONS ========== */
+.btn{width:100%;border-radius:12px;padding:14px;font:inherit;font-size:14.5px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:transform .06s ease,opacity .15s ease,background .15s ease}
+.btn:active{transform:scale(.99)}
+.btn.primary{background:var(--gold);color:#fff}
+.btn.primary:hover{background:var(--gold-deep)}
+.btn.primary-ok{background:var(--green);color:#fff}
+.btn.primary-navy{background:var(--navy);color:#fff}
+.btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold-deep)}
+.btn.quiet{background:none;color:var(--sub);border:none;font-weight:500;font-size:13px;padding:8px}
+.btn.danger{background:var(--red-pale);color:var(--red);border-color:rgba(156,58,52,.15)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.actions{display:flex;flex-direction:column;gap:10px}
+
+/* ========== EQUIPMENT LIST ========== */
+.eq{display:flex;align-items:flex-start;gap:12px;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;text-align:left;box-shadow:0 2px 4px rgba(41,35,27,.02);transition:border-color .15s,box-shadow .15s;flex-shrink:0}
+.eq:hover{border-color:var(--gold-pale);box-shadow:var(--shadow-card)}
+.eq-img{width:52px;height:52px;border-radius:10px;flex:0 0 auto;overflow:hidden;background:var(--bg-deep);border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
+.eq-img img{width:100%;height:100%;object-fit:cover}
+.eq-info{flex:1;min-width:0}
+.eq-name{font-size:14.5px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.eq-cat{font-size:12px;color:var(--sub)}
+.eq-pills{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.eq-book{margin-top:8px;padding:7px 16px;border-radius:8px;background:var(--gold);color:#fff;font-size:12px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:background .12s}
+.eq-book:hover{background:var(--gold-deep)}
+.eq-book:active{opacity:.8}
+
+/* ========== SEARCH ========== */
+.search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 14px;box-shadow:inset 0 1px 3px rgba(0,0,0,.02);transition:border-color .15s}
+.search:focus-within{border-color:var(--gold)}
+.search input{flex:1;font-size:14px;color:var(--ink);background:none;border:none;outline:none;font-family:inherit}
+.search input::placeholder{color:var(--faint)}
+.search .si{color:var(--faint);font-size:14px;flex:0 0 auto}
+
+/* ========== FILTER PILLS ========== */
+.filters{display:flex;gap:6px;overflow-x:auto;flex:0 0 auto;padding-bottom:2px}
+.filters::-webkit-scrollbar{display:none}
+.fbtn{white-space:nowrap;font-size:12px;font-weight:500;padding:7px 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--sub);cursor:pointer;font-family:inherit;transition:all .15s}
+.fbtn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.fbtn:hover:not(.on){border-color:var(--gold);color:var(--gold-deep)}
+
+/* ========== PILLS/TAGS ========== */
+.pill{font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;white-space:nowrap;letter-spacing:.02em;text-transform:uppercase;display:inline-flex;align-items:center;gap:4px}
+.p-avail{background:var(--green-pale);color:var(--green)}
+.p-ready{background:rgba(46,160,67,.08);color:#15803D}
+.p-inuse{background:var(--red-pale);color:var(--red)}
+.p-repair{background:rgba(100,100,100,.08);color:#555}
+.p-used{background:var(--gold-pale);color:var(--gold-deep)}
+.p-confirmed{background:var(--green-pale);color:var(--green)}
+.p-active{background:var(--navy-lt);color:var(--navy)}
+.p-completed{background:var(--bg-deep);color:var(--sub)}
+.p-returned{background:var(--gold-pale-2);color:var(--gold-deep)}
+.dot-live{width:5px;height:5px;border-radius:50%;background:var(--green-br);animation:pulse 2s ease infinite;display:inline-block}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+
+/* ========== DETAIL ========== */
+.d-img{height:180px;border-radius:var(--r-lg);overflow:hidden;background:var(--bg-deep);border:1px solid var(--line);position:relative;flex:0 0 auto}
+.d-img img{width:100%;height:100%;object-fit:cover}
+.d-badge{position:absolute;bottom:10px;left:10px;background:var(--surface);border:1px solid var(--line);color:var(--ink);font-size:11px;font-weight:600;padding:5px 12px;border-radius:99px;display:inline-flex;align-items:center;gap:5px;box-shadow:var(--shadow-card)}
+
+/* ========== SUMMARY TABLE ========== */
+.sum{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-card)}
+.sum div{display:flex;gap:12px;padding:11px 14px;border-bottom:1px solid var(--line);font-size:13px}
+.sum div:last-child{border-bottom:none}
+.sum span{width:90px;color:var(--faint);flex:0 0 auto;font-size:12px;font-weight:500}
+.sum b{font-weight:600;word-break:break-word;font-size:13px;color:var(--ink)}
+.sum .ok{color:var(--green)}
+
+/* ========== BATTERY ========== */
+.bat-bar{width:36px;height:8px;border-radius:99px;background:var(--bg-deep);overflow:hidden;display:inline-block;vertical-align:middle}
+.bat-fill{display:block;height:100%;background:var(--green);border-radius:99px}
+
+/* ========== CALENDAR ========== */
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.cal-month{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--ink)}
+.cal-nav{width:30px;height:30px;border-radius:50%;background:var(--surface);border:1px solid var(--line);color:var(--ink);display:grid;place-items:center;cursor:pointer;font-size:14px;font-family:inherit;transition:background .12s}
+.cal-nav:hover{background:var(--bg-deep)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-lbl{font-size:10px;font-weight:600;color:var(--faint);text-align:center;padding:3px 0}
+.cal-d{font-size:11.5px;font-weight:500;color:var(--ink);text-align:center;padding:5px;border-radius:50%;cursor:pointer;aspect-ratio:1;display:flex;align-items:center;justify-content:center;transition:all .12s;position:relative}
+.cal-d:hover:not(.sel):not(:disabled){background:var(--bg-deep)}
+.cal-d.sel{background:var(--gold);color:#fff;font-weight:700;box-shadow:0 2px 8px rgba(173,122,36,.3)}
+.cal-d.has-booking::after{content:"";position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--gold)}
+.cal-d.empty{pointer-events:none}
+.cal-d:disabled{color:var(--faint);opacity:.4;cursor:not-allowed}
+.cal-d:focus-visible,.cal-nav:focus-visible,.slot:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* ========== SLOTS ========== */
+.slot{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:var(--r);border:1.5px solid var(--line);background:var(--surface);transition:all .12s}
+.slot.avail{cursor:pointer}
+.slot.avail:hover{border-color:var(--gold);background:var(--bg-deep)}
+.slot.taken{background:var(--bg-deep);opacity:.6;cursor:not-allowed}
+.slot-time{font-size:13px;font-weight:600;color:var(--ink)}
+.slot-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;text-transform:uppercase;letter-spacing:.02em}
+.s-free{background:var(--green-pale);color:var(--green)}
+.s-taken{background:var(--line);color:var(--faint)}
+
+/* ========== DIVIDER ========== */
+.divider{display:flex;align-items:center;gap:12px;margin:4px 0}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
+.divider span{font-size:11px;font-weight:600;color:var(--faint);text-transform:uppercase;letter-spacing:.05em}
+
+/* ========== LOGO & KITS ========== */
+.logo-sm { height: 28px; width: auto; display: block; object-fit: contain; flex: 0 0 auto; }
+
+.kit-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;margin-bottom:14px;box-shadow:var(--shadow-card);flex-shrink:0}
+.kit-head{display:flex;align-items:center;gap:12px;padding:16px 14px;cursor:pointer;background:var(--surface)}
+.kit-icon{width:44px;height:44px;border-radius:12px;background:var(--gold-pale-2);color:var(--gold-deep);display:grid;place-items:center;flex:0 0 auto}
+.kit-info{flex:1;min-width:0}
+.kit-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.kit-desc{font-size:12px;color:var(--sub);line-height:1.4}
+.kit-count{font-size:12px;font-weight:700;color:var(--gold-deep);background:var(--gold-pale);padding:4px 8px;border-radius:8px;flex:0 0 auto}
+.kit-items{display:flex;flex-direction:column;padding:8px 14px 14px;gap:6px}
+.kit-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-deep);border-radius:10px;transition:transform .12s}
+.kit-item:hover{transform:translateX(2px)}
+.kit-item-icon{display:grid;place-items:center;flex:0 0 auto}
+.kit-item-icon.ok{color:var(--green)}
+.kit-item-icon.bad{color:var(--faint)}
+.kit-item-name{flex:1;font-size:13.5px;font-weight:600;color:var(--ink)}
+
+/* ========== NOTICE ========== */
+.notice{display:flex;align-items:flex-start;gap:8px;background:var(--gold-pale-2);border:1px solid var(--gold-pale);border-radius:var(--r);padding:12px 14px;font-size:12px;color:var(--gold-deep);line-height:1.5}
+.notice strong{display:block;font-size:12.5px;margin-bottom:2px}
+
+/* ========== BANNER ========== */
+.banner{border-radius:var(--r);padding:13px 14px;font-size:13px;line-height:1.45}
+.banner.bad{background:var(--red-pale);color:var(--red)}
+.banner.info{background:var(--navy-lt);color:var(--navy-dk)}
+.banner.ok{background:var(--green-pale);color:var(--green)}
+.banner strong{display:block;font-size:13.5px;margin-bottom:2px}
+
+/* ========== SUCCESS ========== */
+.center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:20px}
+.badge{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;font-size:28px}
+.badge.ok{background:var(--green-pale);color:var(--green);border:2px solid var(--green);animation:popIn .5s cubic-bezier(.175,.885,.32,1.275) forwards}
+.badge.bad{background:var(--red-pale);color:var(--red);border:2px solid var(--red);animation:popIn .5s cubic-bezier(.175,.885,.32,1.275) forwards}
+@keyframes popIn{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes fadeUp{0%{transform:translateY(16px);opacity:0}100%{transform:translateY(0);opacity:1}}
+.fade-up{animation:fadeUp .4s ease forwards;animation-delay:.2s;opacity:0}
+
+/* ========== BOOKING CARDS ========== */
+.bk{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:0 2px 4px rgba(41,35,27,.02);transition:box-shadow .15s;flex-shrink:0}
+.bk:hover{box-shadow:var(--shadow-card)}
+.bk-content{display:flex;flex:1}
+.bk-bar{width:4px;flex:0 0 auto}
+.bk-bar.g{background:var(--green)}.bk-bar.n{background:var(--gold)}.bk-bar.d{background:var(--line)}
+.bk-body{flex:1;padding:12px 14px}
+.bk-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.bk-name{font-size:14.5px;font-weight:700;margin-bottom:2px;color:var(--ink)}
+.bk-meta{font-size:12px;color:var(--sub);margin-bottom:2px}
+.bk-loc{font-size:11px;color:var(--gold-deep);font-weight:500}
+.bk-ref{font-size:10px;color:var(--faint);font-family:monospace}
+.bk-actions{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.bk-btn{padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:background .12s,transform .06s}
+.bk-btn:active{transform:scale(.98)}
+.bk-btn.primary{background:var(--gold);color:#fff}
+.bk-btn.danger{background:var(--red-pale);color:var(--red)}
+.bk-btn.ok{background:var(--green-pale);color:var(--green)}
+
+/* ========== TAB BAR ========== */
+.tabs{display:flex;border-top:1px solid var(--line);background:var(--surface);flex:0 0 auto;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+.tabs button{flex:1;border:none;background:none;padding:10px 0 6px;cursor:pointer;color:var(--faint);font:inherit;font-size:10px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:4px;text-transform:uppercase;letter-spacing:.03em;transition:color .12s}
+.tabs button .ic{font-size:16px;line-height:1}
+.tabs button.on{color:var(--gold-deep)}
+
+/* ========== MODALS & ACCOUNT SWITCHER ========== */
+.modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:90;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .2s ease forwards}
+.modal{background:var(--surface);border-radius:var(--r-lg);padding:24px;width:100%;max-width:340px;box-shadow:var(--shadow-soft);animation:popIn .3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards}
+.modal h3{margin:0 0 8px;font-size:18px;font-weight:700}
+.modal p{margin:0 0 20px;font-size:13.5px;color:var(--sub)}
+
+.acct-btn{border:none;background:var(--raised);color:var(--ink);width:32px;height:32px;border-radius:10px;font-size:15px;cursor:pointer;display:grid;place-items:center;flex:0 0 auto;transition:background .15s}
+.acct-btn:hover{background:var(--gold-pale)}
+.acct-sheet{position:absolute;inset:0;z-index:90;display:flex;flex-direction:column;justify-content:flex-end}
+.acct-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.5);animation:fadeIn .2s ease forwards}
+.acct-panel{position:relative;background:var(--surface);border-radius:24px 24px 0 0;padding:24px;animation:slideUp .3s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;box-shadow:0 -10px 40px rgba(0,0,0,0.2);padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+.acct-panel h3{margin:0;font-size:18px;font-weight:700;color:var(--ink)}
+.acct-sub{margin:4px 0 16px;font-size:13px;color:var(--sub)}
+.acct-opt{width:100%;display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);margin-bottom:8px;cursor:pointer;text-align:left;transition:all .15s}
+.acct-opt:hover{border-color:var(--gold-pale);background:var(--bg-deep)}
+.acct-opt.active{border-color:var(--gold);background:var(--gold-pale-2)}
+.acct-av{width:40px;height:40px;border-radius:50%;color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700;flex:0 0 auto}
+.acct-info{flex:1}
+.acct-name{font-size:14px;font-weight:600;color:var(--ink)}
+.acct-role{font-size:12px;color:var(--sub)}
+.acct-check{color:var(--gold-deep);flex:0 0 auto}
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+/* ========== TOAST ========== */
+.toast{position:absolute;left:16px;right:16px;bottom:88px;background:var(--ink);color:var(--surface);padding:12px 14px;border-radius:12px;font-size:13px;font-weight:500;opacity:0;transform:translateY(8px);transition:.2s ease;pointer-events:none;z-index:9}
+.toast.show{opacity:1;transform:none}
+
+/* ========== FORMS ========== */
+.field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--ink)}
+.field input,.field textarea,.field select{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px;transition:border-color .15s}
+.field textarea{min-height:70px;resize:vertical}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(173,122,36,.1)}
+.field .hint{font-size:11px;color:var(--faint);margin-top:5px}
+
+/* ========== STARS ========== */
+.stars{display:flex;gap:4px}
+.stars button{width:36px;height:36px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:18px;cursor:pointer;display:grid;place-items:center;color:var(--faint);transition:all .12s}
+.stars button.on{background:var(--gold-pale-2);border-color:var(--gold);color:var(--gold)}
+
+/* ========== SKELETON ========== */
+.skel{border-radius:8px;background:var(--bg-deep);animation:shimmer 1.4s ease-in-out infinite}
+@keyframes shimmer{0%{opacity:1}50%{opacity:.5}100%{opacity:1}}
+.sk-card{display:flex;gap:12px;padding:14px;background:var(--surface);border-radius:var(--r);border:1px solid var(--line)}
+.sk-thumb{width:52px;height:52px;border-radius:10px;flex:0 0 auto}
+.sk-lines{flex:1;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.sk-line{height:11px;border-radius:99px}
+.spinner{width:14px;height:14px;border-radius:50%;border:2px solid var(--line);border-top-color:var(--gold);animation:spin .8s linear infinite;flex:0 0 auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ========== COORDINATOR ========== */
+.coord{display:flex;gap:12px;align-items:center;padding:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-card)}
+.coord-av{width:40px;height:40px;border-radius:50%;background:var(--gold-pale-2);color:var(--gold-deep);font-weight:700;font-size:15px;display:grid;place-items:center;flex:0 0 auto}
+.coord-info{flex:1}
+.coord-name{font-size:13.5px;font-weight:600;color:var(--ink)}
+.coord-role{font-size:11.5px;color:var(--sub);margin-top:1px}
+
+/* ========== TIMELINE ========== */
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-row{display:flex;align-items:center;gap:10px;padding:6px 0;position:relative}
+.tl-time{font-size:10px;font-weight:600;color:var(--faint);width:42px;flex:0 0 auto;text-align:right}
+.tl-bar{flex:1;height:22px;border-radius:4px;position:relative;overflow:hidden}
+.tl-bar .tl-fill{position:absolute;inset:0;border-radius:4px}
+.tl-bar .free{background:var(--green-pale)}
+.tl-bar .booked{background:var(--red-pale)}
+.tl-bar .yours{background:var(--gold-pale)}
+.tl-lbl{font-size:9px;font-weight:600;position:absolute;left:6px;top:50%;transform:translateY(-50%);white-space:nowrap}
+
+/* ========== KIT BUILDER ========== */
+.kit-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-card);transition:border-color .15s}
+.kit-card:hover{border-color:var(--gold-pale)}
+.kit-head{padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.kit-icon{width:44px;height:44px;border-radius:12px;background:var(--gold-pale-2);display:grid;place-items:center;font-size:20px;flex:0 0 auto}
+.kit-info{flex:1;min-width:0}
+.kit-title{font-size:14px;font-weight:700;color:var(--ink)}
+.kit-desc{font-size:11.5px;color:var(--sub);margin-top:2px}
+.kit-items{padding:0 14px 14px;display:flex;flex-direction:column;gap:6px}
+.kit-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:var(--bg-deep);font-size:12.5px}
+.kit-item-check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line);display:grid;place-items:center;font-size:11px;color:#fff;flex:0 0 auto;transition:all .15s}
+.kit-item-check.checked{background:var(--green);border-color:var(--green)}
+.kit-item-name{flex:1;font-weight:500;color:var(--ink)}
+.kit-item-status{font-size:10px;font-weight:600}
+.kit-count{font-size:11px;font-weight:600;color:var(--gold-deep);background:var(--gold-pale-2);padding:3px 8px;border-radius:99px}
+
+/* ========== MODAL OVERLAY ========== */
+.modal-overlay{position:absolute;inset:0;background:rgba(41,35,27,.5);z-index:50;display:flex;align-items:flex-end;justify-content:center;animation:fadeIn .15s ease}
+.modal{background:var(--surface);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:24px 20px;width:100%;max-height:60%;animation:slideUp .2s ease}
+@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
+@keyframes slideUp{0%{transform:translateY(100%)}100%{transform:translateY(0)}}
+.modal h3{font-family:var(--serif);font-size:17px;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.modal p{font-size:13px;color:var(--sub);margin-bottom:16px;line-height:1.5}
+
+/* ========== RESET BTN ========== */
+.reset-demo{position:fixed;bottom:12px;right:12px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:11px;font-weight:600;color:var(--sub);cursor:pointer;z-index:100;font-family:inherit;transition:all .15s}
+.reset-demo:hover{color:var(--ink);border-color:var(--gold)}
+.logo-sm{width:28px;height:28px;border-radius:6px;object-fit:contain;flex:0 0 auto}
+
+/* ========== AVAILABILITY TIMELINE (detail) ========== */
+.avail-tl{display:flex;gap:2px;height:28px;border-radius:6px;overflow:hidden}
+.avail-block{flex:1;position:relative;display:flex;align-items:center;justify-content:center}
+.avail-block.free{background:var(--green-pale)}
+.avail-block.booked{background:var(--red-pale)}
+.avail-block span{font-size:8px;font-weight:700;letter-spacing:.02em}
+
+/* ========== ACCOUNT BUTTON ========== */
+.acct-btn{width:32px;height:32px;border-radius:50%;border:2px solid var(--gold);background:var(--gold-pale-2);display:grid;place-items:center;cursor:pointer;flex:0 0 auto;transition:all .15s;padding:0}
+.acct-btn:hover{border-color:var(--gold-deep);background:var(--gold-pale)}
+.acct-btn svg{display:block}
+.acct-sheet{position:absolute;top:0;left:0;right:0;bottom:0;z-index:50;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:auto}
+.acct-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.35);animation:fadeIn .2s ease}
+.acct-panel{position:relative;background:var(--surface);border-radius:20px 20px 0 0;padding:24px 20px 32px;box-shadow:0 -8px 40px rgba(0,0,0,.12);animation:slideUp .25s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.acct-panel h3{font-family:var(--serif);font-size:18px;font-weight:600;margin:0 0 4px;color:var(--ink)}
+.acct-panel .acct-sub{font-size:12.5px;color:var(--sub);margin-bottom:16px}
+.acct-opt{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;transition:all .15s;margin-bottom:10px;width:100%;font-family:inherit;text-align:left}
+.acct-opt:hover{border-color:var(--gold)}
+.acct-opt.active{border-color:var(--gold);background:var(--gold-pale-2)}
+.acct-opt .acct-av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:700;flex:0 0 auto;color:#fff}
+.acct-opt .acct-info{flex:1;min-width:0}
+.acct-opt .acct-name{font-size:14px;font-weight:600;color:var(--ink)}
+.acct-opt .acct-role{font-size:11.5px;color:var(--sub)}
+.acct-opt .acct-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;flex:0 0 auto;transition:all .15s}
+.acct-opt.active .acct-check{border-color:var(--gold);background:var(--gold)}
+
+/* ========== ADMIN STYLES ========== */
+.admin-stat{display:flex;flex-direction:column;align-items:center;padding:16px 12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-card);text-align:center}
+.admin-stat .as-num{font-family:var(--serif);font-size:26px;font-weight:600}
+.admin-stat .as-label{font-size:10px;color:var(--sub);margin-top:3px;font-weight:500}
+.admin-stat.urgent .as-num{color:var(--red)}
+.admin-stat.warn .as-num{color:var(--gold)}
+.admin-stat.ok .as-num{color:var(--green)}
+.req-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;box-shadow:var(--shadow-card);margin-bottom:8px}
+.req-card .rc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.req-card .rc-name{font-size:14.5px;font-weight:700;color:var(--ink)}
+.req-card .rc-meta{font-size:12px;color:var(--sub);margin-bottom:2px}
+.req-card .rc-actions{display:flex;gap:8px;margin-top:10px}
+.handover-opt{display:flex;gap:6px;flex-wrap:wrap}
+.handover-opt button{padding:10px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .12s;color:var(--ink);flex:1;min-width:0}
+.handover-opt button.on{border-color:var(--gold);background:var(--gold-pale-2);color:var(--gold-deep)}
+.handover-opt button:hover:not(.on){border-color:var(--gold-pale)}
+.density-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.density-cell{aspect-ratio:1;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font-size:11px;font-weight:500;color:var(--ink);border:1px solid transparent;transition:all .12s;position:relative}
+.density-cell:hover{border-color:var(--gold)}
+.density-cell.empty{pointer-events:none;opacity:0}
+.density-cell .dc-day{font-size:11.5px;font-weight:600}
+.density-cell .dc-dots{display:flex;gap:2px;margin-top:2px}
+.density-cell .dc-dot{width:4px;height:4px;border-radius:50%}
+.density-0{background:var(--surface)}
+.density-1{background:rgba(62,107,73,.08)}
+.density-2{background:rgba(62,107,73,.16)}
+.density-3{background:rgba(173,122,36,.12)}
+.density-4{background:rgba(156,58,52,.10)}
+.density-cell.sel{border-color:var(--gold);box-shadow:0 0 0 2px rgba(173,122,36,.2)}
+.drill-booking{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--line);margin-bottom:6px}
+.drill-booking .db-color{width:4px;height:32px;border-radius:2px;flex:0 0 auto}
+.drill-booking .db-info{flex:1;min-width:0}
+.drill-booking .db-name{font-size:13px;font-weight:600;color:var(--ink)}
+.drill-booking .db-time{font-size:11px;color:var(--sub)}
+</style>
+</head>
+<body>
+<div class="fit" id="fit">
+  <div class="phone">
+    <div class="screen">
+      <div class="device" id="device">
+        <div class="island"></div>
+        <div class="status">
+          <span id="clock">9:41</span>
+          <span class="right">
+            <span class="bars"><i></i><i></i><i></i><i></i></span>
+            <span class="batt"><i></i></span>
+          </span>
+        </div>
+        <div id="app"></div>
+        <div class="homebar"></div>
+        <div class="toast" id="toast"></div>
+        <div id="modal-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="reset-demo" id="resetBtn" title="Restart the prototype with fresh sample data">Reset demo</button>
+
+<script>
+/* ===================== DATA ===================== */
+const DEFAULT_EQUIPMENT = [
+  {id:'cam1',name:'Sony A7III Camera',cat:'Cameras',asset:'CAM-014',img:'assets/sony-a7iii.jpg',avail:'available',ready:'ready',battery:78,condition:'Good',location:'Equipment Room B, Shelf 3',lastChecked:'Today, 8:45 AM',rating:4.8},
+  {id:'mic1',name:'Rode NTG3 Shotgun Mic',cat:'Audio',asset:'AUD-007',img:'assets/rode-ntg3.jpg',avail:'available',ready:'ready',battery:null,condition:'Excellent',location:'Equipment Room A, Cabinet 2',lastChecked:'Today, 9:00 AM',rating:4.6},
+  {id:'tri1',name:'Manfrotto Tripod',cat:'Support',asset:'TRP-003',img:'assets/tripod.jpg',avail:'available',ready:'check',battery:null,condition:'Fair, minor scuff',location:'Equipment Room B, Shelf 1',lastChecked:'Yesterday, 5:30 PM',rating:4.2},
+  {id:'lite1',name:'Aputure 120D Light',cat:'Lighting',asset:'LGT-002',img:'assets/aputure-120d.jpg',avail:'available',ready:'ready',battery:null,condition:'Good',location:'Equipment Room B, Shelf 2',lastChecked:'Today, 8:30 AM',rating:4.5},
+  {id:'rec1',name:'Zoom H6 Recorder',cat:'Audio',asset:'AUD-012',img:'assets/recorder.jpg',avail:'repair',ready:'repair',battery:65,condition:'Needs repair: input 3 faulty',location:'Equipment Room A, Shelf 4',lastChecked:'Mon, Sep 22',rating:3.9}
+];
+
+/* Equipment is now mutable — persisted in localStorage so Admin can add items
+   and the Digital Handover Log can auto-flag readiness */
+const EQUIP_KEY='vutv.equip.equipment.v1';
+function loadEquipment(){try{const s=JSON.parse(localStorage.getItem(EQUIP_KEY));return Array.isArray(s)&&s.length?s:null;}catch{return null;}}
+function saveEquipment(){try{localStorage.setItem(EQUIP_KEY,JSON.stringify(EQUIPMENT));}catch{}}
+let EQUIPMENT = loadEquipment() || JSON.parse(JSON.stringify(DEFAULT_EQUIPMENT));
+
+const KITS = [
+  {id:'kit-interview',name:'Interview Kit',icon:'mic',desc:'Camera + Mic + Light • Perfect for sit-down interviews',items:['cam1','mic1','lite1'],type:'Interview'},
+  {id:'kit-broll',name:'B-Roll Kit',icon:'film',desc:'Camera + Tripod + Light • Cinematic B-roll footage',items:['cam1','tri1','lite1'],type:'B-Roll'},
+  {id:'kit-podcast',name:'Podcast Kit',icon:'headphones',desc:'Mic + Recorder • Crisp audio for podcasting',items:['mic1','rec1'],type:'Podcast'},
+  {id:'kit-full',name:'Full Production Kit',icon:'camera',desc:'All available gear • For major productions',items:['cam1','mic1','tri1','lite1'],type:'Full Production'}
+];
+
+const COORDINATOR = {name:'Aarav Mehta',role:'VUTV Equipment Desk',initials:'AM'};
+const BOOKING_KEY='vutv.equip.bookings.v2';
+const dateKey=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+const addDays=(date,n)=>{const d=new Date(date+'T12:00:00');d.setDate(d.getDate()+n);return dateKey(d);};
+const dateLabel=date=>new Date(date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+const dateLabelShort=date=>new Date(date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+const timeLabel=time=>new Date('2000-01-01T'+time).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+const interval=(date,time)=>new Date(date+'T'+time).getTime();
+const overlaps=(aS,aE,bS,bE)=>aS<bE && bS<aE;
+const bookingStart=b=>interval(b.startDate,b.startTime);
+const bookingEnd=b=>interval(b.endDate,b.endTime);
+const blocks=b=>['pending','confirmed','active'].includes(b.status);
+const bookingsFromStorage=()=>{try{const s=JSON.parse(localStorage.getItem(BOOKING_KEY));return Array.isArray(s)?s:null;}catch{return null;}};
+function saveBookings(){try{localStorage.setItem(BOOKING_KEY,JSON.stringify(S.bookings));}catch{toast('Bookings could not be saved');}}
+function conflictFor(draft,bookings,excludeId){
+  return bookings.find(b=>b.id!==excludeId && b.eqId===draft.equipmentId && blocks(b) && b.startDate && overlaps(interval(draft.startDate,draft.startTime),interval(draft.endDate,draft.endTime),bookingStart(b),bookingEnd(b)));
+}
+function newDraft(id){
+  const now=new Date(),today=dateKey(now);
+  const startHour=Math.max(9,Math.ceil((now.getHours()+now.getMinutes()/60)/2)*2);
+  const startDate=startHour>=16?addDays(today,1):today;
+  const startTime=String(startHour>=16?9:startHour).padStart(2,'0')+':00';
+  const endTime=String((startHour>=16?9:startHour)+2).padStart(2,'0')+':00';
+  return {equipmentId:id,startDate,endDate:startDate,startTime,endTime,purpose:'Academic project',requester:'',destination:'',coordinator:COORDINATOR.name,status:'pending'};
+}
+function bookingDate(b){return b.startDate?dateLabelShort(b.startDate)+(b.endDate!==b.startDate?' – '+dateLabelShort(b.endDate):''):'';}
+function bookingTime(b){return b.startTime?timeLabel(b.startTime)+' – '+timeLabel(b.endTime):'';}
+function formatRange(d){return dateLabelShort(d.startDate)+' '+timeLabel(d.startTime)+' – '+(d.endDate!==d.startDate?dateLabelShort(d.endDate)+' ':'')+ timeLabel(d.endTime);}
+function validateDraft(d){
+  if(!d||!getEq(d.equipmentId)) return 'Choose equipment first';
+  if(!d.requester.trim()) return 'Enter a requester or team name';
+  if(!d.destination.trim()) return 'Enter where the equipment will be used';
+  if(!d.startDate||!d.endDate||!d.startTime||!d.endTime) return 'Select dates and times';
+  if(interval(d.startDate,d.startTime)<Date.now()) return 'Choose a future start time';
+  if(interval(d.endDate,d.endTime)<=interval(d.startDate,d.startTime)) return 'End must be after start';
+  if(getEq(d.equipmentId).avail==='repair') return 'This item needs repair';
+  return '';
+}
+
+/* ========== DIGITAL HANDOVER LOG — auto-flag helper ========== */
+function handoverAutoFlag(eqId, condition){
+  const e = getEq(eqId);
+  if(!e) return;
+  if(condition !== 'Working fine'){
+    e.avail = 'repair';
+    e.ready = 'repair';
+    e.condition = condition === 'Battery low' ? 'Battery low — needs charging' : 'Damage reported by producer';
+    const d = new Date();
+    e.lastChecked = d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})+', '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+    saveEquipment();
+  }
+}
+
+function seedState(){
+  return {
+    role:'producer', // 'producer' or 'admin'
+    tab:'home',view:{name:'home'},search:'',filter:'All',lastUpdated:'just now',
+    adminTab:'admin-dash',
+    selectedEq:null,selectedDate:dateKey(new Date()),selectedMonth:dateKey(new Date()).slice(0,7),
+    calendarDate:dateKey(new Date()),calendarMonth:dateKey(new Date()).slice(0,7),
+    bookingDraft:null,lastBookingId:null,showModal:null,kitDraft:null,
+    bookings:[
+      {id:'demo-mic',ref:'VR-DEMO-001',eq:'Rode NTG3 Shotgun Mic',eqId:'mic1',startDate:addDays(dateKey(new Date()),1),endDate:addDays(dateKey(new Date()),1),startTime:'14:00',endTime:'16:00',loc:'Equipment Room A, Cabinet 2',status:'pending',requester:'Riya Sharma',destination:'Studio B',purpose:'Interview',rating:null,feedback:null,checkOut:null,checkIn:null},
+      {id:'demo-light',ref:'VR-DEMO-002',eq:'Aputure 120D Light',eqId:'lite1',startDate:dateKey(new Date()),endDate:Date.now()>interval(dateKey(new Date()),'17:00')?addDays(dateKey(new Date()),1):dateKey(new Date()),startTime:'00:00',endTime:'17:00',loc:'Studio A',status:'active',requester:'Arjun Patel',destination:'Lecture Hall',purpose:'Event coverage',rating:null,feedback:null,checkOut:{condition:'Working fine',note:'',time:new Date().toISOString()},checkIn:null},
+      {id:'demo-tripod',ref:'VR-DEMO-003',eq:'Manfrotto Tripod',eqId:'tri1',startDate:addDays(dateKey(new Date()),-1),endDate:addDays(dateKey(new Date()),-1),startTime:'10:00',endTime:'12:00',loc:'Equipment Room B, Shelf 1',status:'completed',requester:'Demo User',destination:'Campus grounds',purpose:'B-Roll',rating:4,feedback:'Good condition',checkOut:{condition:'Working fine',note:'',time:null},checkIn:{condition:'Working fine',note:'',time:null}}
+    ],
+    coordNotified:false
+  };
+}
+let S = seedState();
+S.bookings=bookingsFromStorage()||S.bookings;
+
+/* ===================== HELPERS ===================== */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+function go(name,arg){S.view={name,arg};render();$('app').scrollTop=0;}
+let toastT;
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2600);}
+function setTab(t){S.tab=t;go(t);}
+function setAdminTab(t){S.adminTab=t;go(t);}
+function getEq(id){return EQUIPMENT.find(e=>e.id===id);}
+function availability(e){
+  if(e.avail==='repair')return 'repair';
+  return S.bookings.some(b=>b.eqId===e.id&&blocks(b)&&b.startDate&&bookingStart(b)<=Date.now()&&bookingEnd(b)>Date.now())?'inuse':'available';
+}
+function showModal(type,data){S.showModal={type,data};renderModal();}
+function hideModal(){S.showModal=null;renderModal();}
+
+/* ========== SVG ICON SYSTEM ========== */
+const ICONS={
+  home:'<path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4" stroke-linecap="round" stroke-linejoin="round"/>'  ,
+  grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>'  ,
+  box:'<path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" stroke-linecap="round" stroke-linejoin="round"/><polyline points="3.27 6.96 12 12.01 20.73 6.96" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="22.08" x2="12" y2="12" stroke-linecap="round" stroke-linejoin="round"/>'  ,
+  calendar:'<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>'  ,
+  list:'<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>'  ,
+  user:'<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>'  ,
+  search:'<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>'  ,
+  check:'<polyline points="20 6 9 17 4 12"/>'  ,
+  x:'<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>'  ,
+  alert:'<path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>'  ,
+  mappin:'<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>'  ,
+  clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>'  ,
+  star:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>'  ,
+  refresh:'<polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>'  ,
+  zap:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>'  ,
+  mic:'<path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>'  ,
+  camera:'<path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/>'  ,
+  film:'<rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/><line x1="17" y1="17" x2="22" y2="17"/>'  ,
+  headphones:'<path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/>'  ,
+  sun:'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'  ,
+  settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>'  ,
+  shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'  ,
+  package:'<line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>'  ,
+  wrench:'<path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>'  ,
+  clipboard:'<path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>'  ,
+  plus:'<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+  chevronL:'<polyline points="15 18 9 12 15 6"/>',
+  chevronR:'<polyline points="9 18 15 12 9 6"/>'
+};
+function ic(name,size){
+  size=size||16;
+  return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'+(ICONS[name]||'')+'</svg>';
+}
+
+function accountBtn(){
+  const initials=S.role==='admin'?'HV':'PR';
+  return '<button class="acct-btn" data-act="openaccount" title="Switch account">'+ic('user',16)+'</button>';
+}
+
+function shell(title,bodyHtml,o){
+  o=o||{};
+  const back=o.back?'<button class="iconbtn" data-act="go" data-to="'+o.back+'" data-arg="'+(o.backArg||'')+'">'+ic('x',16)+'</button>':'';
+  const right=o.right||'';
+  const tabs=o.hideTabs?'':(S.role==='admin'?adminTabBar():tabBar());
+  const logo=(title==='Home'||title==='Admin Dashboard')?'<img src="assets/vutv-logo.png" class="logo-sm" alt="VUTV">':'';
+  return '<div class="top">'+back+logo+'<h1>'+esc(title)+'</h1>'+accountBtn()+right+'</div><div class="body" id="body">'+bodyHtml+'</div>'+tabs;
+}
+
+function tabBar(){
+  const t=[['home',ic('home',18),'Home'],['equipment',ic('grid',18),'Browse'],['kits',ic('box',18),'Kits'],['sharedcalendar',ic('calendar',18),'Calendar'],['mybookings',ic('list',18),'Bookings']];
+  return '<div class="tabs">'+t.map(x=>'<button class="'+(S.tab===x[0]?'on':'')+'" data-act="tab" data-to="'+x[0]+'"><span class="ic">'+x[1]+'</span>'+x[2]+'</button>').join('')+'</div>';
+}
+
+function adminTabBar(){
+  const t=[['admin-dash',ic('shield',18),'Dashboard'],['admin-requests',ic('clipboard',18),'Requests'],['admin-equip',ic('settings',18),'Equipment'],['sharedcalendar',ic('calendar',18),'Calendar']];
+  return '<div class="tabs">'+t.map(x=>'<button class="'+(S.adminTab===x[0]?'on':'')+'" data-act="admintab" data-to="'+x[0]+'"><span class="ic">'+x[1]+'</span>'+x[2]+'</button>').join('')+'</div>';
+}
+
+function availPill(a){
+  const m={available:['<span class="dot-live"></span> Available','p-avail'],inuse:['In use','p-inuse'],repair:['Needs repair','p-repair']};
+  const p=m[a]||['Unknown','p-repair'];
+  return '<span class="pill '+p[1]+'">'+p[0]+'</span>';
+}
+function readyPill(r){
+  const m={ready:[ic('check',10)+' Ready','p-ready'],check:[ic('alert',10)+' Check','p-used'],'repair':['Repair','p-repair']};
+  const p=m[r]||['Unknown','p-repair'];
+  return '<span class="pill '+p[1]+'">'+p[0]+'</span>';
+}
+function statusPill(s){
+  const m={pending:['Pending','p-used'],confirmed:['Confirmed','p-confirmed'],active:['Active','p-active'],completed:['Completed','p-completed'],returned:['Returned','p-returned']};
+  const p=m[s]||['Unknown','p-repair'];
+  return '<span class="pill '+p[1]+'">'+p[0]+'</span>';
+}
+
+function availTimeline(eqId){
+  let h='<div class="avail-tl">';
+  for(let hr=9;hr<=17;hr+=2){
+    const start=String(hr).padStart(2,'0')+':00',end=String(Math.min(hr+2,18)).padStart(2,'0')+':00';
+    const today=dateKey(new Date());
+    const probe={equipmentId:eqId,startDate:today,endDate:today,startTime:start,endTime:end};
+    const taken=conflictFor(probe,S.bookings)||interval(today,start)<Date.now();
+    h+='<div class="avail-block '+(taken?'booked':'free')+'"><span style="color:var(--'+(taken?'red':'green')+')">'+(hr>12?hr-12:hr)+(hr>=12?'p':'a')+'</span></div>';
+  }
+  h+='</div>';
+  return h;
+}
+
+/* ===================== SCREENS ===================== */
+const V={};
+
+V.home=()=>{
+  const avail=EQUIPMENT.filter(e=>availability(e)==='available').length;
+  const ready=EQUIPMENT.filter(e=>e.ready==='ready').length;
+  const upcoming=S.bookings.filter(b=>b.status==='pending'||b.status==='confirmed'||b.status==='active');
+  const activeB=S.bookings.filter(b=>b.status==='active');
+  let h='<h2>VUTV Equipment</h2><p class="lead">Smart equipment booking for student producers</p>';
+
+  // Hero card
+  h+='<button class="hero-card" data-act="tab" data-to="equipment"><div class="h-top"><span class="h-name">Equipment Desk</span><span class="chip"><span class="dot"></span> Live</span></div>';
+  h+='<div class="h-big">'+avail+' of '+EQUIPMENT.length+' Available</div>';
+  h+='<div class="h-sub">'+ready+' shoot-ready · Updated '+esc(S.lastUpdated)+'</div></button>';
+
+  // Quick actions
+  h+='<div class="grid2">';
+  h+='<button class="btn primary" data-act="tab" data-to="equipment">Browse Equipment</button>';
+  h+='<button class="btn ghost" data-act="tab" data-to="kits">'+ic('box',14)+' Kit Builder</button>';
+  h+='</div>';
+  h+='<div class="grid2">';
+  h+='<button class="btn ghost" data-act="tab" data-to="mybookings">My Bookings</button>';
+  h+='<button class="btn ghost" data-act="refresh">Refresh Status</button>';
+  h+='</div>';
+
+  // Dashboard stats
+  h+='<p class="label">Dashboard</p>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">';
+  h+='<div class="card" style="text-align:center;padding:14px"><div style="font-family:var(--serif);font-size:22px;font-weight:600;color:var(--green)">'+avail+'</div><div style="font-size:10px;color:var(--sub);margin-top:3px">Available</div></div>';
+  h+='<div class="card" style="text-align:center;padding:14px"><div style="font-family:var(--serif);font-size:22px;font-weight:600;color:var(--red)">'+(EQUIPMENT.length-avail)+'</div><div style="font-size:10px;color:var(--sub);margin-top:3px">In Use</div></div>';
+  h+='<div class="card" style="text-align:center;padding:14px"><div style="font-family:var(--serif);font-size:22px;font-weight:600;color:var(--gold)">'+upcoming.length+'</div><div style="font-size:10px;color:var(--sub);margin-top:3px">Upcoming</div></div>';
+  h+='</div>';
+
+  // Active booking alert
+  if(activeB.length){
+    const a=activeB[0];
+    h+='<div class="banner ok" style="cursor:pointer" data-act="tab" data-to="mybookings"><strong>'+ic('zap',13)+' Active now: '+esc(a.eq)+'</strong>Return due '+esc(bookingTime(a).split('–')[1])+' · '+esc(a.loc)+'</div>';
+  }
+
+  // Upcoming
+  if(upcoming.length){
+    h+='<p class="label">Upcoming bookings</p>';
+    const next=upcoming.filter(b=>b.startDate&&bookingEnd(b)>Date.now()).sort((a,b)=>bookingStart(a)-bookingStart(b));
+    next.slice(0,3).forEach(b=>{
+      h+='<button class="bk" data-act="tab" data-to="mybookings" style="width:100%;cursor:pointer"><div class="bk-bar '+(b.status==='active'?'n':'g')+'"></div><div class="bk-body"><div class="bk-top">'+statusPill(b.status)+'<span class="bk-ref">'+esc(b.ref)+'</span></div>';
+      h+='<div class="bk-name">'+esc(b.eq)+'</div><div class="bk-meta">'+esc(bookingDate(b))+', '+esc(bookingTime(b))+'</div></div></button>';
+    });
+  }
+
+  return shell('Home',h);
+};
+
+V.equipment=()=>{
+  let h='';
+  h+='<div class="search"><span class="si">'+ic('search',14)+'</span><input type="text" id="searchInput" placeholder="Search equipment..." value="'+esc(S.search)+'" data-act="search"></div>';
+  const cats=['All','Cameras','Audio','Lighting','Support'];
+  h+='<div class="filters">'+cats.map(c=>'<button class="fbtn '+(S.filter===c?'on':'')+'" data-act="filter" data-val="'+c+'">'+c+'</button>').join('')+'</div>';
+  let filtered=EQUIPMENT.filter(e=>{
+    if(S.filter!=='All'&&e.cat!==S.filter) return false;
+    if(S.search&&![e.name,e.cat,e.asset,e.location].some(x=>x.toLowerCase().includes(S.search.toLowerCase()))) return false;
+    return true;
+  });
+  h+='<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:700;color:var(--ink)">Equipment</span><span style="font-size:12px;color:var(--sub)">'+filtered.length+' item'+(filtered.length!==1?'s':'')+'</span></div>';
+  if(filtered.length){
+    filtered.forEach(e=>{
+      const imgHtml=e.img?'<img src="'+e.img+'" onerror="this.style.display=\'none\'">':'<span style="color:var(--faint)">'+ic('package',20)+'</span>';
+      const state=availability(e),canBook=state!=='repair';
+      h+='<div class="eq">';
+      h+='<div class="eq-img" data-act="detail" data-id="'+e.id+'" style="cursor:pointer">'+imgHtml+'</div>';
+      h+='<div class="eq-info">';
+      h+='<div class="eq-name" style="cursor:pointer" data-act="detail" data-id="'+e.id+'">'+esc(e.name)+'</div>';
+      h+='<div class="eq-cat">'+esc(e.cat)+' · '+esc(e.asset)+'</div>';
+      h+='<div class="eq-pills">'+availPill(state)+readyPill(e.ready)+'</div>';
+      if(canBook) h+='<button class="eq-book" data-act="startbook" data-id="'+e.id+'">'+(state==='inuse'?'Book for later':'Book now')+'</button>';
+      h+='</div></div>';
+    });
+  } else {
+    h+='<div style="text-align:center;padding:40px 0"><div style="color:var(--faint);margin-bottom:12px">'+ic('package',32)+'</div>';
+    h+='<h2 style="font-size:17px">No equipment found</h2>';
+    h+='<p class="lead" style="margin-top:4px">Try a different search or category.</p>';
+    h+='<button class="btn ghost" style="margin-top:16px;width:auto;display:inline-block;padding:10px 24px" data-act="clearsearch">Clear search</button></div>';
+  }
+  return shell('Equipment',h,{right:'<button class="iconbtn" data-act="refresh">'+ic('refresh',14)+'</button>'});
+};
+
+V.detail=()=>{
+  const e=getEq(S.view.arg);
+  if(!e) return V.equipment();
+  const imgHtml=e.img?'<img src="'+e.img+'" alt="'+esc(e.name)+'">':'';
+  const state=availability(e);
+  let h='';
+  h+='<div class="d-img">'+imgHtml;
+  if(state==='available') h+='<div class="d-badge"><span class="dot-live"></span> Available now</div>';
+  else if(state==='inuse') h+='<div class="d-badge" style="color:var(--red)">In use</div>';
+  h+='</div>';
+
+  // Title + rating
+  h+='<div style="display:flex;justify-content:space-between;align-items:flex-start">';
+  h+='<div><div style="font-size:18px;font-weight:700;letter-spacing:-.3px;color:var(--ink)">'+esc(e.name)+'</div>';
+  h+='<div style="font-size:12px;color:var(--sub);margin-top:2px">'+esc(e.cat)+' · Asset #'+esc(e.asset)+'</div></div>';
+  if(e.rating) h+='<span style="background:var(--gold-pale-2);color:var(--gold-deep);font-size:12px;font-weight:700;padding:4px 10px;border-radius:99px;display:inline-flex;align-items:center;gap:3px">'+ic('star',11)+' '+e.rating+'</span>';
+  h+='</div>';
+
+  h+='<div style="display:flex;gap:6px">'+availPill(state)+readyPill(e.ready)+'</div>';
+
+  // Today's availability timeline
+  h+='<p class="label">Today\'s availability</p>';
+  h+=availTimeline(e.id);
+
+  // Details table
+  h+='<div class="sum">';
+  h+='<div><span>Condition</span><b>'+esc(e.condition)+'</b></div>';
+  h+='<div><span>Location</span><b>'+esc(e.location)+'</b></div>';
+  if(e.battery!==null) h+='<div><span>Battery</span><b><span class="bat-bar"><span class="bat-fill" style="width:'+e.battery+'%"></span></span> '+e.battery+'%</b></div>';
+  h+='<div><span>Last checked</span><b>'+esc(e.lastChecked)+'</b></div>';
+  const next=S.bookings.filter(b=>b.eqId===e.id&&blocks(b)&&bookingEnd(b)>Date.now()).sort((a,b)=>bookingStart(a)-bookingStart(b))[0];
+  h+='<div><span>Next booking</span><b>'+(next?esc(formatRange(next)):'None scheduled')+'</b></div>';
+  h+='</div>';
+
+  // Coordinator
+  h+='<p class="label">Equipment coordinator</p>';
+  h+='<div class="coord"><div class="coord-av">'+esc(COORDINATOR.initials)+'</div><div class="coord-info"><div class="coord-name">'+esc(COORDINATOR.name)+'</div><div class="coord-role">'+esc(COORDINATOR.role)+'</div></div></div>';
+
+  // In-use banner
+  if(state==='inuse'){
+    const active=S.bookings.find(b=>b.eqId===e.id&&blocks(b)&&bookingStart(b)<=Date.now()&&bookingEnd(b)>Date.now());
+    h+='<div class="banner info"><strong>Currently in use</strong>'+(active?'Until '+esc(dateLabelShort(active.endDate))+' '+esc(timeLabel(active.endTime))+'. ':'')+'You can reserve a future window.</div>';
+  }
+  if(state!=='repair'){
+    h+='<button class="btn primary" data-act="startbook" data-id="'+e.id+'">'+(state==='inuse'?'Book for later':'Book this equipment')+'</button>';
+  } else {
+    h+='<button class="btn ghost" disabled>Currently unavailable — needs repair</button>';
+  }
+  return shell(e.name,h,{back:'equipment'});
+};
+
+V.calendar=()=>{
+  const d=S.bookingDraft,e=getEq(d&&d.equipmentId);
+  if(!e) return V.equipment();
+  const [year,month]=S.selectedMonth.split('-').map(Number);
+  const first=new Date(year,month-1,1),days=new Date(year,month,0).getDate();
+  let h='<div style="font-size:14px;font-weight:600;color:var(--ink)">'+esc(e.name)+'</div>';
+  h+='<div style="font-size:12px;color:var(--sub)">Selected: '+esc(dateLabelShort(S.selectedDate))+'</div>';
+
+  // Calendar
+  h+='<div class="card" style="padding:12px"><div class="cal-head">';
+  h+='<button class="cal-nav" data-act="month" data-val="-1" aria-label="Previous month">'+ic('chevronL',16)+'</button>';
+  h+='<span class="cal-month">'+first.toLocaleDateString('en-US',{month:'long',year:'numeric'})+'</span>';
+  h+='<button class="cal-nav" data-act="month" data-val="1" aria-label="Next month">'+ic('chevronR',16)+'</button></div><div class="cal-grid">';
+  ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(day=>h+='<div class="cal-lbl">'+day+'</div>');
+  for(let i=0;i<first.getDay();i++) h+='<span class="cal-d empty"></span>';
+  for(let i=1;i<=days;i++){
+    const day=year+'-'+String(month).padStart(2,'0')+'-'+String(i).padStart(2,'0');
+    const hasBooking=S.bookings.some(b=>b.eqId===e.id&&blocks(b)&&b.startDate<=day&&b.endDate>=day);
+    h+='<button class="cal-d'+(day===S.selectedDate?' sel':'')+(hasBooking?' has-booking':'')+'" data-act="calday" data-val="'+day+'" aria-label="'+esc(dateLabel(day))+'" '+(day<dateKey(new Date())?'disabled':'')+'>'+i+'</button>';
+  }
+  h+='</div></div>';
+
+  // Quick slots
+  h+='<p class="label">Quick slots — '+esc(dateLabelShort(S.selectedDate))+'</p>';
+  for(let hour=9;hour<=15;hour+=2){
+    const start=String(hour).padStart(2,'0')+':00',end=String(hour+2).padStart(2,'0')+':00';
+    const probe={equipmentId:e.id,startDate:S.selectedDate,endDate:S.selectedDate,startTime:start,endTime:end};
+    const taken=conflictFor(probe,S.bookings)||interval(S.selectedDate,start)<Date.now();
+    h+=taken?'<div class="slot taken"><span class="slot-time">'+timeLabel(start)+' – '+timeLabel(end)+'</span><span class="slot-badge s-taken">Unavailable</span></div>':'<button class="slot avail" data-act="selectslot" data-val="'+start+'" style="width:100%"><span class="slot-time">'+timeLabel(start)+' – '+timeLabel(end)+'</span><span class="slot-badge s-free">Select</span></button>';
+  }
+
+  // Divider
+  h+='<div class="divider"><span>or custom time</span></div>';
+
+  // Custom interval
+  h+='<div class="card" style="padding:14px"><div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:10px">Custom interval</div>';
+  h+='<div class="grid2"><div class="field"><label for="startDate">Start date</label><input id="startDate" type="date" min="'+dateKey(new Date())+'" value="'+esc(d.startDate)+'" data-draft="startDate"></div>';
+  h+='<div class="field"><label for="startTime">Start time</label><input id="startTime" type="time" value="'+esc(d.startTime)+'" data-draft="startTime"></div>';
+  h+='<div class="field"><label for="endDate">End date</label><input id="endDate" type="date" min="'+esc(d.startDate)+'" value="'+esc(d.endDate)+'" data-draft="endDate"></div>';
+  h+='<div class="field"><label for="endTime">End time</label><input id="endTime" type="time" value="'+esc(d.endTime)+'" data-draft="endTime"></div></div></div>';
+
+  h+='<button class="btn primary" data-act="continuebooking">Continue with selected time</button>';
+  h+='<button class="btn quiet" data-act="go" data-to="equipment">Cancel</button>';
+  return shell('Select Date & Time',h,{back:'detail',backArg:e.id,hideTabs:true});
+};
+
+V.bookingform=()=>{
+  const e=getEq(S.view.arg);
+  if(!e) return V.equipment();
+  const d=S.bookingDraft;
+  let h='';
+  h+='<div class="banner info" style="margin-bottom:4px"><strong>Booking Details</strong>Please fill in the reservation details below.</div>';
+  h+='<div class="card" style="text-align:center"><strong style="color:var(--gold-deep)">'+esc(formatRange(d))+'</strong></div>';
+  h+='<div class="field" style="margin-top:12px"><label for="requester">Who is booking?</label><input id="requester" data-draft="requester" type="text" value="'+esc(d.requester)+'" placeholder="Your name / Team name"></div>';
+  h+='<div class="field" style="margin-top:12px"><label for="purpose">Purpose</label><select id="purpose" data-draft="purpose">'+['Academic project','VUTV Production','Personal','Other'].map(p=>'<option '+(d.purpose===p?'selected':'')+'>'+p+'</option>').join('')+'</select></div>';
+  h+='<div class="field" style="margin-top:12px"><label for="destination">Where will it be used?</label><input id="destination" data-draft="destination" type="text" value="'+esc(d.destination)+'" placeholder="Studio / room / location"></div>';
+  h+='<div class="actions" style="margin-top:16px"><button class="btn primary" data-act="reviewbooking">Continue to Review</button>';
+  h+='<button class="btn ghost" data-act="go" data-to="calendar" data-arg="'+e.id+'">Back to time selection</button></div>';
+  return shell('Booking Details',h,{back:'calendar',backArg:e.id,hideTabs:true});
+};
+
+V.review=()=>{
+  const e=getEq(S.view.arg);
+  if(!e) return V.equipment();
+  const d=S.bookingDraft;
+  let h='';
+  h+='<div class="banner info"><strong>Review before confirming</strong>Your request will be sent to the coordinator for approval.</div>';
+  h+='<div class="sum">';
+  h+='<div><span>Equipment</span><b>'+esc(e.name)+'</b></div>';
+  h+='<div><span>Start</span><b>'+esc(dateLabelShort(d.startDate))+' '+esc(timeLabel(d.startTime))+'</b></div>';
+  h+='<div><span>End</span><b>'+esc(dateLabelShort(d.endDate))+' '+esc(timeLabel(d.endTime))+'</b></div>';
+  h+='<div><span>Requester</span><b>'+esc(d.requester)+'</b></div>';
+  h+='<div><span>Purpose</span><b>'+esc(d.purpose)+'</b></div>';
+  h+='<div><span>Location</span><b>'+esc(d.destination)+'</b></div>';
+  h+='<div><span>Readiness</span><b style="color:var(--green)">'+(e.ready==='ready'?ic('check',12)+' Shoot-ready':ic('alert',12)+' Needs check')+'</b></div>';
+  h+='<div><span>Pickup</span><b>'+esc(e.location)+'</b></div>';
+  h+='<div><span>Coordinator</span><b>'+esc(COORDINATOR.name)+'</b></div>';
+  h+='<div><span>Conflicts</span><b style="color:var(--green)">'+(conflictFor(d,S.bookings)?ic('alert',12)+' Time conflict':ic('check',12)+' None detected')+'</b></div>';
+  h+='</div>';
+  h+='<div class="notice"><strong>Prototype note</strong>This request is saved locally. Coordinator approval is simulated.</div>';
+  h+='<div class="actions"><button class="btn primary" data-act="confirm">Request Booking</button>';
+  h+='<button class="btn ghost" data-act="go" data-to="bookingform" data-arg="'+e.id+'">Back to details</button></div>';
+  return shell('Review Booking',h,{back:'bookingform',backArg:e.id,hideTabs:true});
+};
+
+V.success=()=>{
+  const b=S.bookings.find(x=>x.id===S.lastBookingId);
+  const e=b&&getEq(b.eqId);
+  let h='<div class="center" style="flex:0 0 auto;align-items:center;text-align:center">';
+  h+='<div class="badge ok">'+ic('check',28)+'</div>';
+  h+='<h2 class="fade-up">Booking Requested!</h2>';
+  h+='<p class="lead fade-up" style="margin-top:4px">'+(e?esc(e.name):'Equipment')+' reserved successfully.</p></div>';
+  h+='<div class="card fade-up" style="text-align:center"><div style="font-size:10px;font-weight:600;color:var(--faint);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Booking Reference</div>';
+  h+='<div style="font-size:16px;font-weight:800;color:var(--gold-deep);font-family:monospace;letter-spacing:.5px">'+esc(b.ref)+'</div>';
+  h+='<div style="font-size:11px;color:var(--sub);margin-top:5px">'+esc(bookingDate(b))+' · '+esc(bookingTime(b))+'</div></div>';
+  h+='<div class="banner info fade-up"><strong>Pending coordinator approval</strong>'+esc(COORDINATOR.name)+' will be notified. You\'ll see the status update in My Bookings.</div>';
+  h+='<div class="actions fade-up"><button class="btn primary" data-act="tab" data-to="mybookings">View My Bookings</button>';
+  h+='<button class="btn ghost" data-act="tab" data-to="home">Back to Home</button></div>';
+  return shell('Confirmed',h,{hideTabs:true});
+};
+
+V.conflict=()=>{
+  const e=getEq(S.view.arg);
+  let h='<div class="center" style="flex:0 0 auto;align-items:center;text-align:center">';
+  h+='<div class="badge bad">!</div>';
+  h+='<h2 class="fade-up">Time Conflict</h2>';
+  h+='<p class="lead fade-up" style="margin-top:4px">That interval overlaps an existing booking. Pick a different time.</p></div>';
+  h+='<div class="card fade-up"><h3>Your selections are saved</h3><p>'+(e?esc(e.name):'Equipment')+', '+(S.bookingDraft?esc(formatRange(S.bookingDraft)):'')+'</p></div>';
+  h+='<button class="btn primary fade-up" data-act="go" data-to="calendar" data-arg="'+esc(e.id)+'">Choose Another Time</button>';
+  h+='<button class="btn ghost fade-up" data-act="go" data-to="equipment">Cancel Booking</button>';
+  return shell('Scheduling Conflict',h,{hideTabs:true});
+};
+
+V.mybookings=()=>{
+  const upcoming=S.bookings.filter(b=>b.status==='pending'||b.status==='confirmed'||b.status==='active');
+  const completed=S.bookings.filter(b=>b.status==='completed'||b.status==='returned');
+  let h='';
+  h+='<p class="label">Upcoming</p>';
+  if(!upcoming.length){
+    h+='<div class="card"><h3>No upcoming bookings</h3><p>Browse equipment or use Kit Builder to get started.</p></div>';
+  }
+  upcoming.forEach(b=>{
+    h+='<div class="bk"><div class="bk-content"><div class="bk-bar '+(b.status==='active'?'n':'g')+'"></div><div class="bk-body"><div class="bk-top">'+statusPill(b.status)+'<span class="bk-ref">'+esc(b.ref)+'</span></div>';
+    h+='<div class="bk-name">'+esc(b.eq)+'</div><div class="bk-meta">'+esc(bookingDate(b))+', '+esc(bookingTime(b))+'</div>';
+    h+='<div class="bk-loc">'+ic('mappin',11)+' '+esc(b.loc)+'</div>';
+    if(b.checkOut) h+='<div style="font-size:10px;color:var(--green);font-weight:600;margin-top:3px;display:flex;align-items:center;gap:3px">'+ic('check',10)+' Checked out: '+esc(b.checkOut.condition)+'</div>';
+    h+='<div class="bk-actions">';
+    // Check-out button (for confirmed bookings that haven't been checked out)
+    if(b.status==='confirmed'&&!b.checkOut) h+='<button class="bk-btn ok" data-act="checkout" data-id="'+b.id+'" style="flex:1">Check-Out</button>';
+    if(b.startDate)h+='<button class="bk-btn" data-act="extend" data-id="'+b.id+'" style="flex:1;background:var(--bg-deep);color:var(--ink)">Extend</button>';
+    h+='<button class="bk-btn primary" data-act="markreturn" data-id="'+b.id+'" style="flex:1">Return</button>';
+    h+='<button class="bk-btn danger" data-act="confirmcancel" data-id="'+b.id+'" style="flex:1">Cancel</button></div>';
+    h+='</div></div></div>';
+  });
+  h+='<p class="label" style="margin-top:10px">Completed</p>';
+  if(!completed.length){
+    h+='<div class="card"><h3>No completed bookings yet</h3></div>';
+  }
+  completed.forEach(b=>{
+    h+='<div class="bk" style="opacity:'+(b.status==='completed'&&!b.rating?'1':'.7')+'"><div class="bk-content"><div class="bk-bar d"></div><div class="bk-body"><div class="bk-top">'+statusPill(b.status)+'<span class="bk-ref">'+esc(b.ref)+'</span></div>';
+    h+='<div class="bk-name">'+esc(b.eq)+'</div><div class="bk-meta">'+esc(bookingDate(b))+', '+esc(bookingTime(b))+'</div>';
+    if(b.returnCondition)h+='<div class="bk-loc">Returned: '+esc(b.returnCondition)+(b.returnNotes?' · '+esc(b.returnNotes):'')+'</div>';
+    if(b.returnPhoto)h+='<img src="'+esc(b.returnPhoto)+'" alt="Return photo" style="max-width:100%;max-height:100px;border-radius:8px;margin-top:6px">';
+    h+='</div></div></div>';
+    if(b.status==='completed'&&!b.rating){
+      h+='<button class="bk-btn ok" data-act="givefeedback" data-id="'+b.id+'" style="margin-top:-1px;width:100%;padding:8px 14px">Give feedback</button>';
+    }
+    if(b.rating) h+='<div style="margin-top:-1px;padding:4px 14px;font-size:11px;color:var(--sub);display:flex;align-items:center;gap:3px">Rated '+b.rating+'/5 '+ic('star',10)+'</div>';
+  });
+  h+='<button class="btn primary" data-act="tab" data-to="equipment" style="margin-top:12px">Browse Equipment</button>';
+  return shell('My Bookings',h);
+};
+
+/* ========== KIT BUILDER (NEW FEATURE) ========== */
+V.kits=()=>{
+  let h='<h2>Kit Builder</h2><p class="lead">Book complete production kits in one tap. All items reserved for the same time slot.</p>';
+  KITS.forEach(kit=>{
+    const items=kit.items.map(id=>getEq(id)).filter(Boolean);
+    const availCount=items.filter(e=>availability(e)!=='repair').length;
+    const allAvail=availCount===items.length;
+    h+='<div class="kit-card">';
+    h+='<div class="kit-head" data-act="selectkit" data-id="'+kit.id+'">';
+    h+='<div class="kit-icon">'+ic(kit.icon,22)+'</div>';
+    h+='<div class="kit-info"><div class="kit-title">'+esc(kit.name)+'</div><div class="kit-desc">'+esc(kit.desc)+'</div></div>';
+    h+='<span class="kit-count">'+availCount+'/'+items.length+'</span>';
+    h+='</div>';
+    h+='<div class="kit-items">';
+    items.forEach(e=>{
+      const state=availability(e);
+      const ok=state!=='repair';
+      h+='<div class="kit-item"><div class="kit-item-icon '+(ok?'ok':'bad')+'">'+( ok?ic('check',16):ic('alert',16))+'</div>';
+      h+='<span class="kit-item-name">'+esc(e.name)+'</span>';
+      h+='<span class="kit-item-status pill '+(ok?'p-avail':'p-repair')+'">'+(state==='available'?'Ready':state==='inuse'?'In use':'Repair')+'</span></div>';
+    });
+    h+='</div>';
+    if(allAvail){
+      h+='<div style="padding:0 14px 14px"><button class="btn primary" data-act="bookkit" data-id="'+kit.id+'" style="font-size:13px;padding:12px">'+ic('zap',13)+' Book entire kit</button></div>';
+    } else {
+      h+='<div style="padding:0 14px 14px"><button class="btn ghost" data-act="bookkit" data-id="'+kit.id+'" style="font-size:13px;padding:12px">Book available items ('+availCount+'/'+items.length+')</button></div>';
+    }
+    h+='</div>';
+  });
+  return shell('Kit Builder',h);
+};
+
+V.kitcalendar=()=>{
+  const kit=KITS.find(k=>k.id===S.kitDraft?.kitId);
+  if(!kit) return V.kits();
+  const items=kit.items.map(id=>getEq(id)).filter(e=>e&&availability(e)!=='repair');
+  const [year,month]=S.selectedMonth.split('-').map(Number);
+  const first=new Date(year,month-1,1),days=new Date(year,month,0).getDate();
+  let h='<div style="display:flex;align-items:center;gap:8px"><span style="color:var(--gold-deep)">'+ic(kit.icon,22)+'</span><div><div style="font-size:14px;font-weight:600;color:var(--ink)">'+esc(kit.name)+'</div><div style="font-size:12px;color:var(--sub)">'+items.length+' items · '+esc(dateLabelShort(S.selectedDate))+'</div></div></div>';
+
+  // Calendar
+  h+='<div class="card" style="padding:12px"><div class="cal-head">';
+  h+='<button class="cal-nav" data-act="month" data-val="-1">'+ic('chevronL',16)+'</button>';
+  h+='<span class="cal-month">'+first.toLocaleDateString('en-US',{month:'long',year:'numeric'})+'</span>';
+  h+='<button class="cal-nav" data-act="month" data-val="1">'+ic('chevronR',16)+'</button></div><div class="cal-grid">';
+  ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(day=>h+='<div class="cal-lbl">'+day+'</div>');
+  for(let i=0;i<first.getDay();i++) h+='<span class="cal-d empty"></span>';
+  for(let i=1;i<=days;i++){
+    const day=year+'-'+String(month).padStart(2,'0')+'-'+String(i).padStart(2,'0');
+    h+='<button class="cal-d'+(day===S.selectedDate?' sel':'')+'" data-act="calday" data-val="'+day+'" '+(day<dateKey(new Date())?'disabled':'')+'>'+i+'</button>';
+  }
+  h+='</div></div>';
+
+  // Slots for all items
+  h+='<p class="label">Available for all items — '+esc(dateLabelShort(S.selectedDate))+'</p>';
+  for(let hour=9;hour<=15;hour+=2){
+    const start=String(hour).padStart(2,'0')+':00',end=String(hour+2).padStart(2,'0')+':00';
+    let conflict=false;
+    items.forEach(e=>{
+      const probe={equipmentId:e.id,startDate:S.selectedDate,endDate:S.selectedDate,startTime:start,endTime:end};
+      if(conflictFor(probe,S.bookings)||interval(S.selectedDate,start)<Date.now()) conflict=true;
+    });
+    h+=conflict?'<div class="slot taken"><span class="slot-time">'+timeLabel(start)+' – '+timeLabel(end)+'</span><span class="slot-badge s-taken">Conflict</span></div>':'<button class="slot avail" data-act="kitstartslot" data-val="'+start+'" style="width:100%"><span class="slot-time">'+timeLabel(start)+' – '+timeLabel(end)+'</span><span class="slot-badge s-free">Select all</span></button>';
+  }
+  h+='<button class="btn quiet" data-act="tab" data-to="kits">Cancel</button>';
+  return shell('Kit Schedule',h,{back:'kits',hideTabs:true});
+};
+
+V.kitreview=()=>{
+  const kit=KITS.find(k=>k.id===S.kitDraft?.kitId);
+  if(!kit) return V.kits();
+  const items=kit.items.map(id=>getEq(id)).filter(e=>e&&availability(e)!=='repair');
+  const kd=S.kitDraft;
+  let h='<div class="banner info"><strong>Kit Booking Review</strong>All '+items.length+' items will be reserved for the same time.</div>';
+  h+='<div class="sum">';
+  h+='<div><span>Kit</span><b>'+ic(kit.icon,14)+' '+esc(kit.name)+'</b></div>';
+  h+='<div><span>Date</span><b>'+esc(dateLabelShort(kd.startDate))+'</b></div>';
+  h+='<div><span>Time</span><b>'+esc(timeLabel(kd.startTime))+' – '+esc(timeLabel(kd.endTime))+'</b></div>';
+  h+='<div><span>Items</span><b>'+items.map(e=>esc(e.name)).join(', ')+'</b></div>';
+  h+='<div><span>Requester</span><b>'+esc(kd.requester)+'</b></div>';
+  h+='<div><span>Location</span><b>'+esc(kd.destination)+'</b></div>';
+  h+='</div>';
+  h+='<div class="actions"><button class="btn primary" data-act="confirmkit">'+ic('zap',14)+' Confirm Kit Booking ('+items.length+' items)</button>';
+  h+='<button class="btn ghost" data-act="go" data-to="kitcalendar">Change time</button></div>';
+  return shell('Review Kit',h,{back:'kitcalendar',hideTabs:true});
+};
+
+V.kitsuccess=()=>{
+  const kit=KITS.find(k=>k.id===S.kitDraft?.kitId);
+  let h='<div class="center" style="flex:0 0 auto;align-items:center;text-align:center">';
+  h+='<div class="badge ok">'+ic('zap',28)+'</div>';
+  h+='<h2 class="fade-up">Kit Booked!</h2>';
+  h+='<p class="lead fade-up" style="margin-top:4px">'+(kit?esc(kit.name):'Kit')+' — all items reserved successfully.</p></div>';
+  h+='<div class="actions fade-up"><button class="btn primary" data-act="tab" data-to="mybookings">View My Bookings</button>';
+  h+='<button class="btn ghost" data-act="tab" data-to="home">Back to Home</button></div>';
+  return shell('Kit Confirmed',h,{hideTabs:true});
+};
+
+V.extend=()=>{
+  const b=S.bookings.find(x=>x.id===S.view.arg);
+  if(!b||!b.endDate)return V.mybookings();
+  let h='<div class="banner info"><strong>Extend Booking</strong>Choose a later end time. Conflicts are checked automatically.</div>';
+  h+='<div class="sum"><div><span>Equipment</span><b>'+esc(b.eq)+'</b></div><div><span>Current end</span><b>'+esc(dateLabelShort(b.endDate))+' '+esc(timeLabel(b.endTime))+'</b></div></div>';
+  h+='<div class="field"><label for="extendDate">New end date</label><input id="extendDate" type="date" min="'+esc(b.endDate)+'" value="'+esc(b.endDate)+'"></div>';
+  h+='<div class="field"><label for="extendTime">New end time</label><input id="extendTime" type="time" value="'+esc(b.endTime)+'"></div>';
+  h+='<button class="btn primary" data-act="saveextension" data-id="'+b.id+'">Save Extension</button>';
+  h+='<button class="btn ghost" data-act="tab" data-to="mybookings">Cancel</button>';
+  return shell('Extend Booking',h,{back:'mybookings',hideTabs:true});
+};
+
+/* ========== DIGITAL HANDOVER LOG — CHECK-OUT ========== */
+V.checkout=()=>{
+  const b=S.bookings.find(x=>x.id===S.view.arg);
+  if(!b) return V.mybookings();
+  const e=getEq(b.eqId);
+  let h='<div class="banner info"><strong>Digital Handover — Check-Out</strong>Inspect the equipment before taking it. Report its current condition.</div>';
+  h+='<div class="sum">';
+  h+='<div><span>Equipment</span><b>'+esc(b.eq)+'</b></div>';
+  h+='<div><span>Reference</span><b style="font-family:monospace">'+esc(b.ref)+'</b></div>';
+  h+='<div><span>Pickup</span><b>'+esc(e?e.location:'—')+'</b></div>';
+  h+='</div>';
+  h+='<p class="label">Equipment condition at check-out</p>';
+  h+='<div class="handover-opt" id="checkoutOpts">';
+  ['Working fine','Battery low','Damage noticed'].forEach(c=>{
+    h+='<button data-act="setCheckoutCond" data-val="'+c+'">'+c+'</button>';
+  });
+  h+='</div>';
+  h+='<div class="field" style="margin-top:12px"><label for="checkoutNote">Notes (optional)</label><textarea id="checkoutNote" placeholder="Describe condition details if needed"></textarea></div>';
+  h+='<div class="notice" style="margin-top:8px"><strong>Auto-flag notice</strong>If you report anything other than "Working fine", this equipment will be immediately flagged as "Needs repair" for the next producer.</div>';
+  h+='<div class="actions" style="margin-top:12px"><button class="btn primary" data-act="doCheckout" data-id="'+b.id+'">Complete Check-Out</button>';
+  h+='<button class="btn ghost" data-act="tab" data-to="mybookings">Cancel</button></div>';
+  return shell('Check-Out',h,{back:'mybookings',hideTabs:true});
+};
+
+/* ========== DIGITAL HANDOVER LOG — CHECK-IN / RETURN ========== */
+V.returnconfirm=()=>{
+  const b=S.bookings.find(x=>x.id===S.view.arg);
+  if(!b) return V.mybookings();
+  const e=getEq(b.eqId);
+  let h='<div class="banner info"><strong>Digital Handover — Check-In / Return</strong>Report the equipment condition on return.</div>';
+  h+='<div class="sum">';
+  h+='<div><span>Equipment</span><b>'+esc(b.eq)+'</b></div>';
+  h+='<div><span>Reference</span><b style="font-family:monospace">'+esc(b.ref)+'</b></div>';
+  h+='<div><span>Date</span><b>'+esc(bookingDate(b))+'</b></div>';
+  h+='<div><span>Coordinator</span><b>'+esc(COORDINATOR.name)+'</b></div>';
+  h+='</div>';
+  h+='<p class="label">Equipment condition at check-in</p>';
+  h+='<div class="handover-opt" id="checkinOpts">';
+  ['Working fine','Battery low','Damage noticed'].forEach(c=>{
+    h+='<button data-act="setCheckinCond" data-val="'+c+'">'+c+'</button>';
+  });
+  h+='</div>';
+  h+='<div class="field" style="margin-top:12px"><label for="returnNotes">Notes (optional)</label><textarea id="returnNotes" placeholder="Describe any issues"></textarea></div>';
+  h+='<div class="field"><label for="returnPhoto">Return photo (optional)</label><input type="file" accept="image/*" capture="environment" id="returnPhoto"></div>';
+  h+='<div class="notice" style="margin-top:8px"><strong>Auto-flag notice</strong>If you report anything other than "Working fine", this equipment will be immediately flagged as "Needs repair" — visible to the next producer and on the Admin dashboard. No phone call required.</div>';
+  h+='<div class="actions"><button class="btn primary-ok" data-act="doreturn" data-id="'+b.id+'">Confirm Return</button>';
+  h+='<button class="btn ghost" data-act="tab" data-to="mybookings">Go back</button></div>';
+  return shell('Check-In / Return',h,{back:'mybookings',hideTabs:true});
+};
+
+V.feedback=()=>{
+  const b=S.bookings.find(x=>x.id===S.view.arg);
+  if(!b) return V.mybookings();
+  let h='<h2>How was the equipment?</h2><p class="lead">Your feedback helps maintain quality for all producers.</p>';
+  h+='<div class="sum"><div><span>Equipment</span><b>'+esc(b.eq)+'</b></div><div><span>Date</span><b>'+esc(bookingDate(b))+'</b></div></div>';
+  h+='<p class="label">Rating</p>';
+  h+='<div class="stars" id="stars">';
+  for(let i=1;i<=5;i++) h+='<button data-act="rate" data-val="'+i+'">&#9734;</button>';
+  h+='</div>';
+  h+='<div class="field" style="margin-top:4px"><label>Equipment condition</label>';
+  h+='<div style="display:flex;gap:6px;flex-wrap:wrap" id="condOpts">';
+  ['Excellent','Good','Fair','Poor'].forEach(c=>{
+    h+='<button class="fbtn" data-act="setcond" data-val="'+c+'">'+c+'</button>';
+  });
+  h+='</div></div>';
+  h+='<div class="field"><label for="fb-notes">Notes (optional)</label>';
+  h+='<textarea id="fb-notes" placeholder="Any issues or comments"></textarea></div>';
+  h+='<button class="btn primary" data-act="submitfeedback" data-id="'+b.id+'">Submit Feedback</button>';
+  h+='<button class="btn quiet" data-act="tab" data-to="mybookings">Skip</button>';
+  return shell('Feedback',h,{hideTabs:true});
+};
+
+/* ========== SHARED EQUIPMENT CALENDAR (both roles) ========== */
+V.sharedcalendar=()=>{
+  const [year,month]=S.calendarMonth.split('-').map(Number);
+  const first=new Date(year,month-1,1),days=new Date(year,month,0).getDate();
+  const today=dateKey(new Date());
+  let h='<h2>Equipment Calendar</h2><p class="lead">Booking density across the month. Tap a day to see details.</p>';
+
+  // Month nav
+  h+='<div class="card" style="padding:12px"><div class="cal-head">';
+  h+='<button class="cal-nav" data-act="calmonth" data-val="-1">'+ic('chevronL',16)+'</button>';
+  h+='<span class="cal-month">'+first.toLocaleDateString('en-US',{month:'long',year:'numeric'})+'</span>';
+  h+='<button class="cal-nav" data-act="calmonth" data-val="1">'+ic('chevronR',16)+'</button></div>';
+
+  // Density grid
+  h+='<div class="density-grid">';
+  ['S','M','T','W','T','F','S'].forEach(d=>h+='<div class="cal-lbl" style="aspect-ratio:auto">'+d+'</div>');
+  for(let i=0;i<first.getDay();i++) h+='<div class="density-cell empty"></div>';
+  for(let i=1;i<=days;i++){
+    const day=year+'-'+String(month).padStart(2,'0')+'-'+String(i).padStart(2,'0');
+    const count=S.bookings.filter(b=>b.startDate&&b.startDate<=day&&b.endDate>=day&&blocks(b)).length;
+    const density=Math.min(count,4);
+    const isSel=day===S.calendarDate;
+    h+='<button class="density-cell density-'+density+(isSel?' sel':'')+'" data-act="caldrill" data-val="'+day+'">';
+    h+='<span class="dc-day">'+i+'</span>';
+    if(count>0){
+      h+='<span class="dc-dots">';
+      for(let d=0;d<Math.min(count,3);d++) h+='<span class="dc-dot" style="background:var('+(d<2?'--gold':'--red')+')"></span>';
+      if(count>3) h+='<span style="font-size:7px;color:var(--sub)">+</span>';
+      h+='</span>';
+    }
+    h+='</button>';
+  }
+  h+='</div></div>';
+
+  // Drill-down
+  h+='<p class="label">'+esc(dateLabelShort(S.calendarDate))+'</p>';
+  const dayBookings=S.bookings.filter(b=>b.startDate&&b.startDate<=S.calendarDate&&b.endDate>=S.calendarDate&&blocks(b));
+  if(dayBookings.length){
+    dayBookings.forEach(b=>{
+      const statusColor=b.status==='pending'?'var(--gold)':b.status==='active'?'var(--navy)':'var(--green)';
+      h+='<div class="drill-booking">';
+      h+='<div class="db-color" style="background:'+statusColor+'"></div>';
+      h+='<div class="db-info"><div class="db-name">'+esc(b.eq)+'</div>';
+      h+='<div class="db-time">'+esc(bookingTime(b))+' · '+(b.requester?esc(b.requester):'—')+'</div></div>';
+      h+=statusPill(b.status)+'</div>';
+    });
+  } else {
+    h+='<div class="card" style="text-align:center"><h3>No bookings</h3><p>No equipment is booked on this day.</p></div>';
+  }
+  return shell('Calendar',h);
+};
+
+/* ========== ADMIN PANEL — DASHBOARD ========== */
+V['admin-dash']=()=>{
+  const pending=S.bookings.filter(b=>b.status==='pending');
+  const repair=EQUIPMENT.filter(e=>e.avail==='repair'||e.ready==='repair');
+  const todayStr=dateKey(new Date());
+  const todayBookings=S.bookings.filter(b=>b.startDate&&b.startDate<=todayStr&&b.endDate>=todayStr&&blocks(b));
+  let h='<h2>Admin Dashboard</h2><p class="lead">Overview for the Head of VUTV</p>';
+
+  // Stats grid
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">';
+  h+='<div class="admin-stat urgent"><div class="as-num">'+pending.length+'</div><div class="as-label">Pending Requests</div></div>';
+  h+='<div class="admin-stat warn"><div class="as-num">'+repair.length+'</div><div class="as-label">Needs Repair</div></div>';
+  h+='<div class="admin-stat ok"><div class="as-num">'+todayBookings.length+'</div><div class="as-label">Today\'s Bookings</div></div>';
+  h+='</div>';
+
+  // Pending requests preview
+  if(pending.length){
+    h+='<p class="label">Pending requests</p>';
+    pending.slice(0,3).forEach(b=>{
+      h+='<div class="req-card"><div class="rc-top">'+statusPill(b.status)+'<span class="bk-ref">'+esc(b.ref)+'</span></div>';
+      h+='<div class="rc-name">'+esc(b.eq)+'</div>';
+      h+='<div class="rc-meta">'+esc(bookingDate(b))+' · '+esc(bookingTime(b))+'</div>';
+      h+='<div class="rc-meta">By '+esc(b.requester||'—')+' · '+esc(b.purpose||'—')+'</div>';
+      h+='<div class="rc-actions"><button class="bk-btn ok" data-act="approve" data-id="'+b.id+'" style="flex:1">✓ Approve</button>';
+      h+='<button class="bk-btn danger" data-act="reject" data-id="'+b.id+'" style="flex:1">✗ Reject</button></div></div>';
+    });
+    if(pending.length>3) h+='<button class="btn ghost" data-act="admintab" data-to="admin-requests">View all '+pending.length+' requests</button>';
+  }
+
+  // Repair items
+  if(repair.length){
+    h+='<p class="label">Items needing repair</p>';
+    repair.forEach(e=>{
+      h+='<div class="req-card"><div class="rc-top"><span class="pill p-repair">Needs Repair</span><span style="font-size:10px;color:var(--faint)">'+esc(e.asset)+'</span></div>';
+      h+='<div class="rc-name">'+esc(e.name)+'</div>';
+      h+='<div class="rc-meta">'+esc(e.condition)+' · '+esc(e.location)+'</div>';
+      h+='<div class="rc-actions"><button class="bk-btn ok" data-act="clearrepair" data-id="'+e.id+'" style="flex:1">✓ Mark as Fixed</button></div></div>';
+    });
+  }
+
+  // Today's bookings
+  if(todayBookings.length){
+    h+='<p class="label">Today\'s bookings</p>';
+    todayBookings.forEach(b=>{
+      h+='<div class="drill-booking">';
+      h+='<div class="db-color" style="background:var('+(b.status==='active'?'--navy':'--green')+')"></div>';
+      h+='<div class="db-info"><div class="db-name">'+esc(b.eq)+'</div>';
+      h+='<div class="db-time">'+esc(bookingTime(b))+' · '+esc(b.requester||'—')+'</div></div>';
+      h+=statusPill(b.status)+'</div>';
+    });
+  }
+
+  return shell('Admin Dashboard',h);
+};
+
+/* ========== ADMIN — REQUESTS (approve/reject) ========== */
+V['admin-requests']=()=>{
+  const pending=S.bookings.filter(b=>b.status==='pending');
+  const recent=S.bookings.filter(b=>b.status==='confirmed'||b.status==='rejected').slice(0,5);
+  let h='<h2>Booking Requests</h2><p class="lead">Approve or reject pending booking requests.</p>';
+
+  h+='<p class="label">Pending ('+pending.length+')</p>';
+  if(!pending.length){
+    h+='<div class="card"><h3>All clear</h3><p>No pending requests right now.</p></div>';
+  }
+  pending.forEach(b=>{
+    const e=getEq(b.eqId);
+    h+='<div class="req-card"><div class="rc-top">'+statusPill(b.status)+'<span class="bk-ref">'+esc(b.ref)+'</span></div>';
+    h+='<div class="rc-name">'+esc(b.eq)+'</div>';
+    h+='<div class="rc-meta">'+esc(bookingDate(b))+' · '+esc(bookingTime(b))+'</div>';
+    h+='<div class="rc-meta">Requester: '+esc(b.requester||'—')+'</div>';
+    h+='<div class="rc-meta">Purpose: '+esc(b.purpose||'—')+' · Location: '+esc(b.destination||'—')+'</div>';
+    if(e) h+='<div class="rc-meta">Equipment: '+esc(e.location)+' · Readiness: '+(e.ready==='ready'?'✓ Ready':'⚠ '+esc(e.ready))+'</div>';
+    h+='<div class="rc-actions"><button class="bk-btn ok" data-act="approve" data-id="'+b.id+'" style="flex:1">✓ Approve</button>';
+    h+='<button class="bk-btn danger" data-act="reject" data-id="'+b.id+'" style="flex:1">✗ Reject</button></div></div>';
+  });
+
+  if(recent.length){
+    h+='<p class="label">Recently handled</p>';
+    recent.forEach(b=>{
+      h+='<div class="req-card" style="opacity:.7"><div class="rc-top">'+statusPill(b.status)+'<span class="bk-ref">'+esc(b.ref)+'</span></div>';
+      h+='<div class="rc-name">'+esc(b.eq)+'</div>';
+      h+='<div class="rc-meta">'+esc(bookingDate(b))+' · '+esc(bookingTime(b))+'</div></div>';
+    });
+  }
+  return shell('Requests',h);
+};
+
+/* ========== ADMIN — EQUIPMENT MANAGEMENT ========== */
+V['admin-equip']=()=>{
+  let h='<h2>Equipment Management</h2><p class="lead">Add new equipment or clear repair flags.</p>';
+
+  // Add equipment form
+  h+='<div class="card" style="padding:14px"><div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:10px">Add New Equipment</div>';
+  h+='<div class="field"><label for="newEqName">Name</label><input id="newEqName" type="text" placeholder="e.g. DJI Ronin-S Gimbal"></div>';
+  h+='<div class="grid2" style="margin-top:8px">';
+  h+='<div class="field"><label for="newEqCat">Category</label><select id="newEqCat"><option>Cameras</option><option>Audio</option><option>Lighting</option><option>Support</option></select></div>';
+  h+='<div class="field"><label for="newEqAsset">Asset ID</label><input id="newEqAsset" type="text" placeholder="e.g. GIM-001"></div>';
+  h+='</div>';
+  h+='<div class="field" style="margin-top:8px"><label for="newEqCondition">Condition note</label><input id="newEqCondition" type="text" placeholder="e.g. Brand new, unboxed"></div>';
+  h+='<div class="field" style="margin-top:8px"><label for="newEqLocation">Location</label><input id="newEqLocation" type="text" placeholder="e.g. Equipment Room A, Shelf 1"></div>';
+  h+='<button class="btn primary" data-act="addequip" style="margin-top:12px">Add Equipment</button></div>';
+
+  // Equipment list
+  h+='<p class="label">All equipment ('+EQUIPMENT.length+')</p>';
+  EQUIPMENT.forEach(e=>{
+    const state=availability(e);
+    h+='<div class="req-card"><div class="rc-top">'+availPill(state)+readyPill(e.ready)+'</div>';
+    h+='<div class="rc-name">'+esc(e.name)+'</div>';
+    h+='<div class="rc-meta">'+esc(e.cat)+' · '+esc(e.asset)+' · '+esc(e.location)+'</div>';
+    h+='<div class="rc-meta">Condition: '+esc(e.condition)+'</div>';
+    if(e.avail==='repair'||e.ready==='repair'){
+      h+='<div class="rc-actions"><button class="bk-btn ok" data-act="clearrepair" data-id="'+e.id+'" style="flex:1">✓ Mark as Fixed</button></div>';
+    }
+    h+='</div>';
+  });
+  return shell('Equipment Mgmt',h);
+};
+
+V.loading=()=>{
+  let h='<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><div class="spinner"></div><span style="font-size:12px;color:var(--faint)">Checking availability...</span></div>';
+  for(let i=0;i<4;i++){
+    h+='<div class="sk-card" style="animation-delay:'+(i*.15)+'s"><div class="sk-thumb skel"></div><div class="sk-lines"><div class="sk-line skel" style="width:'+(80-i*10)+'%"></div><div class="sk-line skel" style="width:'+(50-i*5)+'%"></div></div></div>';
+  }
+  return shell('Equipment',h);
+};
+
+/* ===================== RENDER ===================== */
+function render(){
+  // Route to appropriate default view based on role
+  let viewName = S.view.name;
+  if(S.role==='admin' && (viewName==='home'||viewName==='equipment'||viewName==='kits'||viewName==='mybookings')){
+    viewName = S.adminTab || 'admin-dash';
+    S.view.name = viewName;
+  }
+  if(S.role==='producer' && viewName.startsWith('admin-')){
+    viewName = 'home';
+    S.view.name = viewName;
+    S.tab = 'home';
+  }
+  const fn=V[viewName]||V.home;
+  $('app').outerHTML='<div id="app" style="flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden;background:var(--surface)">'+fn()+'</div>';
+  if(viewName==='equipment'&&S.search){
+    setTimeout(()=>{
+      const inp=$('searchInput');
+      if(inp){inp.focus();inp.setSelectionRange(inp.value.length,inp.value.length);}
+    },10);
+  }
+}
+
+function renderModal(){
+  const root=$('modal-root');
+  if(!S.showModal){root.innerHTML='';return;}
+  const m=S.showModal;
+  if(m.type==='cancelConfirm'){
+    const b=S.bookings.find(x=>x.id===m.data);
+    root.innerHTML='<div class="modal-overlay" id="modalOverlay"><div class="modal"><h3>Cancel Booking?</h3><p>Are you sure you want to cancel <strong>'+(b?esc(b.eq):'this booking')+'</strong>? This cannot be undone.</p><div class="actions"><button class="btn danger" data-act="docancel" data-id="'+m.data+'">Yes, Cancel Booking</button><button class="btn ghost" data-act="dismissmodal">Keep Booking</button></div></div></div>';
+    $('modalOverlay').addEventListener('click',e=>{if(e.target.id==='modalOverlay')hideModal();});
+  }
+  if(m.type==='kitForm'){
+    const kit=KITS.find(k=>k.id===m.data);
+    root.innerHTML='<div class="modal-overlay" id="modalOverlay"><div class="modal"><h3>'+ic(kit.icon,18)+' '+esc(kit.name)+'</h3><p>Enter your details to book this kit.</p><div class="field"><label for="kitRequester">Your name</label><input id="kitRequester" type="text" placeholder="Name / Team"></div><div class="field" style="margin-top:10px"><label for="kitDest">Where will it be used?</label><input id="kitDest" type="text" placeholder="Studio / Room"></div><div class="actions" style="margin-top:14px"><button class="btn primary" data-act="kitformsubmit">Continue to Review</button><button class="btn ghost" data-act="dismissmodal">Cancel</button></div></div></div>';
+    $('modalOverlay').addEventListener('click',e=>{if(e.target.id==='modalOverlay')hideModal();});
+  }
+  if(m.type==='account'){
+    let h='<div class="acct-sheet" id="modalOverlay"><div class="acct-backdrop" data-act="dismissmodal"></div><div class="acct-panel">';
+    h+='<h3>Switch Account</h3><p class="acct-sub">Change your role in this demo environment.</p>';
+    
+    // Producer option
+    const isP=S.role==='producer';
+    h+='<button class="acct-opt '+(isP?'active':'')+'" data-act="switchaccount" data-val="producer">';
+    h+='<div class="acct-av" style="background:var(--gold)">PR</div>';
+    h+='<div class="acct-info"><div class="acct-name">Producer</div><div class="acct-role">Student filmmaker</div></div>';
+    h+='<div class="acct-check">'+(isP?ic('check',12):'')+'</div></button>';
+    
+    // Admin option
+    const isA=S.role==='admin';
+    h+='<button class="acct-opt '+(isA?'active':'')+'" data-act="switchaccount" data-val="admin">';
+    h+='<div class="acct-av" style="background:var(--navy)">HV</div>';
+    h+='<div class="acct-info"><div class="acct-name">Head of VUTV</div><div class="acct-role">Administrator</div></div>';
+    h+='<div class="acct-check">'+(isA?ic('check',12):'')+'</div></button>';
+    
+    h+='</div></div>';
+    root.innerHTML=h;
+  }
+}
+
+/* ===================== STATE: feedback form ===================== */
+let pendingRating=0;
+let pendingCond='';
+
+/* ===================== ACTIONS ===================== */
+let pendingCheckoutCond='';
+let pendingCheckinCond='';
+
+document.addEventListener('click',ev=>{
+  const el=ev.target.closest('[data-act]');
+  if(!el) return;
+  const act=el.dataset.act,id=el.dataset.id,to=el.dataset.to,val=el.dataset.val,arg=el.dataset.arg;
+
+  if(act==='tab'){setTab(to);return;}
+  if(act==='admintab'){setAdminTab(to);return;}
+  if(act==='go'){go(to,arg);return;}
+
+  if(act==='openaccount'){showModal('account');return;}
+  if(act==='switchaccount'){
+    hideModal();
+    S.role=val;
+    if(val==='admin'){S.adminTab=S.adminTab||'admin-dash';go(S.adminTab);}
+    else{S.tab='home';go('home');}
+    return;
+  }
+  if(act==='detail'){go('detail',id);return;}
+  if(act==='startbook'){
+    S.selectedEq=id;
+    S.bookingDraft=newDraft(id);
+    S.selectedDate=S.bookingDraft.startDate;
+    S.selectedMonth=S.selectedDate.slice(0,7);
+    S.view={name:'loading'};render();
+    setTimeout(()=>{if(S.view.name==='loading')go('calendar',id);},300);
+    return;
+  }
+  if(act==='month'){
+    const [year,month]=S.selectedMonth.split('-').map(Number);
+    const next=new Date(year,month-1+Number(val),1);
+    S.selectedMonth=dateKey(next).slice(0,7);
+    render();return;
+  }
+  if(act==='calmonth'){
+    const [year,month]=S.calendarMonth.split('-').map(Number);
+    const next=new Date(year,month-1+Number(val),1);
+    S.calendarMonth=dateKey(next).slice(0,7);
+    S.calendarDate=S.calendarMonth+'-01';
+    render();return;
+  }
+  if(act==='calday'){
+    S.selectedDate=val;
+    if(S.bookingDraft){
+      S.bookingDraft.startDate=val;
+      if(S.bookingDraft.endDate<val)S.bookingDraft.endDate=val;
+    }
+    render();return;
+  }
+  if(act==='selectslot'){
+    const d=S.bookingDraft;
+    d.startDate=S.selectedDate;d.endDate=S.selectedDate;
+    d.startTime=val;
+    d.endTime=String(Number(val.slice(0,2))+2).padStart(2,'0')+':00';
+    if(conflictFor(d,S.bookings)||interval(d.startDate,d.startTime)<Date.now()){go('conflict',d.equipmentId);return;}
+    go('bookingform',d.equipmentId);return;
+  }
+  if(act==='continuebooking'){
+    const d=S.bookingDraft;
+    if(!d.startDate||!d.endDate||!d.startTime||!d.endTime||interval(d.startDate,d.startTime)<Date.now()||interval(d.endDate,d.endTime)<=interval(d.startDate,d.startTime)){toast('Choose a valid future interval');return;}
+    if(conflictFor(d,S.bookings)){go('conflict',d.equipmentId);return;}
+    go('bookingform',d.equipmentId);return;
+  }
+  if(act==='reviewbooking'){
+    const error=validateDraft(S.bookingDraft);
+    if(error){toast(error);return;}
+    if(conflictFor(S.bookingDraft,S.bookings)){go('conflict',S.bookingDraft.equipmentId);return;}
+    go('review',S.bookingDraft.equipmentId);return;
+  }
+  if(act==='confirm'){
+    const d=S.bookingDraft,error=validateDraft(d);
+    if(error){toast(error);go('bookingform',d&&d.equipmentId);return;}
+    S.bookings=bookingsFromStorage()||S.bookings;
+    if(conflictFor(d,S.bookings)){go('conflict',d.equipmentId);return;}
+    const e=getEq(d.equipmentId);
+    const bid='b'+(crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random().toString(36).slice(2));
+    const b={...d,id:bid,ref:'VR-'+bid.slice(1,9).toUpperCase(),eq:e.name,eqId:e.id,loc:e.location,rating:null,feedback:null};
+    S.bookings.unshift(b);
+    S.lastBookingId=bid;
+    saveBookings();
+    go('success',e.id);
+    return;
+  }
+
+  // Cancel confirmation modal
+  if(act==='confirmcancel'){showModal('cancelConfirm',id);return;}
+  if(act==='dismissmodal'){hideModal();return;}
+  if(act==='docancel'){
+    S.bookings=S.bookings.filter(b=>b.id!==id);
+    saveBookings();hideModal();
+    toast('Booking cancelled');render();return;
+  }
+
+  // ========== DIGITAL HANDOVER LOG ACTIONS ==========
+  // Check-out
+  if(act==='checkout'){pendingCheckoutCond='';go('checkout',id);return;}
+  if(act==='setCheckoutCond'){
+    pendingCheckoutCond=val;
+    const opts=document.querySelectorAll('#checkoutOpts button');
+    opts.forEach(o=>o.classList.toggle('on',o.dataset.val===val));
+    return;
+  }
+  if(act==='doCheckout'){
+    if(!pendingCheckoutCond){toast('Select equipment condition');return;}
+    const b=S.bookings.find(x=>x.id===id);
+    if(!b)return;
+    const note=($('checkoutNote')?$('checkoutNote').value:'').trim();
+    b.checkOut={condition:pendingCheckoutCond,note:note,time:new Date().toISOString()};
+    b.status='active';
+    // AUTO-FLAG: if anything other than "Working fine", flag equipment
+    handoverAutoFlag(b.eqId, pendingCheckoutCond);
+    saveBookings();
+    if(pendingCheckoutCond!=='Working fine'){
+      toast('Equipment flagged as "Needs repair" — visible to all');
+    } else {
+      toast('Check-out complete');
+    }
+    go('mybookings');return;
+  }
+  // Check-in condition selector
+  if(act==='setCheckinCond'){
+    pendingCheckinCond=val;
+    const opts=document.querySelectorAll('#checkinOpts button');
+    opts.forEach(o=>o.classList.toggle('on',o.dataset.val===val));
+    return;
+  }
+
+  // ========== ADMIN ACTIONS ==========
+  if(act==='approve'){
+    const b=S.bookings.find(x=>x.id===id);
+    if(b){b.status='confirmed';saveBookings();toast('Booking approved');render();}
+    return;
+  }
+  if(act==='reject'){
+    const b=S.bookings.find(x=>x.id===id);
+    if(b){b.status='rejected';saveBookings();toast('Booking rejected');render();}
+    return;
+  }
+  if(act==='clearrepair'){
+    const e=getEq(id);
+    if(e){
+      e.avail='available';e.ready='ready';
+      e.condition='Repaired and verified';
+      const d=new Date();
+      e.lastChecked=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})+', '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+      saveEquipment();
+      toast('Equipment marked as fixed');render();
+    }
+    return;
+  }
+  if(act==='addequip'){
+    const name=($('newEqName')?$('newEqName').value:'').trim();
+    const cat=$('newEqCat')?$('newEqCat').value:'Cameras';
+    const asset=($('newEqAsset')?$('newEqAsset').value:'').trim();
+    const condition=($('newEqCondition')?$('newEqCondition').value:'Good').trim()||'Good';
+    const location=($('newEqLocation')?$('newEqLocation').value:'').trim();
+    if(!name){toast('Enter equipment name');return;}
+    if(!asset){toast('Enter asset ID');return;}
+    if(!location){toast('Enter location');return;}
+    const newId='eq-'+Date.now();
+    EQUIPMENT.push({id:newId,name,cat,asset:asset.toUpperCase(),img:null,avail:'available',ready:'ready',battery:null,condition,location,lastChecked:'Just added',rating:null});
+    saveEquipment();
+    toast('Equipment added: '+name);render();
+    return;
+  }
+
+  // ========== SHARED CALENDAR ACTIONS ==========
+  if(act==='calmonth'){
+    const [yr,mo]=S.calendarMonth.split('-').map(Number);
+    const next=new Date(yr,mo-1+Number(val),1);
+    S.calendarMonth=dateKey(next).slice(0,7);
+    render();return;
+  }
+  if(act==='caldrill'){
+    S.calendarDate=val;
+    render();return;
+  }
+
+  if(act==='extend'){go('extend',id);return;}
+  if(act==='saveextension'){
+    const b=S.bookings.find(x=>x.id===id);
+    if(!b)return;
+    const endDate=$('extendDate').value,endTime=$('extendTime').value;
+    if(!endDate||!endTime||interval(endDate,endTime)<=bookingEnd(b)){toast('Choose an end later than current');return;}
+    const extension={equipmentId:b.eqId,startDate:b.endDate,startTime:b.endTime,endDate,endTime};
+    S.bookings=bookingsFromStorage()||S.bookings;
+    const current=S.bookings.find(x=>x.id===id);
+    if(!current||!blocks(current)){toast('Booking no longer active');go('mybookings');return;}
+    if(conflictFor(extension,S.bookings,id)){toast('Extension overlaps another booking');return;}
+    current.endDate=endDate;current.endTime=endTime;
+    saveBookings();toast('Booking extended');go('mybookings');return;
+  }
+  if(act==='markreturn'){pendingCheckinCond='';go('returnconfirm',id);return;}
+  if(act==='doreturn'){
+    if(!pendingCheckinCond){toast('Select equipment condition');return;}
+    const b=S.bookings.find(x=>x.id===id);
+    if(!b){return;}
+    const file=$('returnPhoto')?$('returnPhoto').files[0]:null;
+    const finish=photo=>{
+      b.checkIn={condition:pendingCheckinCond,note:($('returnNotes')?$('returnNotes').value:'').trim(),time:new Date().toISOString()};
+      b.returnCondition=pendingCheckinCond;
+      b.returnNotes=b.checkIn.note;
+      b.returnPhoto=photo;b.status='completed';saveBookings();
+      // AUTO-FLAG: if anything other than "Working fine", flag equipment
+      handoverAutoFlag(b.eqId, pendingCheckinCond);
+      if(pendingCheckinCond!=='Working fine'){
+        toast('Return recorded — equipment flagged "Needs repair"');
+      } else {
+        toast('Return recorded');
+      }
+      go('feedback',id);
+    };
+    if(!file){finish(null);return;}
+    if(!file.type.startsWith('image/')){toast('Choose an image file');return;}
+    const img=new Image(),reader=new FileReader();
+    reader.onerror=()=>toast('Could not read image');
+    reader.onload=()=>{img.src=reader.result;};
+    img.onerror=()=>toast('Could not process image');
+    img.onload=()=>{
+      const scale=Math.min(1,640/Math.max(img.width,img.height));
+      const canvas=document.createElement('canvas');
+      canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);
+      canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+      finish(canvas.toDataURL('image/jpeg',.65));
+    };
+    reader.readAsDataURL(file);return;
+  }
+  if(act==='givefeedback'){pendingRating=0;pendingCond='';go('feedback',id);return;}
+  if(act==='rate'){
+    pendingRating=Number(val);
+    const stars=document.querySelectorAll('#stars button');
+    stars.forEach((s,i)=>{s.classList.toggle('on',i<pendingRating);s.innerHTML=i<pendingRating?'&#9733;':'&#9734;';});
+    return;
+  }
+  if(act==='setcond'){
+    pendingCond=val;
+    const opts=document.querySelectorAll('#condOpts .fbtn');
+    opts.forEach(o=>o.classList.toggle('on',o.dataset.val===val));
+    return;
+  }
+  if(act==='submitfeedback'){
+    if(!pendingRating||!pendingCond){toast('Choose a rating and condition');return;}
+    const b=S.bookings.find(x=>x.id===id);
+    if(b){
+      b.rating=pendingRating;b.feedback=pendingCond;
+      const notes=$('fb-notes');
+      if(notes&&notes.value.trim()) b.feedback+=': '+notes.value.trim();
+      saveBookings();
+    }
+    toast('Feedback submitted — thank you!');S.tab='mybookings';go('mybookings');return;
+  }
+  if(act==='refresh'){
+    const d=new Date();
+    S.lastUpdated=String(d.getHours()%12||12)+':'+String(d.getMinutes()).padStart(2,'0')+(d.getHours()>=12?' PM':' AM');
+    toast('Status updated');render();return;
+  }
+  if(act==='filter'){S.filter=val;render();return;}
+  if(act==='clearsearch'){S.search='';S.filter='All';render();return;}
+  if(act==='viewbooking'){S.tab='mybookings';go('mybookings');return;}
+
+  // Kit Builder actions
+  if(act==='bookkit'){
+    const kit=KITS.find(k=>k.id===id);
+    if(!kit)return;
+    S.kitDraft={kitId:kit.id,startDate:dateKey(new Date()),endDate:dateKey(new Date()),startTime:'09:00',endTime:'11:00',requester:'',destination:''};
+    S.selectedDate=S.kitDraft.startDate;
+    S.selectedMonth=S.selectedDate.slice(0,7);
+    go('kitcalendar');return;
+  }
+  if(act==='kitstartslot'){
+    const kd=S.kitDraft;
+    kd.startDate=S.selectedDate;kd.endDate=S.selectedDate;
+    kd.startTime=val;kd.endTime=String(Number(val.slice(0,2))+2).padStart(2,'0')+':00';
+    showModal('kitForm',kd.kitId);return;
+  }
+  if(act==='kitformsubmit'){
+    const req=$('kitRequester')?.value?.trim();
+    const dest=$('kitDest')?.value?.trim();
+    if(!req){toast('Enter your name');return;}
+    if(!dest){toast('Enter usage location');return;}
+    S.kitDraft.requester=req;S.kitDraft.destination=dest;
+    hideModal();go('kitreview');return;
+  }
+  if(act==='confirmkit'){
+    const kit=KITS.find(k=>k.id===S.kitDraft?.kitId);
+    if(!kit)return;
+    const kd=S.kitDraft;
+    const items=kit.items.map(id=>getEq(id)).filter(e=>e&&availability(e)!=='repair');
+    items.forEach(e=>{
+      const bid='k'+(crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random().toString(36).slice(2));
+      S.bookings.unshift({
+        id:bid,ref:'VR-'+bid.slice(1,9).toUpperCase(),eq:e.name,eqId:e.id,
+        equipmentId:e.id,startDate:kd.startDate,endDate:kd.endDate,startTime:kd.startTime,endTime:kd.endTime,
+        purpose:kit.type+' production',requester:kd.requester,destination:kd.destination,
+        coordinator:COORDINATOR.name,status:'confirmed',loc:e.location,rating:null,feedback:null
+      });
+    });
+    saveBookings();go('kitsuccess');return;
+  }
+});
+
+// Search input
+document.addEventListener('input',ev=>{
+  const t=ev.target;
+  if(t.dataset&&t.dataset.draft&&S.bookingDraft){S.bookingDraft[t.dataset.draft]=t.value;}
+  if(t.dataset&&t.dataset.act==='search'){S.search=t.value;render();}
+});
+document.addEventListener('change',ev=>{
+  const t=ev.target;
+  if(t.dataset&&t.dataset.draft&&S.bookingDraft){
+    S.bookingDraft[t.dataset.draft]=t.value;
+    if(t.dataset.draft==='startDate'){
+      S.selectedDate=t.value;S.selectedMonth=t.value.slice(0,7);
+      if(S.bookingDraft.endDate<t.value)S.bookingDraft.endDate=t.value;
+      render();
+    }
+  }
+});
+
+// Reset demo
+$('resetBtn').addEventListener('click',()=>{
+  localStorage.removeItem(BOOKING_KEY);
+  localStorage.removeItem(EQUIP_KEY);
+  EQUIPMENT.length=0;
+  DEFAULT_EQUIPMENT.forEach(e=>EQUIPMENT.push(JSON.parse(JSON.stringify(e))));
+  S=seedState();pendingRating=0;pendingCond='';pendingCheckoutCond='';pendingCheckinCond='';
+  toast('Reset to initial state');render();
+});
+
+/* ===================== CLOCK ===================== */
+function clock(){
+  const el=$('clock');if(!el) return;
+  const d=new Date(),h=d.getHours()%12||12;
+  el.textContent=h+':'+String(d.getMinutes()).padStart(2,'0');
+}
+clock();setInterval(clock,20000);
+
+/* ===================== FIT ===================== */
+function fit(){
+  if(window.innerWidth<=560) return;
+  const k=Math.min((window.innerHeight-40)/2694,(window.innerWidth-40)/1278);
+  document.documentElement.style.setProperty('--k',k);
+}
+window.addEventListener('resize',fit);
+fit();
+
+/* ===================== BOOT ===================== */
+render();
+</script>
+</body>
+</html>
