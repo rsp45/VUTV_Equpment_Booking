@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">VUTV producer empathy map</title>
+  <desc id="desc">A four-quadrant empathy map showing what the VUTV producer says, thinks, does and feels while booking shared equipment.</desc>
+  <rect width="1600" height="1000" fill="#fffaf2"/>
+  <rect x="48" y="48" width="1504" height="904" fill="none" stroke="#d7cec1" stroke-width="2"/>
+  <text x="96" y="115" fill="#aa7d2b" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3">VUTV - RESEARCH ARTEFACT 01</text>
+  <text x="96" y="178" fill="#1c1915" font-family="Georgia, serif" font-size="58">Producer empathy map</text>
+  <text x="96" y="220" fill="#71695f" font-family="Arial, sans-serif" font-size="22">Composite of production-member evidence - P1 + P2</text>
+  <line x1="800" y1="285" x2="800" y2="890" stroke="#d7cec1" stroke-width="2"/>
+  <line x1="96" y1="590" x2="1504" y2="590" stroke="#d7cec1" stroke-width="2"/>
+  <rect x="96" y="285" width="42" height="8" fill="#aa7d2b"/>
+  <text x="96" y="340" fill="#1c1915" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="3">SAYS</text>
+  <text x="96" y="405" fill="#1c1915" font-family="Georgia, serif" font-size="36">"Is the camera free?"</text>
+  <text x="96" y="460" fill="#71695f" font-family="Arial, sans-serif" font-size="24">"Has anyone already booked it?"</text>
+  <text x="96" y="505" fill="#71695f" font-family="Arial, sans-serif" font-size="24">"Is the battery charged?"</text>
+  <rect x="850" y="285" width="42" height="8" fill="#59567d"/>
+  <text x="850" y="340" fill="#1c1915" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="3">THINKS</text>
+  <text x="850" y="405" fill="#1c1915" font-family="Georgia, serif" font-size="36">Someone must have checked.</text>
+  <text x="850" y="460" fill="#71695f" font-family="Arial, sans-serif" font-size="24">The booking trail should be visible.</text>
+  <text x="850" y="505" fill="#71695f" font-family="Arial, sans-serif" font-size="24">A clash will derail the whole crew.</text>
+  <rect x="96" y="638" width="42" height="8" fill="#416c50"/>
+  <text x="96" y="693" fill="#1c1915" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="3">DOES</text>
+  <text x="96" y="758" fill="#1c1915" font-family="Georgia, serif" font-size="36">Emails, waits, then follows up.</text>
+  <text x="96" y="813" fill="#71695f" font-family="Arial, sans-serif" font-size="24">Arrives assuming the gear is ready.</text>
+  <text x="96" y="858" fill="#71695f" font-family="Arial, sans-serif" font-size="24">Calls the Head when the schedule fails.</text>
+  <rect x="850" y="638" width="42" height="8" fill="#9d4943"/>
+  <text x="850" y="693" fill="#1c1915" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="3">FEELS</text>
+  <text x="850" y="758" fill="#1c1915" font-family="Georgia, serif" font-size="36">Uncertain before confirmation.</text>
+  <text x="850" y="813" fill="#71695f" font-family="Arial, sans-serif" font-size="24">Frustrated when a clash appears late.</text>
+  <text x="850" y="858" fill="#71695f" font-family="Arial, sans-serif" font-size="24">Demoralised when the shoot is cancelled.</text>
+  <circle cx="800" cy="590" r="86" fill="#f4efe6" stroke="#1c1915" stroke-width="2"/>
+  <text x="800" y="580" text-anchor="middle" fill="#1c1915" font-family="Georgia, serif" font-size="34">Arjun</text>
+  <text x="800" y="616" text-anchor="middle" fill="#71695f" font-family="Arial, sans-serif" font-size="17" letter-spacing="2">PRODUCER</text>
+</svg>

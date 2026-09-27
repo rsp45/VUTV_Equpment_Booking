@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 552" width="940" height="552">
+  <defs>
+    <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="1.2" fill="#E2DFDA" />
+    </pattern>
+    <filter id="sh" x="-4%" y="-4%" width="108%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0000000D" />
+    </filter>
+  </defs>
+  <rect width="940" height="552" fill="#FAFAFA" rx="16" />
+  <rect width="940" height="552" fill="url(#dots)" rx="16" />
+  <rect x="20.0" y="16.0" width="211.5" height="22.0" rx="11" fill="#F7AC36" stroke="#F7AC36" stroke-width="0" />
+  <text x="125.8" y="31.0" fill="#FFF" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="10.5" font-weight="700">IA V1 · CARD-SORT DERIVED</text>
+  <rect x="340.0" y="35.0" width="260.0" height="42.0" rx="12" fill="#F7AC36" stroke="#F7AC36" stroke-width="0" filter="url(#sh)" />
+  <text x="470.0" y="61.5" fill="#FFF" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="15" font-weight="600">VUTV Equipment Booking</text>
+  <path d="M 470.0 77.0 C 470.0 95.7, 140.0 95.7, 140.0 111.0" fill="none" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="135.0,109.0 145.0,109.0 140.0,117.0" fill="#C4B494" />
+  <rect x="55.0" y="117.0" width="170.0" height="38.0" rx="10" fill="#FEF3E2" stroke="#E8D5B8" stroke-width="1.5" filter="url(#sh)" />
+  <text x="140.0" y="141.0" fill="#2D2A26" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="13" font-weight="600">Track &amp; Check</text>
+  <line x1="140.0" y1="159.0" x2="140.0" y2="185.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="135.0,183.0 145.0,183.0 140.0,191.0" fill="#C4B494" />
+  <rect x="60.0" y="191.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="140.0" y="212.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Check availability</text>
+  <line x1="140.0" y1="229.0" x2="140.0" y2="227.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="135.0,225.0 145.0,225.0 140.0,233.0" fill="#C4B494" />
+  <rect x="60.0" y="233.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="140.0" y="254.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Calendar</text>
+  <line x1="140.0" y1="271.0" x2="140.0" y2="269.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="135.0,267.0 145.0,267.0 140.0,275.0" fill="#C4B494" />
+  <rect x="60.0" y="275.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="140.0" y="296.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Notifications</text>
+  <line x1="140.0" y1="313.0" x2="140.0" y2="311.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="135.0,309.0 145.0,309.0 140.0,317.0" fill="#C4B494" />
+  <rect x="60.0" y="317.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="140.0" y="338.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Pickup checklist</text>
+  <path d="M 470.0 77.0 C 470.0 95.7, 360.0 95.7, 360.0 111.0" fill="none" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="355.0,109.0 365.0,109.0 360.0,117.0" fill="#C4B494" />
+  <rect x="275.0" y="117.0" width="170.0" height="38.0" rx="10" fill="#FEF3E2" stroke="#E8D5B8" stroke-width="1.5" filter="url(#sh)" />
+  <text x="360.0" y="141.0" fill="#2D2A26" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="13" font-weight="600">Book &amp; Manage</text>
+  <line x1="360.0" y1="159.0" x2="360.0" y2="185.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="355.0,183.0 365.0,183.0 360.0,191.0" fill="#C4B494" />
+  <rect x="280.0" y="191.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="360.0" y="212.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Book equipment</text>
+  <line x1="360.0" y1="229.0" x2="360.0" y2="227.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="355.0,225.0 365.0,225.0 360.0,233.0" fill="#C4B494" />
+  <rect x="280.0" y="233.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="360.0" y="254.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Cancel booking</text>
+  <line x1="360.0" y1="271.0" x2="360.0" y2="269.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="355.0,267.0 365.0,267.0 360.0,275.0" fill="#C4B494" />
+  <rect x="280.0" y="275.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="360.0" y="296.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Reschedule booking</text>
+  <line x1="360.0" y1="313.0" x2="360.0" y2="311.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="355.0,309.0 365.0,309.0 360.0,317.0" fill="#C4B494" />
+  <rect x="280.0" y="317.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="360.0" y="338.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Conflict warning</text>
+  <line x1="360.0" y1="355.0" x2="360.0" y2="353.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="355.0,351.0 365.0,351.0 360.0,359.0" fill="#C4B494" />
+  <rect x="280.0" y="359.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="360.0" y="380.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Admin approvals</text>
+  <line x1="360.0" y1="397.0" x2="360.0" y2="395.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="355.0,393.0 365.0,393.0 360.0,401.0" fill="#C4B494" />
+  <rect x="280.0" y="401.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="360.0" y="422.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Return equipment</text>
+  <line x1="360.0" y1="439.0" x2="360.0" y2="437.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="355.0,435.0 365.0,435.0 360.0,443.0" fill="#C4B494" />
+  <rect x="280.0" y="443.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="360.0" y="464.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Alternative time</text>
+  <line x1="360.0" y1="481.0" x2="360.0" y2="479.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="355.0,477.0 365.0,477.0 360.0,485.0" fill="#C4B494" />
+  <rect x="280.0" y="485.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="360.0" y="506.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">My bookings</text>
+  <path d="M 470.0 77.0 C 470.0 95.7, 580.0 95.7, 580.0 111.0" fill="none" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="575.0,109.0 585.0,109.0 580.0,117.0" fill="#C4B494" />
+  <rect x="495.0" y="117.0" width="170.0" height="38.0" rx="10" fill="#FEF3E2" stroke="#E8D5B8" stroke-width="1.5" filter="url(#sh)" />
+  <text x="580.0" y="141.0" fill="#2D2A26" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="13" font-weight="600">Equipment Info</text>
+  <line x1="580.0" y1="159.0" x2="580.0" y2="185.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="575.0,183.0 585.0,183.0 580.0,191.0" fill="#C4B494" />
+  <rect x="500.0" y="191.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="580.0" y="212.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Alternative equipment</text>
+  <line x1="580.0" y1="229.0" x2="580.0" y2="227.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="575.0,225.0 585.0,225.0 580.0,233.0" fill="#C4B494" />
+  <rect x="500.0" y="233.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="580.0" y="254.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Equipment list</text>
+  <line x1="580.0" y1="271.0" x2="580.0" y2="269.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="575.0,267.0 585.0,267.0 580.0,275.0" fill="#C4B494" />
+  <rect x="500.0" y="275.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="580.0" y="296.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Battery status</text>
+  <line x1="580.0" y1="313.0" x2="580.0" y2="311.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="575.0,309.0 585.0,309.0 580.0,317.0" fill="#C4B494" />
+  <rect x="500.0" y="317.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="580.0" y="338.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Condition report</text>
+  <path d="M 470.0 77.0 C 470.0 95.7, 800.0 95.7, 800.0 111.0" fill="none" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="795.0,109.0 805.0,109.0 800.0,117.0" fill="#C4B494" />
+  <rect x="715.0" y="117.0" width="170.0" height="38.0" rx="10" fill="#FEF3E2" stroke="#E8D5B8" stroke-width="1.5" filter="url(#sh)" />
+  <text x="800.0" y="141.0" fill="#2D2A26" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="13" font-weight="600">Policies &amp; Help</text>
+  <line x1="800.0" y1="159.0" x2="800.0" y2="185.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="795.0,183.0 805.0,183.0 800.0,191.0" fill="#C4B494" />
+  <rect x="720.0" y="191.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="800.0" y="212.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Help</text>
+  <line x1="800.0" y1="229.0" x2="800.0" y2="227.0" stroke="#C4B494" stroke-width="1.6" />
+  <polygon points="795.0,225.0 805.0,225.0 800.0,233.0" fill="#C4B494" />
+  <rect x="720.0" y="233.0" width="160.0" height="34.0" rx="10" fill="#FFFFFF" stroke="#DDD9D3" stroke-width="1.5" filter="url(#sh)" />
+  <text x="800.0" y="254.0" fill="#4A4540" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="400">Booking policies</text>
+</svg>

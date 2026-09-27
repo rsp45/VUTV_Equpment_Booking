@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+      name="description"
+      content="An HCI case study by Rudra Patel on equipment booking and scheduling conflicts at VUTV."
+    >
+    <meta name="theme-color" content="#FBF6EA">
+    <link rel="icon" type="image/png" href="assets/vutv-logo.png">
+    <title>VUTV Equipment Booking - HCI Case Study</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to case study</a>
+
+    <header class="hero" id="top">
+      <nav class="nav" aria-label="Case study navigation">
+        <a class="wordmark" href="#top" aria-label="VUTV case study home">
+          <img src="assets/vutv-logo.png" alt="" width="40" height="40">
+          <span>VUTV</span>
+        </a>
+        <div class="nav-links">
+          <a href="#phase-1">Phase 1</a>
+          <a href="#phase-2">Phase 2</a>
+          <a href="#phase-3">Phase 3</a>
+          <a href="#phase-4">Phase 4</a>
+          <a href="#phase-5">Reflection</a>
+        </div>
+        <span class="course">STET301 · HCI</span>
+      </nav>
+
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="kicker">Vijaybhoomi University · Student Media</p>
+          <div class="hero-title-row">
+            <span class="hero-accent-bar" aria-hidden="true"></span>
+            <h1>Equipment<br>Booking</h1>
+          </div>
+          <p class="hero-statement">
+            How might we replace invisible email reservations
+            with a shared, conflict-aware equipment schedule?
+          </p>
+          <a class="primary-link" href="#phase-1">Read the research <span aria-hidden="true">&rarr;</span></a>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <!-- Dot grid decoration -->
+          <svg class="hero-dots" width="120" height="120" viewBox="0 0 120 120" fill="none">
+            <circle cx="10" cy="10" r="2.5" fill="var(--gold-pale)"/><circle cx="30" cy="10" r="2.5" fill="var(--gold-pale)"/><circle cx="50" cy="10" r="2.5" fill="var(--gold-pale)"/><circle cx="70" cy="10" r="2.5" fill="var(--gold-pale)"/><circle cx="90" cy="10" r="2.5" fill="var(--gold-pale)"/><circle cx="110" cy="10" r="2.5" fill="var(--gold-pale)"/>
+            <circle cx="10" cy="30" r="2.5" fill="var(--gold-pale)"/><circle cx="30" cy="30" r="2.5" fill="var(--gold-pale)"/><circle cx="50" cy="30" r="2.5" fill="var(--gold-pale)"/><circle cx="70" cy="30" r="2.5" fill="var(--gold-pale)"/><circle cx="90" cy="30" r="2.5" fill="var(--gold-pale)"/><circle cx="110" cy="30" r="2.5" fill="var(--gold-pale)"/>
+            <circle cx="10" cy="50" r="2.5" fill="var(--gold-pale)"/><circle cx="30" cy="50" r="2.5" fill="var(--gold-pale)"/><circle cx="50" cy="50" r="2.5" fill="var(--gold-pale)"/><circle cx="70" cy="50" r="2.5" fill="var(--gold-pale)"/><circle cx="90" cy="50" r="2.5" fill="var(--gold-pale)"/><circle cx="110" cy="50" r="2.5" fill="var(--gold-pale)"/>
+            <circle cx="10" cy="70" r="2.5" fill="var(--gold-pale)"/><circle cx="30" cy="70" r="2.5" fill="var(--gold-pale)"/><circle cx="50" cy="70" r="2.5" fill="var(--gold-pale)"/><circle cx="70" cy="70" r="2.5" fill="var(--gold-pale)"/><circle cx="90" cy="70" r="2.5" fill="var(--gold-pale)"/><circle cx="110" cy="70" r="2.5" fill="var(--gold-pale)"/>
+          </svg>
+
+          <!-- Calendar + Equipment illustration -->
+          <svg class="hero-illustration" viewBox="0 0 380 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Large circle backdrop -->
+            <circle cx="200" cy="170" r="140" fill="var(--gold-pale-2)" opacity="0.5"/>
+            <!-- Calendar card -->
+            <rect x="60" y="40" rx="16" width="240" height="200" fill="var(--surface)" stroke="var(--surface-line)" stroke-width="1.5"/>
+            <!-- Calendar header dots -->
+            <circle cx="85" cy="62" r="3.5" fill="var(--gold-pale)"/>
+            <circle cx="97" cy="62" r="3.5" fill="var(--gold-pale)"/>
+            <circle cx="109" cy="62" r="3.5" fill="var(--gold-pale)"/>
+            <!-- Calendar grid lines -->
+            <line x1="80" y1="80" x2="280" y2="80" stroke="var(--surface-line)" stroke-width="1"/>
+            <line x1="80" y1="110" x2="280" y2="110" stroke="var(--surface-line)" stroke-width="1"/>
+            <line x1="80" y1="140" x2="280" y2="140" stroke="var(--surface-line)" stroke-width="1"/>
+            <line x1="80" y1="170" x2="280" y2="170" stroke="var(--surface-line)" stroke-width="1"/>
+            <line x1="80" y1="200" x2="280" y2="200" stroke="var(--surface-line)" stroke-width="1"/>
+            <line x1="120" y1="80" x2="120" y2="220" stroke="var(--surface-line)" stroke-width="1"/>
+            <line x1="160" y1="80" x2="160" y2="220" stroke="var(--surface-line)" stroke-width="1"/>
+            <line x1="200" y1="80" x2="200" y2="220" stroke="var(--surface-line)" stroke-width="1"/>
+            <line x1="240" y1="80" x2="240" y2="220" stroke="var(--surface-line)" stroke-width="1"/>
+            <!-- Checkmark in cell -->
+            <circle cx="220" cy="95" r="11" fill="var(--gold-pale-2)" stroke="var(--gold)" stroke-width="1.5"/>
+            <polyline points="214,95 218,99 226,91" stroke="var(--gold-deep)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Equipment cards floating -->
+            <rect x="140" y="190" rx="14" width="200" height="80" fill="var(--surface)" stroke="var(--surface-line)" stroke-width="1.5" opacity="0.95"/>
+            <!-- Camera icon -->
+            <rect x="168" y="214" rx="6" width="36" height="28" fill="none" stroke="var(--ink-soft)" stroke-width="1.5"/>
+            <circle cx="186" cy="228" r="8" fill="none" stroke="var(--ink-soft)" stroke-width="1.5"/>
+            <rect x="178" y="210" rx="2" width="16" height="6" fill="none" stroke="var(--ink-soft)" stroke-width="1.2"/>
+            <!-- Tripod icon -->
+            <line x1="240" y1="210" x2="240" y2="220" stroke="var(--ink-soft)" stroke-width="1.5"/>
+            <line x1="240" y1="220" x2="228" y2="245" stroke="var(--ink-soft)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="240" y1="220" x2="252" y2="245" stroke="var(--ink-soft)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="240" y1="220" x2="240" y2="245" stroke="var(--ink-soft)" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="240" cy="210" r="6" fill="none" stroke="var(--ink-soft)" stroke-width="1.5"/>
+            <!-- Mic icon -->
+            <rect x="286" y="214" rx="8" width="16" height="22" fill="none" stroke="var(--ink-soft)" stroke-width="1.5"/>
+            <path d="M280 236 Q294 248 308 236" fill="none" stroke="var(--ink-soft)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="294" y1="244" x2="294" y2="250" stroke="var(--ink-soft)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+
+          <!-- Golden arc -->
+          <svg class="hero-arc" viewBox="0 0 200 200" fill="none">
+            <path d="M200,0 A200,200 0 0,1 0,200" stroke="var(--gold)" stroke-width="2" opacity="0.35"/>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <div class="colophon">
+      <dl>
+        <div><dt>Submitted by</dt><dd>Rudra Patel</dd></div>
+        <div><dt>Programme</dt><dd>Undergraduate, Vijaybhoomi University</dd></div>
+        <div><dt>Assessment</dt><dd>Human-Computer Interaction, Mid-Term</dd></div>
+        <div><dt>Scope</dt><dd>Research, IA and prioritisation only - no product build</dd></div>
+      </dl>
+    </div>
+
+    <main id="main">
+
+      <section class="section context" aria-labelledby="context-title">
+        <div class="section-label"><span>00</span> The context</div>
+        <div class="section-intro">
+          <p class="eyebrow">One room. Many teams. No shared system.</p>
+          <h2 id="context-title">The camera exists. The certainty doesn’t.</h2>
+        </div>
+        <div class="context-grid">
+          <div class="lead-copy">
+            <p>
+              VUTV produces podcasts, interviews and campus coverage using a
+              shared pool of cameras, microphones, lights and tripods. Other
+              clubs and programmes depend on the same equipment.
+            </p>
+            <p>
+              Booking happens through email. Availability lives in an
+              administrator’s inbox, memory or personal calendar-so the team
+              often discovers a clash only when a shoot is about to begin.
+            </p>
+          </div>
+          <ol class="current-flow" aria-label="Current equipment booking process">
+            <li><span>01</span> Plan a shoot</li>
+            <li><span>02</span> Remember to email</li>
+            <li><span>03</span> Wait for a reply</li>
+            <li><span>04</span> Assume gear is ready</li>
+            <li class="failure"><span>05</span> Discover the clash</li>
+          </ol>
+        </div>
+        <div class="subsection" style="margin-top: 3rem;">
+          <p class="eyebrow">The Problem Statement</p>
+          <blockquote class="problem-statement" style="margin-top: 1rem;">
+            <span class="quote-mark" aria-hidden="true">“</span>
+            <p>
+              Invisible, email-dependent reservations mean the production team learns about equipment clashes too late. Shoots slip, the Head of VUTV becomes a constant escalation inbox, and the overall content backlog grows.
+            </p>
+            <cite>Initial project challenge</cite>
+          </blockquote>
+        </div>
+
+      </section>
+
+      <section class="section research" id="phase-1" aria-labelledby="phase-1-title">
+        <div class="section-label"><span>Phase 1</span> Empathy and definition</div>
+        <div class="section-intro">
+          <div>
+            <h2 id="phase-1-title">Three perspectives, one recurring breakdown.</h2>
+          </div>
+          <p class="section-summary">
+            Semi-structured conversations with two production members and the
+            Head of VUTV surfaced the same dependency: no one can confidently
+            see availability without asking someone else.
+          </p>
+        </div>
+
+        <div class="subsection">
+          <p class="eyebrow">1.1 Observation log</p>
+          <blockquote class="problem-statement" style="margin-top: 1rem;">
+            <p>
+              It was 2:00 PM on a Thursday, and a VUTV production crew was preparing for a critical interview shoot. The producer had emailed the administrator three days prior to reserve the primary camera kit, but never received a formal confirmation. Assuming silence meant approval, the entire crew assembled in the studio on time.
+            </p>
+            <p style="margin-top: 1rem;">
+              When the producer opened the equipment locker, the camera was missing. It had been checked out earlier by another student club for an impromptu campus event. After a frantic fifteen-minute search and a distressed call to the Head of VUTV, the team managed to locate a backup camera. However, their relief was short-lived when they powered it on to discover the battery was completely drained. The shoot, originally scheduled to take an hour, was delayed by forty-five minutes, leaving the crew demoralised and the interviewee waiting.
+            </p>
+            <cite>Field observation · VUTV studio</cite>
+          </blockquote>
+        </div>
+
+        <div class="subsection">
+          <p class="eyebrow">1.2 Persona &amp; research</p>
+
+          <div class="evidence-list" role="group" aria-label="Interview evidence">
+            <article class="evidence-row">
+              <div class="participant">P1</div>
+              <div>
+                <h3>Production team member</h3>
+                <p>
+                  Has repeatedly found cameras assigned to other shoots, seen
+                  bookings fail when no email was sent, and lost shoot time to
+                  dead batteries.
+                </p>
+              </div>
+              <p class="signal">Needs a dedicated schedule and booking portal.</p>
+            </article>
+            <article class="evidence-row">
+              <div class="participant">P2</div>
+              <div>
+                <h3>Production team member</h3>
+                <p>
+                  Reported a similar pattern of uncertainty and coordination
+                  friction, reinforcing that P1’s experience is not isolated.
+                </p>
+              </div>
+              <p class="signal">Needs predictable access before planning a shoot.</p>
+            </article>
+            <article class="evidence-row">
+              <div class="participant">P3</div>
+              <div>
+                <h3>Head of VUTV · Researcher perspective</h3>
+                <p>
+                  Receives frustrated, last-minute calls when equipment clashes
+                  happen and becomes the person expected to resolve every exception.
+                </p>
+              </div>
+              <p class="signal">Needs fewer reactive calls and shared ownership.</p>
+            </article>
+          </div>
+          <p class="method-note">
+            Evidence is presented as paraphrased interview notes because verbatim
+            transcripts were not recorded. No quotation is attributed to a participant.
+          </p>
+
+          <article class="persona" aria-labelledby="persona-title">
+            <div class="persona-identity">
+              <div class="persona-monogram" aria-hidden="true">AP</div>
+              <p>Primary persona</p>
+              <h3 id="persona-title">Arjun, the producer</h3>
+              <span>Composite of P1 + P2</span>
+            </div>
+            <div class="persona-detail">
+              <div>
+                <h4>Goal</h4>
+                <p>Arrive at a planned shoot with the right equipment ready to use.</p>
+              </div>
+              <div>
+                <h4>Behaviour</h4>
+                <p>Plans around academic work, relies on email, and sometimes assumes availability.</p>
+              </div>
+              <div>
+                <h4>Frustration</h4>
+                <p>A camera is already out, the booking trail is unclear, or the battery is dead.</p>
+              </div>
+              <div>
+                <h4>Core need</h4>
+                <p>A shared schedule and self-service reservation flow with equipment readiness.</p>
+              </div>
+            </div>
+            <p class="persona-voice">
+              “I need to know the camera is available and ready before the crew assembles.”
+              <span>Persona voice · synthesis, not a verbatim quote</span>
+            </p>
+          </article>
+
+          <aside class="secondary-persona">
+            <p class="eyebrow">Secondary perspective · P3</p>
+            <h3>The Head of VUTV</h3>
+            <p>
+              Wants the team to resolve availability before a shoot-not through
+              emergency calls after a clash has already happened.
+            </p>
+          </aside>
+        </div>
+
+        <div class="subsection">
+          <p class="eyebrow">1.3 Empathy map</p>
+          <figure class="fig">
+            <a href="Figma/vutv-empathy-map%201.svg" target="_blank" rel="noopener">
+              <img src="Figma/vutv-empathy-map%201.svg" alt="Empathy map" loading="lazy" width="1600" height="1000">
+            </a>
+            <figcaption>
+              <strong>Figure 1.</strong> Producer empathy map, synthesised from P1 and P2.
+            </figcaption>
+          </figure>
+
+          <div class="empathy-grid">
+            <div><span>Says</span><p>“Is the camera free?”</p></div>
+            <div><span>Thinks</span><p>Someone must have checked.</p></div>
+            <div><span>Does</span><p>Emails, waits, arrives, then calls the Head.</p></div>
+            <div><span>Feels</span><p>Uncertain → frustrated → demoralised.</p></div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <p class="eyebrow">1.4 User journey map</p>
+          <p class="lede">
+            The worst moment is discovering the failure after the team, location and time
+            have already been committed. The emotional journey below highlights the lowest
+            point at the <strong>Collision</strong> stage.
+          </p>
+          <figure class="fig journey-chart">
+            <a href="Figma/VUTV%20Journey%20Map%20(High-Fidelity).svg" target="_blank" rel="noopener">
+              <img src="Figma/VUTV%20Journey%20Map%20(High-Fidelity).svg" alt="VUTV equipment booking journey" loading="lazy" width="1600" height="820">
+            </a>
+            <figcaption>
+              <strong>Figure 2.</strong> Emotional journey from planning a shoot to backlog stress.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="subsection">
+          <p class="eyebrow">1.5 Core pain point</p>
+          <blockquote class="problem-statement" style="margin-top: 1rem;">
+            <span class="quote-mark" aria-hidden="true">“</span>
+            <p>
+              Invisible, email-dependent reservations mean the production team only discovers equipment clashes at the "Collision" stage, after the team, location, and time have already been committed. This late realization causes immense frustration, forces shoots to slip, turns the Head of VUTV into an escalation inbox, and grows the content backlog.
+            </p>
+            <cite>Core pain point · synthesised from user journey mapping</cite>
+          </blockquote>
+        </div>
+
+        <div class="subsection">
+          <p class="eyebrow">1.6 Pain → solution logic</p>
+          <div class="table-wrap">
+            <table class="logic-table">
+              <caption class="sr-only">Pain points mapped to user stories and features</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Observed pain</th>
+                  <th scope="col">User story</th>
+                  <th scope="col">Feature direction</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>No shared visibility</td>
+                  <td>As a producer, I want to see what is booked so I do not plan a clash.</td>
+                  <td><strong>Shared calendar</strong></td>
+                </tr>
+                <tr>
+                  <td>Email is forgotten or opaque</td>
+                  <td>As a producer, I want to reserve gear without waiting for an email reply.</td>
+                  <td><strong>Self-service booking</strong></td>
+                </tr>
+                <tr>
+                  <td>Clashes surface on shoot day</td>
+                  <td>As a producer, I want a warning before I confirm an overlapping slot.</td>
+                  <td><strong>Conflict detection</strong></td>
+                </tr>
+                <tr>
+                  <td>Equipment is not shoot-ready</td>
+                  <td>As a producer, I want readiness status before the crew arrives.</td>
+                  <td><strong>Battery &amp; condition status</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section architecture" id="phase-2" aria-labelledby="phase-2-title">
+        <div class="section-label"><span>Phase 2</span> Ideate and evaluate</div>
+        <div class="section-intro">
+          <div>
+            <h2 id="phase-2-title">Test the language before designing the screens.</h2>
+          </div>
+          <p class="section-summary">
+            10 participants sorted 18 feature cards into four pre-labelled groups. The
+            sessions revealed a near-unanimous mental model: participants consistently
+            separated <em>booking actions</em> from <em>status monitoring</em>, and expected
+            <em>equipment condition data</em> (battery, condition report) to live with
+            equipment browsing-not with booking management. These patterns directly
+            informed the IA pivot.
+          </p>
+        </div>
+
+
+
+        <div class="subsection">
+          <p class="eyebrow">2.1 Card sort</p>
+          <article class="study-block">
+            <div class="study-heading">
+              <span>Study 01</span>
+              <div>
+                <h3>Open card sort</h3>
+                <p>10 participants · 18 cards · Ask participants to name their groups and explain why.</p>
+              </div>
+            </div>
+            <div class="card-deck" role="group" aria-label="Card sort deck">
+              <span>Check availability</span><span>Calendar</span><span>Book equipment</span>
+              <span>My bookings</span><span>Conflict warning</span><span>Alternative gear</span>
+              <span>Alternative time</span><span>Equipment list</span><span>Battery status</span>
+              <span>Condition report</span><span>Notifications</span><span>Cancel booking</span>
+              <span>Reschedule</span><span>Pickup checklist</span><span>Return equipment</span>
+              <span>Booking policies</span><span>Admin approvals</span><span>Help</span>
+            </div>
+
+            <figure class="fig photo-figure">
+              <div class="photo-grid">
+                <a href="assets/card-sort/participant-1.jpg" class="photo-card" data-lightbox="card-sort" data-index="0" aria-label="View Participant 1 card sort response">
+                  <img src="assets/card-sort/participant-1.jpg" alt="Participant 1 card sort response form" loading="lazy">
+                  <span class="photo-badge">P1</span>
+                  <span class="photo-overlay"><span>View full form</span></span>
+                </a>
+                <a href="assets/card-sort/participant-2.jpg" class="photo-card" data-lightbox="card-sort" data-index="1" aria-label="View Participant 2 card sort response">
+                  <img src="assets/card-sort/participant-2.jpg" alt="Participant 2 card sort response form" loading="lazy">
+                  <span class="photo-badge">P2</span>
+                  <span class="photo-overlay"><span>View full form</span></span>
+                </a>
+                <a href="assets/card-sort/participant-3.jpg" class="photo-card" data-lightbox="card-sort" data-index="2" aria-label="View Participant 3 card sort response">
+                  <img src="assets/card-sort/participant-3.jpg" alt="Participant 3 card sort response form" loading="lazy">
+                  <span class="photo-badge">P3</span>
+                  <span class="photo-overlay"><span>View full form</span></span>
+                </a>
+                <a href="assets/card-sort/participant-4.jpg" class="photo-card" data-lightbox="card-sort" data-index="3" aria-label="View Participant 4 card sort response">
+                  <img src="assets/card-sort/participant-4.jpg" alt="Participant 4 card sort response form" loading="lazy">
+                  <span class="photo-badge">P4</span>
+                  <span class="photo-overlay"><span>View full form</span></span>
+                </a>
+                <a href="assets/card-sort/participant-5.jpg" class="photo-card" data-lightbox="card-sort" data-index="4" aria-label="View Participant 5 card sort response">
+                  <img src="assets/card-sort/participant-5.jpg" alt="Participant 5 card sort response form" loading="lazy">
+                  <span class="photo-badge">P5</span>
+                  <span class="photo-overlay"><span>View full form</span></span>
+                </a>
+                <a href="assets/card-sort/participant-6.jpg" class="photo-card" data-lightbox="card-sort" data-index="5" aria-label="View Participant 6 card sort response">
+                  <img src="assets/card-sort/participant-6.jpg" alt="Participant 6 card sort response form" loading="lazy">
+                  <span class="photo-badge">P6</span>
+                  <span class="photo-overlay"><span>View full form</span></span>
+                </a>
+                <a href="assets/card-sort/participant-7.jpg" class="photo-card" data-lightbox="card-sort" data-index="6" aria-label="View Participant 7 card sort response">
+                  <img src="assets/card-sort/participant-7.jpg" alt="Participant 7 card sort response form" loading="lazy">
+                  <span class="photo-badge">P7</span>
+                  <span class="photo-overlay"><span>View full form</span></span>
+                </a>
+                <a href="assets/card-sort/participant-8.jpg" class="photo-card" data-lightbox="card-sort" data-index="7" aria-label="View Participant 8 card sort response">
+                  <img src="assets/card-sort/participant-8.jpg" alt="Participant 8 card sort response form" loading="lazy">
+                  <span class="photo-badge">P8</span>
+                  <span class="photo-overlay"><span>View full form</span></span>
+                </a>
+                <a href="assets/card-sort/participant-9.jpg" class="photo-card" data-lightbox="card-sort" data-index="8" aria-label="View Participant 9 card sort response">
+                  <img src="assets/card-sort/participant-9.jpg" alt="Participant 9 card sort response form" loading="lazy">
+                  <span class="photo-badge">P9</span>
+                  <span class="photo-overlay"><span>View full form</span></span>
+                </a>
+                <a href="assets/card-sort/participant-10.jpg" class="photo-card" data-lightbox="card-sort" data-index="9" aria-label="View Participant 10 card sort response">
+                  <img src="assets/card-sort/participant-10.jpg" alt="Participant 10 card sort response form" loading="lazy">
+                  <span class="photo-badge">P10</span>
+                  <span class="photo-overlay"><span>View full form</span></span>
+                </a>
+              </div>
+              <figcaption>
+                <strong>Figure 3.</strong> Card-sort session results from 10 participants - click any thumbnail to view the full response form.
+              </figcaption>
+            </figure>
+
+            <figure class="fig">
+              <a href="Figma/vutv-card-sort%201.svg" target="_blank" rel="noopener">
+                <img src="Figma/vutv-card-sort%201.svg" alt="Card sort board" loading="lazy" width="1600" height="900">
+              </a>
+              <figcaption>
+                <strong>Figure 4.</strong> The synthesized card sort board based on 10 participant sessions. Groups were renamed and cards were arranged based on consensus.
+              </figcaption>
+            </figure>
+          </article>
+        </div>
+
+        <div class="subsection">
+          <p class="eyebrow">2.2 Tree test</p>
+          <article class="study-block">
+            <div class="study-heading">
+              <span>Study 02</span>
+              <div>
+                <h3>Tree test</h3>
+                <p>7 participants &middot; 5 tasks &middot; First click, path, backtracks, time and success recorded via custom web tool.</p>
+              </div>
+            </div>
+
+            <figure class="fig">
+              <a href="Figma/IA%201.svg" target="_blank" rel="noopener">
+                <img src="Figma/IA%201.svg" alt="IA V1 flowchart" loading="lazy" width="1080" height="650">
+              </a>
+              <figcaption>
+                <strong>Figure 5.</strong> IA V1 menu tree derived from card sort consensus. This structure was used in the tree test.
+              </figcaption>
+            </figure>
+
+            <div class="tree-tasks">
+              <h4>Test tasks</h4>
+              <ol>
+                <li>You want to know if a specific camera is free next week. Where do you look?</li>
+                <li>You need to reserve a microphone for tomorrow's podcast shoot.</li>
+                <li>You want to see if the battery for Camera B is fully charged before picking it up.</li>
+                <li>Your shoot got delayed and you need to move your reservation to a new time.</li>
+                <li>You want to review the rules about how long you can borrow equipment.</li>
+              </ol>
+            </div>
+
+            <div class="interactive-embed stack" style="margin: 3rem 0;">
+              <h4>Interactive Tree Test</h4>
+              <p>Try the custom tree testing tool built specifically for this study. Participants used this to navigate the V1 structure.</p>
+              <div style="width: 100%; border: 1px solid var(--surface-line); border-radius: 12px; overflow: hidden; background: #fff; box-shadow: var(--shadow-card);">
+                <iframe src="https://tree-test-red.vercel.app/" width="100%" height="600" style="border: none; display: block;" allowfullscreen></iframe>
+              </div>
+              <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="https://tree-test-red.vercel.app/" target="_blank" rel="noopener" class="primary-link">
+                  Open web app <span aria-hidden="true">&nearr;</span>
+                </a>
+                <a href="https://docs.google.com/spreadsheets/d/1O7AR5I_oJHEEwvMdqLBUdEhGUIuJzxWuGliY8DyrLqQ/edit?usp=sharing" target="_blank" rel="noopener" class="primary-link" style="background: var(--surface); border: 1px solid var(--surface-line); color: var(--ink);">
+                  Download raw results (CSV) <span aria-hidden="true" style="color: var(--gold-deep);">&rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="stack">
+              <h4>Results</h4>
+              <p class="lede">Overall task success: <strong>33/35 (94%)</strong> &middot; Overall directness: <strong>27/35 (77%)</strong></p>
+              <div class="table-wrap">
+                <table class="logic-table">
+                  <caption class="sr-only">Tree test results by task</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Task</th>
+                      <th scope="col">Target path</th>
+                      <th scope="col">Success</th>
+                      <th scope="col">1st-click correct</th>
+                      <th scope="col">Directness</th>
+                      <th scope="col">Avg time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1. Camera free?</td>
+                      <td>Track &amp; Check &rarr; Check availability</td>
+                      <td>5/7 (71%)</td>
+                      <td>4/7 (57%)</td>
+                      <td>3/7 (43%)</td>
+                      <td>26.0 s</td>
+                    </tr>
+                    <tr>
+                      <td>2. Reserve mic</td>
+                      <td>Book &amp; Manage &rarr; Book equipment</td>
+                      <td>7/7 (100%)</td>
+                      <td>7/7 (100%)</td>
+                      <td>7/7 (100%)</td>
+                      <td>11.2 s</td>
+                    </tr>
+                    <tr>
+                      <td>3. Battery check</td>
+                      <td>Equipment Info &rarr; Battery status</td>
+                      <td>7/7 (100%)</td>
+                      <td>7/7 (100%)</td>
+                      <td>7/7 (100%)</td>
+                      <td>17.3 s</td>
+                    </tr>
+                    <tr>
+                      <td>4. Move booking</td>
+                      <td>Book &amp; Manage &rarr; Reschedule booking</td>
+                      <td>7/7 (100%)</td>
+                      <td>6/7 (86%)</td>
+                      <td>6/7 (86%)</td>
+                      <td>13.9 s</td>
+                    </tr>
+                    <tr>
+                      <td>5. Borrowing rules</td>
+                      <td>Policies &amp; Help &rarr; Booking policies</td>
+                      <td>7/7 (100%)</td>
+                      <td>4/7 (57%)</td>
+                      <td>4/7 (57%)</td>
+                      <td>18.2 s</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="stack">
+              <h4>Where users failed</h4>
+              <div class="evidence-list" role="group" aria-label="Tree test failure analysis">
+                <article class="evidence-row evidence-row--alert">
+                  <div class="participant">Task 1</div>
+                  <div>
+                    <p><strong>71% success, 43% directness</strong> - the only task with outright failures.</p>
+                    <p>3 of 7 participants first-clicked <strong>Equipment Info</strong> or <strong>Book &amp; Manage</strong> instead of <strong>Track &amp; Check</strong>. When users think &ldquo;camera&rdquo;, they gravitate toward equipment browsing. The label &ldquo;Track &amp; Check&rdquo; did not clearly signal availability queries.</p>
+                    <ul class="trace-list">
+                      <li>Aaryan Rai &rarr; Equipment Info &rarr; Equipment list (never recovered - <strong>failed</strong>)</li>
+                      <li>Ayush C &rarr; Book &amp; Manage &rarr; back &rarr; Track &amp; Check &rarr; Check availability (recovered)</li>
+                      <li>Kunj Mistry &rarr; Equipment Info &rarr; back &rarr; Track &amp; Check &rarr; Check availability (recovered)</li>
+                    </ul>
+                  </div>
+                </article>
+                <article class="evidence-row">
+                  <div class="participant">Task 5</div>
+                  <div>
+                    <p><strong>100% success, 57% directness</strong> - all recovered, but 3 of 7 looked in the wrong category first.</p>
+                    <p>Users associated &ldquo;borrowing rules&rdquo; with booking actions, looking under <strong>Book &amp; Manage</strong> or even <strong>Equipment Info</strong> before finding <strong>Policies &amp; Help</strong>.</p>
+                    <ul class="trace-list">
+                      <li>Abubakar &rarr; Equipment Info &rarr; back &rarr; Track &amp; Check &rarr; back &rarr; Policies &amp; Help (recovered)</li>
+                      <li>Tripti Mishra &rarr; Book &amp; Manage &rarr; back &rarr; Policies &amp; Help (recovered)</li>
+                      <li>Aaryan Rai &rarr; Book &amp; Manage &rarr; back &rarr; Policies &amp; Help (recovered)</li>
+                    </ul>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div class="results-template stack">
+              <h4>IA pivot: V1 &rarr; V2</h4>
+              <div><span>Rename</span><strong>&ldquo;Track &amp; Check&rdquo; &rarr; &ldquo;Schedule &amp; Availability&rdquo; - fixes Task 1's 43% directness. &ldquo;Schedule&rdquo; directly signals time-based queries, reducing the pull toward Equipment Info.</strong></div>
+              <div><span>Move</span><strong>Conflict warning &rarr; Schedule &amp; Availability - conflict checking is part of availability monitoring, not booking management.</strong></div>
+              <div><span>Move</span><strong>Pickup checklist &rarr; Book &amp; Manage - picking up gear is a booking lifecycle step, not a monitoring action.</strong></div>
+              <div><span>Move</span><strong>Admin approvals &rarr; Policies &amp; Help - governance belongs with rules, boosting Task 5 discoverability.</strong></div>
+            </div>
+
+            <figure class="fig stack">
+              <a href="Figma/IA%202.svg" target="_blank" rel="noopener">
+                <img src="Figma/IA%202.svg" alt="IA V2 flowchart" loading="lazy" width="1080" height="650">
+              </a>
+              <figcaption>
+                <strong>Figure 6.</strong> IA V2 menu tree after tree-test pivot. Gold-highlighted nodes indicate items that moved or categories that were renamed.
+              </figcaption>
+            </figure>
+
+            <div class="tree-tasks">
+              <h4>What changed and why</h4>
+              <ol>
+                <li><strong>Label clarity:</strong> &ldquo;Schedule &amp; Availability&rdquo; removes the ambiguity that caused 3/7 wrong first-clicks on Task 1.</li>
+                <li><strong>Conflict warning relocated:</strong> Conflicts are discovered during availability checks, not during active booking management.</li>
+                <li><strong>Pickup checklist relocated:</strong> Participants treated it as part of the booking lifecycle - pick up happens after you book.</li>
+                <li><strong>Admin approvals relocated:</strong> 2/7 participants looked in Book &amp; Manage for policies; moving approvals to the same governance group improves findability.</li>
+              </ol>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section priorities" id="phase-3" aria-labelledby="phase-3-title">
+        <div class="section-label"><span>Phase 3</span> Prioritisation</div>
+        <div class="section-intro">
+          <div>
+            <h2 id="phase-3-title">Four must-haves. No feature inflation.</h2>
+          </div>
+          <p class="section-summary">
+            The MVP focuses on preventing a failed shoot. Useful features are
+            deliberately cut when they do not change that core outcome.
+          </p>
+        </div>
+
+        <div class="subsection">
+          <p class="eyebrow">3.1 MVP priorities</p>
+          <figure class="fig">
+            <a href="Figma/MoSCoW%20.svg" target="_blank" rel="noopener">
+              <img src="Figma/MoSCoW%20.svg" alt="MoSCoW Prioritization Matrix" loading="lazy" width="1600" height="900">
+            </a>
+            <figcaption>
+              <strong>Figure 7.</strong> MoSCoW Prioritization Matrix.
+            </figcaption>
+          </figure>
+          <p class="cut-logic">
+            <strong>Why the cuts?</strong> Notifications and conflict warnings improve
+            recovery, but equipment browsing, self-service booking, readiness tracking, and a shared calendar
+            are the four capabilities needed to stop the failure at its source.
+          </p>
+        </div>
+
+        <div class="subsection">
+          <p class="eyebrow">3.2 DFV reality check</p>
+          <figure class="fig">
+            <a href="Figma/DFV%20Matrix.svg" target="_blank" rel="noopener">
+              <img src="Figma/DFV%20Matrix.svg" alt="DFV Matrix" loading="lazy" width="1600" height="900">
+            </a>
+            <figcaption>
+              <strong>Figure 8.</strong> DFV Matrix for the final Must-Have slot.
+            </figcaption>
+          </figure>
+
+        </div>
+
+        <div class="subsection">
+          <p class="eyebrow">3.3 The 4 final Must Have's</p>
+          <div class="evidence-list" role="group" aria-label="Must have features">
+            <article class="evidence-row">
+              <div class="participant">01</div>
+              <div>
+                <h3>Equipment browsing</h3>
+                <p>A core directory of available gear so producers can see what exists before requesting it.</p>
+              </div>
+            </article>
+            <article class="evidence-row">
+              <div class="participant">02</div>
+              <div>
+                <h3>Self-service booking</h3>
+                <p>The system must allow producers to independently reserve available gear without waiting for email confirmations from administrators.</p>
+              </div>
+            </article>
+            <article class="evidence-row">
+              <div class="participant">03</div>
+              <div>
+                <h3>Readiness status</h3>
+                <p>Crucial metadata like battery charge and equipment condition must be visible so crews don't arrive to find unusable gear.</p>
+              </div>
+            </article>
+            <article class="evidence-row">
+              <div class="participant">04</div>
+              <div>
+                <h3>Calendar view</h3>
+                <p>Producers need a unified timeline view of equipment bookings to easily locate open slots and plan shoots visually.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        </div>
+      </section>
+
+      <section class="section mvp" id="phase-4" aria-labelledby="phase-4-title">
+        <div class="section-label"><span>Phase 4</span> Proposed MVP</div>
+        
+        <div class="mvp-layout" style="position: relative;">
+          <!-- Golden decorative curve -->
+          <svg style="position: absolute; left: -10%; top: -20%; z-index: 0; opacity: 0.15; pointer-events: none;" width="300" height="300" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 0,100 C 50,0 150,200 200,100" fill="none" stroke="var(--gold-deep)" stroke-width="4" stroke-linecap="round"/>
+            <path d="M 0,120 C 50,20 150,220 200,120" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+
+          <div class="section-intro" style="margin-bottom: 0; position: relative; z-index: 1;">
+            <div style="display: flex; align-items: stretch; gap: 1.25rem;">
+              <span class="hero-accent-bar" aria-hidden="true"></span>
+              <div>
+                <h2 id="phase-4-title" style="margin-top: -0.2rem;">A focused scheduling portal.</h2>
+                <p class="section-summary">
+                  The Minimum Viable Product (MVP) is a web-based scheduling portal that centralizes equipment visibility and automates conflict prevention.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mvp-card lead-copy">
+            <p style="margin-top: 0;">
+              By focusing strictly on the four must-have features, the MVP shifts the booking process from a reactive, email-based system to a proactive, self-serve model.
+              It eliminates the core pain point of "invisible reservations" without over-engineering features like notifications or advanced analytics.
+            </p>
+            <p style="margin-bottom: 0;">
+              Success for this MVP is measured by a reduction in last-minute equipment clashes and a decrease in escalation emails to the Head of VUTV.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reflection" id="phase-5" aria-labelledby="phase-5-title">
+        <div class="section-label"><span>Phase 5</span> Reflection</div>
+        <div class="reflection-layout">
+          <div>
+            <p class="eyebrow">5.1 Authenticity &amp; reflection</p>
+            <h2 id="phase-5-title">This is not a hypothetical workflow.</h2>
+          </div>
+          <div>
+            <p>
+              As Head of VUTV, I have received the calls that happen after the
+              schedule fails. My perspective gives direct access to the
+              operational problem-but it also creates bias.
+            </p>
+            <p>
+              To keep the project credible, production-member evidence is
+              separated from my own perspective, paraphrases are labelled, and
+              future IA decisions will be based on observed participant paths.
+            </p>
+            <div class="principle">
+              <span>Design principle</span>
+              <strong>Make certainty available before commitment.</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <a class="wordmark" href="#top" aria-label="Back to VUTV case study top">
+        <img src="assets/vutv-logo.png" alt="" width="40" height="40">
+        <span>VUTV</span>
+      </a>
+      <p>Equipment Booking &amp; Scheduling Conflicts</p>
+      <p>Rudra Patel · STET301 · Vijaybhoomi University</p>
+      <div class="footer-links">
+        <a href="https://github.com/rsp45/vutv-equipment-booking-hci">View source</a>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </footer>
+  </body>
+</html>

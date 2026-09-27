@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="820" viewBox="0 0 1600 820" role="img" aria-labelledby="title desc">
+  <title id="title">VUTV equipment booking journey map</title>
+  <desc id="desc">The producer journey from planning a shoot to backlog stress, with the lowest emotion at conflict discovery and cancellation.</desc>
+  <rect width="1600" height="820" fill="#fffaf2"/>
+  <rect x="48" y="48" width="1504" height="724" fill="none" stroke="#d7cec1" stroke-width="2"/>
+  <text x="96" y="115" fill="#aa7d2b" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3">VUTV - RESEARCH ARTEFACT 02</text>
+  <text x="96" y="178" fill="#1c1915" font-family="Georgia, serif" font-size="58">Equipment booking journey</text>
+  <text x="96" y="220" fill="#71695f" font-family="Arial, sans-serif" font-size="22">Confidence collapses when the conflict appears after commitment.</text>
+  <line x1="150" y1="335" x2="1450" y2="335" stroke="#d7cec1" stroke-width="2" stroke-dasharray="8 12"/>
+  <line x1="150" y1="470" x2="1450" y2="470" stroke="#d7cec1" stroke-width="2" stroke-dasharray="8 12"/>
+  <line x1="150" y1="605" x2="1450" y2="605" stroke="#d7cec1" stroke-width="2" stroke-dasharray="8 12"/>
+  <text x="96" y="342" fill="#71695f" font-family="Arial, sans-serif" font-size="16" letter-spacing="2">HIGH</text>
+  <text x="110" y="477" fill="#71695f" font-family="Arial, sans-serif" font-size="16" letter-spacing="2">OK</text>
+  <text x="105" y="612" fill="#71695f" font-family="Arial, sans-serif" font-size="16" letter-spacing="2">LOW</text>
+  <polyline points="205,345 410,412 615,458 820,445 1025,620 1230,642 1400,598" fill="none" stroke="#ead4d1" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="205,345 410,412 615,458 820,445 1025,620 1230,642 1400,598" fill="none" stroke="#9d4943" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#fffaf2" stroke="#1c1915" stroke-width="3">
+    <circle cx="205" cy="345" r="10"/>
+    <circle cx="410" cy="412" r="10"/>
+    <circle cx="615" cy="458" r="10"/>
+    <circle cx="820" cy="445" r="10"/>
+    <circle cx="1400" cy="598" r="10"/>
+  </g>
+  <g fill="#9d4943" stroke="#9d4943" stroke-width="3">
+    <circle cx="1025" cy="620" r="13"/>
+    <circle cx="1230" cy="642" r="13"/>
+  </g>
+  <g fill="#1c1915" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle">
+    <text x="205" y="704">PLAN</text>
+    <text x="410" y="704">EMAIL</text>
+    <text x="615" y="704">WAIT</text>
+    <text x="820" y="704">ARRIVE</text>
+    <text x="1025" y="704">CONFLICT</text>
+    <text x="1230" y="704">CANCEL</text>
+    <text x="1400" y="704">BACKLOG</text>
+  </g>
+  <g fill="#71695f" font-family="Arial, sans-serif" font-size="16" text-anchor="middle">
+    <text x="205" y="738">Excited</text>
+    <text x="410" y="738">Unsure</text>
+    <text x="615" y="738">Anxious</text>
+    <text x="820" y="738">Hopeful</text>
+    <text x="1025" y="738">Frustrated</text>
+    <text x="1230" y="738">Deflated</text>
+    <text x="1400" y="738">Stressed</text>
+  </g>
+</svg>

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">VUTV desirability feasibility viability matrix</title>
+  <desc id="desc">A comparison of conflict detection and equipment readiness status across desirability, feasibility, and viability.</desc>
+  <rect width="1600" height="900" fill="#fffaf2"/>
+  <rect x="48" y="48" width="1504" height="804" fill="none" stroke="#d7cec1" stroke-width="2"/>
+  <text x="96" y="115" fill="#aa7d2b" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3">VUTV - RESEARCH ARTEFACT 04</text>
+  <text x="96" y="178" fill="#1c1915" font-family="Georgia, serif" font-size="58">DFV reality check</text>
+  <text x="96" y="220" fill="#71695f" font-family="Arial, sans-serif" font-size="22">The two contested must-haves are scored against the failure they prevent.</text>
+
+  <g font-family="Arial, sans-serif">
+    <g transform="translate(96 290)">
+      <rect width="680" height="470" rx="20" fill="#f8edd7" stroke="#aa7d2b" stroke-width="2"/>
+      <text x="34" y="50" fill="#aa7d2b" font-size="16" font-weight="700" letter-spacing="3">MUST 03</text>
+      <text x="34" y="102" fill="#1c1915" font-family="Georgia, serif" font-size="42">Conflict detection</text>
+      <text x="600" y="82" text-anchor="middle" fill="#1c1915" font-family="Georgia, serif" font-size="64">14</text>
+      <text x="600" y="111" text-anchor="middle" fill="#71695f" font-size="16">/ 15</text>
+
+      <g transform="translate(34 158)">
+        <text y="17" fill="#1c1915" font-size="18" font-weight="700">DESIRABILITY</text>
+        <rect x="180" width="390" height="20" rx="10" fill="#e3d9ca"/>
+        <rect x="180" width="390" height="20" rx="10" fill="#aa7d2b"/>
+        <text x="600" y="17" fill="#1c1915" font-size="18" font-weight="700">5</text>
+        <text y="74" fill="#1c1915" font-size="18" font-weight="700">FEASIBILITY</text>
+        <rect x="180" y="57" width="390" height="20" rx="10" fill="#e3d9ca"/>
+        <rect x="180" y="57" width="312" height="20" rx="10" fill="#59567d"/>
+        <text x="600" y="74" fill="#1c1915" font-size="18" font-weight="700">4</text>
+        <text y="131" fill="#1c1915" font-size="18" font-weight="700">VIABILITY</text>
+        <rect x="180" y="114" width="390" height="20" rx="10" fill="#e3d9ca"/>
+        <rect x="180" y="114" width="390" height="20" rx="10" fill="#416c50"/>
+        <text x="600" y="131" fill="#1c1915" font-size="18" font-weight="700">5</text>
+      </g>
+      <line x1="34" y1="330" x2="646" y2="330" stroke="#d7cec1" stroke-width="2"/>
+      <text x="34" y="370" fill="#71695f" font-size="19">Prevents the journey's lowest point: discovering</text>
+      <text x="34" y="400" fill="#71695f" font-size="19">an overlap after the crew and location are committed.</text>
+      <rect x="34" y="430" width="612" height="10" rx="5" fill="#aa7d2b"/>
+    </g>
+
+    <g transform="translate(824 290)">
+      <rect width="680" height="470" rx="20" fill="#e6eee8" stroke="#416c50" stroke-width="2"/>
+      <text x="34" y="50" fill="#416c50" font-size="16" font-weight="700" letter-spacing="3">MUST 04</text>
+      <text x="34" y="102" fill="#1c1915" font-family="Georgia, serif" font-size="42">Readiness status</text>
+      <text x="600" y="82" text-anchor="middle" fill="#1c1915" font-family="Georgia, serif" font-size="64">12</text>
+      <text x="600" y="111" text-anchor="middle" fill="#71695f" font-size="16">/ 15</text>
+
+      <g transform="translate(34 158)">
+        <text y="17" fill="#1c1915" font-size="18" font-weight="700">DESIRABILITY</text>
+        <rect x="180" width="390" height="20" rx="10" fill="#d6e0d8"/>
+        <rect x="180" width="312" height="20" rx="10" fill="#aa7d2b"/>
+        <text x="600" y="17" fill="#1c1915" font-size="18" font-weight="700">4</text>
+        <text y="74" fill="#1c1915" font-size="18" font-weight="700">FEASIBILITY</text>
+        <rect x="180" y="57" width="390" height="20" rx="10" fill="#d6e0d8"/>
+        <rect x="180" y="57" width="234" height="20" rx="10" fill="#59567d"/>
+        <text x="600" y="74" fill="#1c1915" font-size="18" font-weight="700">3</text>
+        <text y="131" fill="#1c1915" font-size="18" font-weight="700">VIABILITY</text>
+        <rect x="180" y="114" width="390" height="20" rx="10" fill="#d6e0d8"/>
+        <rect x="180" y="114" width="390" height="20" rx="10" fill="#416c50"/>
+        <text x="600" y="131" fill="#1c1915" font-size="18" font-weight="700">5</text>
+      </g>
+      <line x1="34" y1="330" x2="646" y2="330" stroke="#c8d5cb" stroke-width="2"/>
+      <text x="34" y="370" fill="#71695f" font-size="19">Prevents dead batteries and damaged gear from</text>
+      <text x="34" y="400" fill="#71695f" font-size="19">turning a confirmed reservation into a failed shoot.</text>
+      <rect x="34" y="430" width="490" height="10" rx="5" fill="#416c50"/>
+    </g>
+  </g>
+
+  <text x="800" y="818" text-anchor="middle" fill="#1c1915" font-family="Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="2">DECISION - KEEP BOTH IN MVP; ASSIGN A CLEAR HUMAN OWNER TO READINESS UPDATES</text>
+</svg>

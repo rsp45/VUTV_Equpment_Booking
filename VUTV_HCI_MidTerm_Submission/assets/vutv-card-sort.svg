@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">VUTV equipment booking card sort</title>
+  <desc id="desc">An open card-sort synthesis arranging equipment booking tasks into plan, reserve, prepare, and manage groups.</desc>
+  <rect width="1600" height="1000" fill="#fffaf2"/>
+  <rect x="48" y="48" width="1504" height="904" fill="none" stroke="#d7cec1" stroke-width="2"/>
+  <text x="96" y="115" fill="#aa7d2b" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3">VUTV - RESEARCH ARTEFACT 03</text>
+  <text x="96" y="178" fill="#1c1915" font-family="Georgia, serif" font-size="58">Card-sort synthesis</text>
+  <text x="96" y="220" fill="#71695f" font-family="Arial, sans-serif" font-size="22">Proposed information groups for a shared, conflict-aware equipment service.</text>
+
+  <g font-family="Arial, sans-serif">
+    <g transform="translate(96 285)">
+      <rect width="326" height="570" rx="18" fill="#f8edd7" stroke="#aa7d2b" stroke-width="2"/>
+      <rect width="326" height="72" rx="18" fill="#aa7d2b"/>
+      <rect y="54" width="326" height="18" fill="#aa7d2b"/>
+      <text x="28" y="46" fill="#fffaf2" font-size="19" font-weight="700" letter-spacing="3">PLAN</text>
+      <g fill="#fffaf2" stroke="#d7cec1">
+        <rect x="24" y="102" width="278" height="64" rx="9"/>
+        <rect x="24" y="182" width="278" height="64" rx="9"/>
+        <rect x="24" y="262" width="278" height="64" rx="9"/>
+        <rect x="24" y="342" width="278" height="64" rx="9"/>
+      </g>
+      <g fill="#1c1915" font-size="20">
+        <text x="44" y="141">Check availability</text>
+        <text x="44" y="221">Calendar</text>
+        <text x="44" y="301">Equipment list</text>
+        <text x="44" y="381">Alternative gear / time</text>
+      </g>
+      <text x="28" y="520" fill="#71695f" font-size="16">Answer: what can I use, and when?</text>
+    </g>
+
+    <g transform="translate(454 285)">
+      <rect width="326" height="570" rx="18" fill="#e9e8f2" stroke="#59567d" stroke-width="2"/>
+      <rect width="326" height="72" rx="18" fill="#59567d"/>
+      <rect y="54" width="326" height="18" fill="#59567d"/>
+      <text x="28" y="46" fill="#fffaf2" font-size="19" font-weight="700" letter-spacing="3">RESERVE</text>
+      <g fill="#fffaf2" stroke="#d7cec1">
+        <rect x="24" y="102" width="278" height="64" rx="9"/>
+        <rect x="24" y="182" width="278" height="64" rx="9"/>
+        <rect x="24" y="262" width="278" height="64" rx="9"/>
+        <rect x="24" y="342" width="278" height="64" rx="9"/>
+      </g>
+      <g fill="#1c1915" font-size="20">
+        <text x="44" y="141">Book equipment</text>
+        <text x="44" y="221">Conflict warning</text>
+        <text x="44" y="301">Admin approval</text>
+        <text x="44" y="381">Booking policies</text>
+      </g>
+      <text x="28" y="520" fill="#71695f" font-size="16">Commit without creating an overlap.</text>
+    </g>
+
+    <g transform="translate(812 285)">
+      <rect width="326" height="570" rx="18" fill="#e6eee8" stroke="#416c50" stroke-width="2"/>
+      <rect width="326" height="72" rx="18" fill="#416c50"/>
+      <rect y="54" width="326" height="18" fill="#416c50"/>
+      <text x="28" y="46" fill="#fffaf2" font-size="19" font-weight="700" letter-spacing="3">PREPARE</text>
+      <g fill="#fffaf2" stroke="#d7cec1">
+        <rect x="24" y="102" width="278" height="64" rx="9"/>
+        <rect x="24" y="182" width="278" height="64" rx="9"/>
+        <rect x="24" y="262" width="278" height="64" rx="9"/>
+        <rect x="24" y="342" width="278" height="64" rx="9"/>
+      </g>
+      <g fill="#1c1915" font-size="20">
+        <text x="44" y="141">Battery status</text>
+        <text x="44" y="221">Condition report</text>
+        <text x="44" y="301">Pickup checklist</text>
+        <text x="44" y="381">Notifications</text>
+      </g>
+      <text x="28" y="520" fill="#71695f" font-size="16">Know the kit is ready before call time.</text>
+    </g>
+
+    <g transform="translate(1170 285)">
+      <rect width="326" height="570" rx="18" fill="#f4e5e3" stroke="#9d4943" stroke-width="2"/>
+      <rect width="326" height="72" rx="18" fill="#9d4943"/>
+      <rect y="54" width="326" height="18" fill="#9d4943"/>
+      <text x="28" y="46" fill="#fffaf2" font-size="19" font-weight="700" letter-spacing="3">MANAGE</text>
+      <g fill="#fffaf2" stroke="#d7cec1">
+        <rect x="24" y="102" width="278" height="64" rx="9"/>
+        <rect x="24" y="182" width="278" height="64" rx="9"/>
+        <rect x="24" y="262" width="278" height="64" rx="9"/>
+        <rect x="24" y="342" width="278" height="64" rx="9"/>
+      </g>
+      <g fill="#1c1915" font-size="20">
+        <text x="44" y="141">My bookings</text>
+        <text x="44" y="221">Reschedule</text>
+        <text x="44" y="301">Cancel booking</text>
+        <text x="44" y="381">Return equipment</text>
+      </g>
+      <text x="28" y="520" fill="#71695f" font-size="16">Keep the shared schedule accurate.</text>
+    </g>
+  </g>
+
+  <rect x="96" y="890" width="1400" height="34" rx="17" fill="#1c1915"/>
+  <text x="796" y="913" text-anchor="middle" fill="#fffaf2" font-family="Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="2">HYPOTHESIS TO VALIDATE WITH 10 PARTICIPANTS - LABELS ARE NOT YET FINDINGS</text>
+</svg>
