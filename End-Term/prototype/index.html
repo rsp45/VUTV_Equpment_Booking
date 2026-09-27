@@ -502,6 +502,7 @@ const addDays=(date,n)=>{const d=new Date(date+'T12:00:00');d.setDate(d.getDate(
 const dateLabel=date=>new Date(date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
 const dateLabelShort=date=>new Date(date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
 const timeLabel=time=>new Date('2000-01-01T'+time).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+const timeOptions=sel=>{let h='';for(let i=9;i<=18;i++){for(let m of ['00','30']){if(i===18&&m==='30')continue;let v=String(i).padStart(2,'0')+':'+m;h+='<option value="'+v+'"'+(v===sel?' selected':'')+'>'+timeLabel(v)+'</option>';}}return h;};
 const interval=(date,time)=>new Date(date+'T'+time).getTime();
 const overlaps=(aS,aE,bS,bE)=>aS<bE && bS<aE;
 const bookingStart=b=>interval(b.startDate,b.startTime);
@@ -845,9 +846,9 @@ V.calendar=()=>{
   // Custom interval
   h+='<div class="card" style="padding:14px"><div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:10px">Custom interval</div>';
   h+='<div class="grid2"><div class="field"><label for="startDate">Start date</label><input id="startDate" type="date" min="'+dateKey(new Date())+'" value="'+esc(d.startDate)+'" data-draft="startDate"></div>';
-  h+='<div class="field"><label for="startTime">Start time</label><input id="startTime" type="time" value="'+esc(d.startTime)+'" data-draft="startTime"></div>';
+  h+='<div class="field"><label for="startTime">Start time</label><select id="startTime" data-draft="startTime">'+timeOptions(d.startTime)+'</select></div>';
   h+='<div class="field"><label for="endDate">End date</label><input id="endDate" type="date" min="'+esc(d.startDate)+'" value="'+esc(d.endDate)+'" data-draft="endDate"></div>';
-  h+='<div class="field"><label for="endTime">End time</label><input id="endTime" type="time" value="'+esc(d.endTime)+'" data-draft="endTime"></div></div></div>';
+  h+='<div class="field"><label for="endTime">End time</label><select id="endTime" data-draft="endTime">'+timeOptions(d.endTime)+'</select></div></div></div>';
 
   h+='<button class="btn primary" data-act="continuebooking">Continue with selected time</button>';
   h+='<button class="btn quiet" data-act="go" data-to="equipment">Cancel</button>';
@@ -1065,7 +1066,7 @@ V.extend=()=>{
   let h='<div class="banner info"><strong>Extend Booking</strong>Choose a later end time. Conflicts are checked automatically.</div>';
   h+='<div class="sum"><div><span>Equipment</span><b>'+esc(b.eq)+'</b></div><div><span>Current end</span><b>'+esc(dateLabelShort(b.endDate))+' '+esc(timeLabel(b.endTime))+'</b></div></div>';
   h+='<div class="field"><label for="extendDate">New end date</label><input id="extendDate" type="date" min="'+esc(b.endDate)+'" value="'+esc(b.endDate)+'"></div>';
-  h+='<div class="field"><label for="extendTime">New end time</label><input id="extendTime" type="time" value="'+esc(b.endTime)+'"></div>';
+  h+='<div class="field"><label for="extendTime">New end time</label><select id="extendTime">'+timeOptions(b.endTime)+'</select></div>';
   h+='<button class="btn primary" data-act="saveextension" data-id="'+b.id+'">Save Extension</button>';
   h+='<button class="btn ghost" data-act="tab" data-to="mybookings">Cancel</button>';
   return shell('Extend Booking',h,{back:'mybookings',hideTabs:true});
